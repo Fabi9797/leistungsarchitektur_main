@@ -54,6 +54,29 @@ export default function FrameworkSection() {
           <TempleGraphic />
         </div>
 
+        {/* Pillar Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 sm:mb-20">
+          {pillars.map((p, i) => {
+            const Icon = p.icon;
+            return (
+              <motion.div
+                key={p.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-[#F0EAD6]/50 border border-black/8 rounded-2xl p-5 sm:p-6"
+              >
+                <div className="w-10 h-10 bg-[#00416A] rounded-xl flex items-center justify-center mb-4">
+                  <Icon className="w-5 h-5 text-white" />
+                </div>
+                <p className="text-xs font-bold text-[#00416A] tracking-widest uppercase mb-2">{p.label}</p>
+                <p className="text-sm text-black/60 leading-relaxed">{p.text}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+
         {/* Explanation Text */}
         <div className="max-w-3xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
