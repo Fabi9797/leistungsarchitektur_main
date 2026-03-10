@@ -111,13 +111,15 @@ function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
           </div>
         )}
         {edit && (
-          <button onClick={generateImage} disabled={genLoading} style={{ position: "absolute", bottom: "8px", right: "8px", background: C.indigo, color: "white", border: "none", borderRadius: "6px", padding: "4px 10px", fontSize: "10px", fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: "4px", opacity: genLoading ? 0.7 : 1 }}>
-            {genLoading ? (
-              <><Loader2 size={9} style={{ animation: "spin 1s linear infinite" }} /> Generieren…</>
-            ) : (
-              <><Sparkles size={9} /> KI-Bild</>
-            )}
-          </button>
+          <div style={{ position: "absolute", bottom: "8px", right: "8px", display: "flex", gap: "4px" }}>
+            <input ref={fileInputRef} type="file" accept="image/*" onChange={handleUpload} style={{ display: "none" }} />
+            <button onClick={() => fileInputRef.current.click()} disabled={uploadLoading} style={{ background: "rgba(0,0,0,0.55)", color: "white", border: "none", borderRadius: "6px", padding: "4px 10px", fontSize: "10px", fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: "4px", opacity: uploadLoading ? 0.7 : 1 }}>
+              {uploadLoading ? <><Loader2 size={9} style={{ animation: "spin 1s linear infinite" }} /> Hochladen…</> : <>↑ Upload</>}
+            </button>
+            <button onClick={generateImage} disabled={genLoading} style={{ background: C.indigo, color: "white", border: "none", borderRadius: "6px", padding: "4px 10px", fontSize: "10px", fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: "4px", opacity: genLoading ? 0.7 : 1 }}>
+              {genLoading ? <><Loader2 size={9} style={{ animation: "spin 1s linear infinite" }} /> Generieren…</> : <><Sparkles size={9} /> KI-Bild</>}
+            </button>
+          </div>
         )}
       </div>
       {edit && (
