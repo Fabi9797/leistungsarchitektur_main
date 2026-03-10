@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 const faqs = [
   {
     q: "Wie unterscheidet sich das von einem normalen Trainingsplan?",
-    a: "Hier geht es nicht um einen Plan, den du abarbeitest. Wir beginnen mit einer Analyse deiner Hebel – also der Faktoren, die bei dir den größten Einfluss auf Fortschritt haben. Training, Ernährung und Alltag werden dann zu einem System verbunden, das laufend gesteuert und angepasst wird.",
+    a: "Hier geht es nicht um einen Plan, den du einfach abarbeitest. Wir beginnen mit einer Analyse deiner individuellen Hebel – also den 20 %, die bei dir 80 % des Ergebnisses ausmachen. Daraus entsteht ein System, das zu dir passt und bei Bedarf angepasst wird.",
   },
   {
     q: "Ich habe wenig Zeit. Funktioniert das trotzdem?",
