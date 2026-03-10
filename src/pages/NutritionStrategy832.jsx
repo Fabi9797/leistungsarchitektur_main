@@ -131,6 +131,7 @@ export default function NutritionStrategy832() {
           .no-print { display: none !important; }
           .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
           @page { size: A4; margin: 0; }
+          * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
         }
       `}</style>
 
