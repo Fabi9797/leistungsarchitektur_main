@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "Ich habe wenig Zeit. Funktioniert das trotzdem?",
-    a: "Genau dafür ist das System gemacht. Wir arbeiten nicht mit starren 6-Tage-Plänen, sondern passen alles an deine reale Verfügbarkeit an. Das Ziel ist maximale Wirkung bei minimalem Zeitaufwand.",
+    a: "Genau dafür ist das System gemacht. Wir arbeiten nicht mit starren 6-Tage-Plänen oder unrealistischen Vorgaben, sondern passen alles individuell an deinen Alltag an. Wenige, gezielte Hebel – maximale Wirkung.",
   },
   {
     q: "Muss ich komplett auf alles verzichten?",
