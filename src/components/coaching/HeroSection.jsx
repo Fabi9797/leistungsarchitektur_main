@@ -106,30 +106,7 @@ export default function HeroSection({ heroImage }) {
             </div>
           </motion.div>
 
-          {/* Right: YouTube Video */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
-          >
-            <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: "16/9" }}>
-              <iframe
-                src="https://www.youtube.com/embed/yZqY3uymfk4"
-                title="Performance Architecture"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-                style={{ border: 0 }}
-              />
-            </div>
-            {/* Floating stat card */}
-            <div className="absolute -left-3 lg:-left-6 bottom-6 bg-white rounded-xl shadow-2xl p-4 lg:p-5 border border-black/5">
-              <p className="text-xs font-semibold text-black/40 uppercase tracking-wider">Ø Ergebnis</p>
-              <p className="text-2xl font-bold text-[#00416A] mt-1">-8.4 kg</p>
-              <p className="text-xs text-black/40 mt-1">Körperfett in 12 Wochen</p>
-            </div>
-          </motion.div>
+
         </div>
       </div>
     </section>
