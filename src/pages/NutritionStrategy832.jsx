@@ -75,9 +75,38 @@ function Tag({ children }) {
 function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
   const upd = (key, val) => onChange({ ...variant, [key]: val });
   const updList = (key, val) => onChange({ ...variant, [key]: val });
+  const [genLoading, setGenLoading] = useState(false);
+
+  async function generateImage() {
+    const basis = variant.basis || [];
+    if (!basis.length && !variant.name) return;
+    setGenLoading(true);
+    const ingredients = basis.join(", ") || variant.name;
+    const result = await base44.integrations.Core.GenerateImage({
+      prompt: `Clean, minimal food photography of: ${ingredients}. Top-down view on a white plate, natural light, professional food photo, no garnish, no text.`
+    });
+    onChange({ ...variant, image_url: result.url });
+    setGenLoading(false);
+  }
 
   return (
-    <div style={{ border: "1px solid rgba(0,65,106,0.1)", borderRadius: "10px", padding: "18px 20px", background: "white", position: "relative" }}>
+    <div style={{ border: "1px solid rgba(0,65,106,0.1)", borderRadius: "10px", overflow: "hidden", background: "white", position: "relative" }}>
+      {/* Bild */}
+      <div style={{ width: "100%", height: "140px", background: C.egg, position: "relative", overflow: "hidden" }}>
+        {variant.image_url
+          ? <img src={variant.image_url} alt={variant.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <p style={{ ...s.small, opacity: 0.5 }}>Kein Bild</p>
+            </div>
+        }
+        {edit && (
+          <button onClick={generateImage} disabled={genLoading}
+            style={{ position: "absolute", bottom: "8px", right: "8px", background: C.indigo, color: "white", border: "none", borderRadius: "6px", padding: "4px 10px", fontSize: "10px", fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: "4px", opacity: genLoading ? 0.7 : 1 }}>
+            {genLoading ? <><Loader2 size={9} style={{ animation: "spin 1s linear infinite" }} /> Generieren…</> : <><Sparkles size={9} /> KI-Bild</>}
+          </button>
+        )}
+      </div>
+      <div style={{ padding: "14px 16px" }}>
       {edit && (
         <button onClick={onDelete} style={{ position: "absolute", top: "8px", right: "8px", background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "4px", cursor: "pointer", color: "#cc3333", padding: "2px 6px", fontSize: "10px", display: "flex", alignItems: "center", gap: "3px" }}>
           <Trash2 size={9} /> Löschen
