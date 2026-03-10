@@ -1,6 +1,30 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Dumbbell, Salad, Pill, BarChart2 } from "lucide-react";
 import TempleGraphic from "./TempleGraphic";
+
+const pillars = [
+  {
+    icon: Dumbbell,
+    label: "Trainingsplan",
+    text: "Individueller Trainingsplan, der auf deinen persönlichen Alltag abgestimmt wird – damit Beruf und Sport in Einklang kommen.",
+  },
+  {
+    icon: Salad,
+    label: "Ernährung",
+    text: "Optimale Anpassung der Ernährung innerhalb einer Rahmenvorgabe – ganz ohne Verbote und Hungern.",
+  },
+  {
+    icon: Pill,
+    label: "Nahrungsergänzung",
+    text: "Zielführende und bedarfsorientierte Supplements, um deinen Trainingsfleiß bestmöglich zu unterstützen.",
+  },
+  {
+    icon: BarChart2,
+    label: "Steuerung",
+    text: "Ganzheitliche Betreuung durch praktische Datenerfassung mit hilfreicher Technik.",
+  },
+];
 
 export default function FrameworkSection() {
   return (
