@@ -47,19 +47,19 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
-import Home from './pages/Home';
-import Clients832 from './pages/Clients832';
 import ClientOverview832 from './pages/ClientOverview832';
+import Clients832 from './pages/Clients832';
 import FactSheet832 from './pages/FactSheet832';
+import Home from './pages/Home';
 import NutritionAdmin832 from './pages/NutritionAdmin832';
 import NutritionStrategy832 from './pages/NutritionStrategy832';
 
 
 export const PAGES = {
-    "Home": Home,
-    "Clients832": Clients832,
     "ClientOverview832": ClientOverview832,
+    "Clients832": Clients832,
     "FactSheet832": FactSheet832,
+    "Home": Home,
     "NutritionAdmin832": NutritionAdmin832,
     "NutritionStrategy832": NutritionStrategy832,
 }
