@@ -49,33 +49,6 @@ export default function FrameworkSection() {
           </p>
         </motion.div>
 
-        {/* YouTube Video */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-12 sm:mb-20 max-w-3xl mx-auto"
-        >
-          <a
-            href="https://www.youtube.com/watch?v=yZqY3uymfk4"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-4 bg-[#F0EAD6]/60 border border-black/10 rounded-2xl p-5 sm:p-6 hover:bg-[#F0EAD6] transition-colors group"
-          >
-            <div className="w-14 h-14 flex-shrink-0 bg-[#00416A] rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
-              <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-xs font-bold text-[#00416A]/50 tracking-widest uppercase mb-1">YouTube</p>
-              <p className="text-base font-semibold text-black">Performance Architecture – Die Methode</p>
-              <p className="text-sm text-black/50 mt-0.5">youtube.com/watch?v=yZqY3uymfk4</p>
-            </div>
-          </a>
-        </motion.div>
-
         {/* Architecture Visual */}
         <div className="mb-12 sm:mb-20 px-4 sm:px-0">
           <TempleGraphic />
