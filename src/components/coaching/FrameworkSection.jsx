@@ -49,6 +49,25 @@ export default function FrameworkSection() {
           </p>
         </motion.div>
 
+        {/* YouTube Video */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-12 sm:mb-20 max-w-3xl mx-auto"
+        >
+          <div className="relative w-full rounded-2xl overflow-hidden shadow-xl" style={{ paddingBottom: "56.25%" }}>
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/yZqY3uymfk4"
+              title="Performance Architecture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </motion.div>
+
         {/* Architecture Visual */}
         <div className="mb-12 sm:mb-20 px-4 sm:px-0">
           <TempleGraphic />
