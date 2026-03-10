@@ -57,16 +57,27 @@ export default function FrameworkSection() {
           transition={{ duration: 0.6 }}
           className="mb-12 sm:mb-20 max-w-3xl mx-auto"
         >
-          <div className="rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: "16/9" }}>
-            <iframe
-              width="100%"
-              height="100%"
-              src="https://www.youtube.com/embed/yZqY3uymfk4"
-              title="Performance Architecture"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+          <a
+            href="https://www.youtube.com/watch?v=yZqY3uymfk4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block relative rounded-2xl overflow-hidden shadow-xl group"
+            style={{ aspectRatio: "16/9" }}
+          >
+            <img
+              src="https://img.youtube.com/vi/yZqY3uymfk4/maxresdefault.jpg"
+              alt="Performance Architecture Video"
+              className="w-full h-full object-cover"
             />
-          </div>
+            {/* Play button overlay */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-2xl group-hover:scale-105 transition-transform">
+                <svg className="w-7 h-7 sm:w-9 sm:h-9 text-[#00416A] ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          </a>
         </motion.div>
 
         {/* Architecture Visual */}
