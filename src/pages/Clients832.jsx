@@ -166,7 +166,7 @@ export default function Clients832() {
                     {[c.alter && `${c.alter} J.`, c.gewicht && `${c.gewicht} kg`, c.coaching_ziel].filter(Boolean).join(" · ")}
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-shrink-0">
                   <a
                     href={createPageUrl(`FactSheet832?id=${c.id}`)}
                     target="_blank"
@@ -180,6 +180,7 @@ export default function Clients832() {
                   </button>
                 </div>
               </div>
+              <ClientDocuments client={c} onUpdate={load} />
             ))}
           </div>
         )}
