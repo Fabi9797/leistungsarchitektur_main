@@ -51,6 +51,7 @@ import Home from './pages/Home';
 import Clients832 from './pages/Clients832';
 import ClientOverview832 from './pages/ClientOverview832';
 import FactSheet832 from './pages/FactSheet832';
+import NutritionAdmin832 from './pages/NutritionAdmin832';
 
 
 export const PAGES = {
@@ -58,6 +59,7 @@ export const PAGES = {
     "Clients832": Clients832,
     "ClientOverview832": ClientOverview832,
     "FactSheet832": FactSheet832,
+    "NutritionAdmin832": NutritionAdmin832,
 }
 
 export const pagesConfig = {
