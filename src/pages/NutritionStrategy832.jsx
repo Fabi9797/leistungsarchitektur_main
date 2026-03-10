@@ -299,10 +299,21 @@ export default function NutritionStrategy832() {
         input, textarea { font-family: 'Inter', sans-serif; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @media print {
-          body { background: white !important; }
+          html, body { margin: 0 !important; padding: 0 !important; background: white !important; }
           .no-print { display: none !important; }
-          .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
-          @page { size: A4; margin: 0; }
+          .print-wrapper { background: white !important; padding: 0 !important; }
+          .page {
+            width: 210mm !important;
+            height: 297mm !important;
+            min-height: unset !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+            padding: 14mm 16mm !important;
+            page-break-after: always !important;
+            break-after: page !important;
+            overflow: hidden !important;
+          }
+          @page { size: A4 portrait; margin: 0; }
           * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
         }
       `}</style>
