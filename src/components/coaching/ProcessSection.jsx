@@ -21,22 +21,22 @@ const steps = [
 
 export default function ProcessSection() {
   return (
-    <section id="ablauf" className="py-20 lg:py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="ablauf" className="py-16 lg:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-20"
         >
           <span className="text-xs font-bold text-[#00416A]/40 tracking-[0.2em] uppercase">
             Der Ablauf
           </span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight">
+          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-black tracking-tight">
             Der Weg zur Form
           </h2>
-          <p className="mt-4 text-lg text-black/50 max-w-2xl mx-auto">
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-black/50 max-w-2xl mx-auto">
             Drei Phasen. Ein Ziel. Kein Aktionismus, sondern gezielte Steuerung.
           </p>
         </motion.div>
@@ -49,12 +49,12 @@ export default function ProcessSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
-              className={`relative flex gap-8 lg:gap-12 ${i < steps.length - 1 ? "pb-16" : ""}`}
+              className={`relative flex gap-5 sm:gap-8 lg:gap-12 ${i < steps.length - 1 ? "pb-10 sm:pb-16" : ""}`}
             >
               {/* Number & Line */}
               <div className="flex flex-col items-center flex-shrink-0">
-                <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-2xl bg-[#00416A]/5 flex items-center justify-center">
-                  <span className="text-2xl lg:text-3xl font-bold text-[#00416A]/20">{step.num}</span>
+                <div className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-2xl bg-[#00416A]/5 flex items-center justify-center">
+                  <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#00416A]/20">{step.num}</span>
                 </div>
                 {i < steps.length - 1 && (
                   <div className="w-px flex-1 bg-gradient-to-b from-[#00416A]/15 to-transparent mt-4" />

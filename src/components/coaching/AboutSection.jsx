@@ -4,9 +4,9 @@ import { ArrowRight } from "lucide-react";
 
 export default function AboutSection({ heroImage }) {
   return (
-    <section className="py-20 lg:py-32 bg-[#00416A] relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+    <section className="py-16 lg:py-32 bg-[#00416A] relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Image */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -15,7 +15,7 @@ export default function AboutSection({ heroImage }) {
             transition={{ duration: 0.7 }}
             className="relative"
           >
-            <div className="relative rounded-2xl overflow-hidden aspect-[4/5] max-w-sm mx-auto lg:mx-0">
+            <div className="relative rounded-2xl overflow-hidden aspect-[4/5] max-w-xs sm:max-w-sm mx-auto lg:mx-0">
               <img
                 src={heroImage}
                 alt="Coach"
@@ -24,8 +24,8 @@ export default function AboutSection({ heroImage }) {
               <div className="absolute inset-0 bg-gradient-to-t from-[#00416A]/30 to-transparent" />
             </div>
             {/* Experience badge */}
-            <div className="absolute -right-4 lg:right-0 bottom-8 bg-[#F0EAD6] rounded-xl p-5 shadow-xl">
-              <p className="text-3xl font-bold text-[#00416A]">6+</p>
+            <div className="absolute right-2 sm:-right-4 lg:right-0 bottom-6 sm:bottom-8 bg-[#F0EAD6] rounded-xl p-4 sm:p-5 shadow-xl">
+              <p className="text-2xl sm:text-3xl font-bold text-[#00416A]">6+</p>
               <p className="text-xs text-[#00416A]/60 font-medium mt-1">Jahre Erfahrung</p>
             </div>
           </motion.div>
@@ -40,7 +40,7 @@ export default function AboutSection({ heroImage }) {
             <span className="text-xs font-bold text-white/30 tracking-[0.2em] uppercase">
               Über mich
             </span>
-            <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
+            <h2 className="mt-3 text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
               Warum ich das mache
             </h2>
             <div className="mt-8 space-y-5 text-white/70 text-base leading-relaxed">

@@ -19,31 +19,31 @@ const noFits = [
 
 export default function QualificationSection() {
   return (
-    <section className="py-20 lg:py-32 bg-[#F0EAD6]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="py-16 lg:py-32 bg-[#F0EAD6]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
           <span className="text-xs font-bold text-[#00416A]/40 tracking-[0.2em] uppercase">
             Passt es?
           </span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight">
+          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-black tracking-tight">
             Für wen ist das System?
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-5 sm:gap-8 max-w-5xl mx-auto">
           {/* Fit */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-2xl p-8 lg:p-10 shadow-sm"
+            className="bg-white rounded-2xl p-6 sm:p-8 lg:p-10 shadow-sm"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-full mb-6">
               <Check className="w-4 h-4 text-green-600" />
@@ -67,7 +67,7 @@ export default function QualificationSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="bg-white rounded-2xl p-8 lg:p-10 shadow-sm"
+            className="bg-white rounded-2xl p-6 sm:p-8 lg:p-10 shadow-sm"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 rounded-full mb-6">
               <X className="w-4 h-4 text-red-500" />

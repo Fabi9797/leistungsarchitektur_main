@@ -10,23 +10,23 @@ const pillars = [
 
 export default function FrameworkSection() {
   return (
-    <section id="methode" className="py-20 lg:py-32 bg-white relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="methode" className="py-16 lg:py-32 bg-white relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-20"
         >
           <span className="text-xs font-bold text-[#00416A]/40 tracking-[0.2em] uppercase">
             Die Methode
           </span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight">
+          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-black tracking-tight">
             Die Leistungsarchitektur
           </h2>
-          <p className="mt-6 text-lg text-black/50 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-4 sm:mt-6 text-base sm:text-lg text-black/50 max-w-2xl mx-auto leading-relaxed">
             Kein Raten. Kein Ausprobieren. Ein System, das auf Analyse und Steuerung basiert – nicht auf Motivation.
           </p>
         </motion.div>
@@ -59,17 +59,17 @@ export default function FrameworkSection() {
                 return (
                   <div
                     key={p.label}
-                    className={`p-8 text-center bg-[#F0EAD6]/50 ${
+                    className={`p-4 sm:p-8 text-center bg-[#F0EAD6]/50 ${
                       i < 2 ? "border-r border-black/10" : ""
                     }`}
                   >
-                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mx-auto shadow-sm">
-                      <Icon className="w-5 h-5 text-[#00416A]" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl flex items-center justify-center mx-auto shadow-sm">
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-[#00416A]" />
                     </div>
-                    <p className="mt-4 text-xs font-bold tracking-[0.15em] uppercase text-[#00416A]/60">
+                    <p className="mt-3 text-[9px] sm:text-xs font-bold tracking-[0.1em] uppercase text-[#00416A]/60">
                       Säule 0{i + 1}
                     </p>
-                    <p className="mt-1 font-semibold text-black">{p.label}</p>
+                    <p className="mt-1 text-xs sm:text-base font-semibold text-black">{p.label}</p>
                   </div>
                 );
               })}
@@ -91,7 +91,7 @@ export default function FrameworkSection() {
 
         {/* Explanation Text */}
         <div className="max-w-3xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

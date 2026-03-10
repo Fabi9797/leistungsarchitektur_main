@@ -24,40 +24,40 @@ const transformations = [
 
 export default function SocialProof({ images }) {
   return (
-    <section id="ergebnisse" className="py-20 lg:py-32 bg-[#F0EAD6]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="ergebnisse" className="py-16 lg:py-32 bg-[#F0EAD6]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
           <span className="text-xs font-bold text-[#00416A]/50 tracking-[0.2em] uppercase">
             Echte Ergebnisse
           </span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight">
+          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-black tracking-tight">
             Ergebnisse meiner Kunden
           </h2>
-          <p className="mt-4 text-lg text-black/50 max-w-2xl mx-auto">
+          <p className="mt-3 text-base sm:text-lg text-black/50 max-w-2xl mx-auto">
             Keine Stockfotos. Keine leeren Versprechen. Reale Menschen, die mit einem klaren System nachhaltig in Form gekommen sind.
           </p>
         </motion.div>
 
         {/* Transformations Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-8">
           {transformations.map((t, i) => (
             <motion.div
               key={t.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
               className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-500"
             >
               {/* Image */}
-              <div className="relative aspect-[3/4] overflow-hidden">
+              <div className="relative aspect-[4/5] sm:aspect-[3/4] overflow-hidden">
                 <img
                   src={images[i]}
                   alt={`Transformation ${t.name}`}

@@ -23,8 +23,8 @@ export default function HeroSection({ heroImage }) {
         backgroundSize: '60px 60px'
       }} />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-28 pb-16 lg:pt-32 lg:pb-24 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-24 pb-14 lg:pt-32 lg:pb-24 w-full">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -32,26 +32,26 @@ export default function HeroSection({ heroImage }) {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* Proof Line */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#F0EAD6] rounded-full mb-8">
-              <div className="w-2 h-2 bg-[#00416A] rounded-full" />
-              <span className="text-xs font-semibold text-[#00416A] tracking-wider uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-[#F0EAD6] rounded-full mb-6 sm:mb-8">
+              <div className="w-2 h-2 bg-[#00416A] rounded-full flex-shrink-0" />
+              <span className="text-[10px] sm:text-xs font-semibold text-[#00416A] tracking-wider uppercase">
                 6+ Jahre Erfahrung aus eigenem Fitnessstudio
               </span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-black leading-[1.08]">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-black leading-[1.1]">
               Dein Morgen beginnt Heute.{" "}
               <span className="text-[#00416A]">Fit in die Zukunft.</span>
             </h1>
 
             {/* Subheadline */}
-            <p className="mt-6 text-lg lg:text-xl text-black/60 leading-relaxed max-w-xl">
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl text-black/60 leading-relaxed">
               Wir bringen Training, Ernährung und Alltag in ein funktionierendes System – damit du in Form kommst und es langfristig bleibst.
             </p>
 
             {/* Bullet Points */}
-            <div className="mt-8 space-y-4">
+            <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
               {bullets.map((b, i) => (
                 <motion.div
                   key={i}
@@ -61,33 +61,33 @@ export default function HeroSection({ heroImage }) {
                   className="flex items-start gap-3"
                 >
                   <CheckCircle2 className="w-5 h-5 text-[#00416A] mt-0.5 flex-shrink-0" />
-                  <span className="text-base text-black/70">{b}</span>
+                  <span className="text-sm sm:text-base text-black/70">{b}</span>
                 </motion.div>
               ))}
             </div>
 
             {/* CTA */}
-            <div className="mt-10">
+            <div className="mt-8 sm:mt-10">
               <a
                 href="#analyse"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-[#00416A] text-white text-base font-semibold rounded-xl hover:bg-[#003356] transition-all duration-300 shadow-lg shadow-[#00416A]/20"
+                className="group w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-3 px-8 py-4 bg-[#00416A] text-white text-base font-semibold rounded-xl hover:bg-[#003356] transition-all duration-300 shadow-lg shadow-[#00416A]/20 min-h-[52px]"
               >
                 Analyse starten
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
-              <p className="mt-3 text-sm text-black/40">
+              <p className="mt-3 text-sm text-black/40 text-center sm:text-left">
                 2 Minuten · Finde heraus, ob mein Coaching für dich passt
               </p>
             </div>
 
             {/* System Indicators */}
-            <div className="mt-12 flex gap-6 lg:gap-8">
+            <div className="mt-8 sm:mt-12 grid grid-cols-3 gap-3 sm:flex sm:gap-8">
               {systemIndicators.map((s) => (
-                <div key={s.num} className="flex items-start gap-2">
+                <div key={s.num} className="flex flex-col sm:flex-row items-start gap-1 sm:gap-2">
                   <span className="text-xs font-bold text-[#00416A]/30">{s.num}</span>
                   <div>
-                    <span className="text-xs font-bold text-[#00416A] tracking-wider">{s.label}</span>
-                    <p className="text-xs text-black/40 mt-0.5">{s.desc}</p>
+                    <span className="text-[10px] sm:text-xs font-bold text-[#00416A] tracking-wider block">{s.label}</span>
+                    <p className="text-[10px] sm:text-xs text-black/40 mt-0.5 hidden sm:block">{s.desc}</p>
                   </div>
                 </div>
               ))}
