@@ -55,7 +55,7 @@ export default function FrameworkSection() {
         </div>
 
         {/* Pillar Cards */}
-        <div className="mb-12 sm:mb-20 -mx-5 sm:mx-0">
+        <div className="mb-12 sm:mb-20">
           <div className="flex gap-4 overflow-x-auto px-5 sm:px-0 pb-3 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: "none" }}>
             {pillars.map((p, i) => {
               const Icon = p.icon;
