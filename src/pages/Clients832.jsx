@@ -182,6 +182,7 @@ export default function Clients832() {
                   </div>
                 </div>
                 <ClientDocuments client={c} onUpdate={load} />
+              </div>
             ))}
           </div>
         )}
