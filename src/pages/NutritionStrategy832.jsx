@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { base44 } from "@/api/base44Client";
-import { Printer } from "lucide-react";
+import { Printer, Pencil, Check, X, Plus, Trash2 } from "lucide-react";
 
 const parse = (str, fallback = []) => { try { return JSON.parse(str); } catch { return fallback; } };
 const C = { indigo: "#00416A", egg: "#F0EAD6" };
@@ -15,25 +15,53 @@ const s = {
   divider: { height: "1px", background: "rgba(0,65,106,0.08)", margin: "16px 0", border: "none" },
 };
 
-function Page({ children, pageNum }) {
-  return (
-    <div className="page" style={{
-      width: "794px", minHeight: "1123px", background: "white", margin: "0 auto 32px",
-      padding: "56px 60px", boxSizing: "border-box", boxShadow: "0 4px 40px rgba(0,0,0,0.12)",
-      display: "flex", flexDirection: "column", fontFamily: "'Inter', sans-serif",
-      position: "relative",
-    }}>
-      {children}
-      <div style={{ marginTop: "auto", paddingTop: "24px", borderTop: "1px solid rgba(0,0,0,0.07)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <p style={s.small}>Leistungsarchitektur · Vertraulich</p>
-        <p style={s.small}>Seite {pageNum}</p>
-      </div>
-    </div>
-  );
+// Editable text field – looks normal in view mode, becomes an input in edit mode
+function E({ value, onChange, edit, style, multiline, placeholder = "..." }) {
+  if (!edit) return multiline
+    ? <p style={{ ...style, margin: 0 }}>{value}</p>
+    : <span style={style}>{value}</span>;
+
+  const base = {
+    background: "rgba(0,65,106,0.04)", border: "1px dashed rgba(0,65,106,0.25)",
+    borderRadius: "4px", outline: "none", fontFamily: "inherit", resize: "none",
+    width: "100%", padding: "2px 4px", boxSizing: "border-box",
+    ...style,
+  };
+
+  return multiline
+    ? <textarea value={value || ""} onChange={e => onChange(e.target.value)} placeholder={placeholder} rows={3} style={{ ...base, display: "block" }} />
+    : <input value={value || ""} onChange={e => onChange(e.target.value)} placeholder={placeholder} style={{ ...base, display: "inline-block" }} />;
 }
 
-function SectionLabel({ children }) {
-  return <p style={s.label}>{children}</p>;
+// Editable bullet list
+function EditableList({ items, onChange, edit }) {
+  return (
+    <div>
+      {items.map((item, i) => (
+        <div key={i} style={{ display: "flex", gap: "8px", marginBottom: "4px", alignItems: "flex-start" }}>
+          <span style={{ color: C.indigo, fontWeight: 700, fontSize: "10px", marginTop: "2px", flexShrink: 0 }}>·</span>
+          {edit ? (
+            <div style={{ display: "flex", gap: "4px", flex: 1, alignItems: "center" }}>
+              <input value={item} onChange={e => { const n = [...items]; n[i] = e.target.value; onChange(n); }}
+                style={{ flex: 1, background: "rgba(0,65,106,0.04)", border: "1px dashed rgba(0,65,106,0.25)", borderRadius: "4px", outline: "none", fontFamily: "inherit", fontSize: "11px", padding: "2px 4px", color: "rgba(0,0,0,0.6)" }} />
+              <button onClick={() => { const n = items.filter((_, j) => j !== i); onChange(n); }}
+                style={{ background: "none", border: "none", cursor: "pointer", color: "#cc3333", padding: "2px", flexShrink: 0 }}>
+                <X size={10} />
+              </button>
+            </div>
+          ) : (
+            <p style={{ ...s.body, margin: 0 }}>{item}</p>
+          )}
+        </div>
+      ))}
+      {edit && (
+        <button onClick={() => onChange([...items, ""])}
+          style={{ marginTop: "4px", background: "none", border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "4px", cursor: "pointer", color: C.indigo, fontSize: "10px", padding: "2px 8px", display: "flex", alignItems: "center", gap: "4px" }}>
+          <Plus size={9} /> Zeile hinzufügen
+        </button>
+      )}
+    </div>
+  );
 }
 
 function Tag({ children }) {
@@ -44,88 +72,187 @@ function Tag({ children }) {
   );
 }
 
-function BulletList({ items }) {
+function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
+  const upd = (key, val) => onChange({ ...variant, [key]: val });
+  const updList = (key, val) => onChange({ ...variant, [key]: val });
+
   return (
-    <div>
-      {items.map((item, i) => (
-        <div key={i} style={{ display: "flex", gap: "8px", marginBottom: "3px" }}>
-          <span style={{ color: C.indigo, fontWeight: 700, fontSize: "10px", marginTop: "1px" }}>·</span>
-          <p style={{ ...s.body, margin: 0 }}>{item}</p>
+    <div style={{ border: "1px solid rgba(0,65,106,0.1)", borderRadius: "10px", padding: "18px 20px", background: "white", position: "relative" }}>
+      {edit && (
+        <button onClick={onDelete} style={{ position: "absolute", top: "8px", right: "8px", background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "4px", cursor: "pointer", color: "#cc3333", padding: "2px 6px", fontSize: "10px", display: "flex", alignItems: "center", gap: "3px" }}>
+          <Trash2 size={9} /> Löschen
+        </button>
+      )}
+      {showIndex && <p style={{ ...s.small, marginBottom: "6px" }}>Option {index + 1}</p>}
+      <E value={variant.name} onChange={v => upd("name", v)} edit={edit} style={{ ...s.h3, marginBottom: "12px", display: "block" }} placeholder="Name" />
+      <hr style={s.divider} />
+
+      {(variant.basis || edit) && (
+        <div style={{ marginBottom: "10px" }}>
+          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Basis</p>
+          <EditableList items={variant.basis || []} onChange={v => updList("basis", v)} edit={edit} />
         </div>
-      ))}
+      )}
+      {(variant.beilagen || edit) && (
+        <div style={{ marginBottom: "10px" }}>
+          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilagen</p>
+          <EditableList items={variant.beilagen || []} onChange={v => updList("beilagen", v)} edit={edit} />
+        </div>
+      )}
+      {(variant.beilage1 || edit) && (
+        <div style={{ marginBottom: "10px" }}>
+          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilage 1</p>
+          <EditableList items={variant.beilage1 || []} onChange={v => updList("beilage1", v)} edit={edit} />
+        </div>
+      )}
+      {(variant.beilage2 || edit) && (
+        <div style={{ marginBottom: "10px" }}>
+          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilage 2</p>
+          <EditableList items={variant.beilage2 || []} onChange={v => updList("beilage2", v)} edit={edit} />
+        </div>
+      )}
+
+      <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid rgba(0,65,106,0.07)" }}>
+        {edit ? (
+          <div style={{ display: "flex", gap: "8px" }}>
+            <input value={variant.kcal || ""} onChange={e => upd("kcal", e.target.value)} placeholder="kcal" style={{ width: "80px", background: C.egg, border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "4px", outline: "none", fontFamily: "inherit", fontSize: "10px", fontWeight: 600, color: C.indigo, padding: "2px 6px" }} />
+            <input value={variant.protein || ""} onChange={e => upd("protein", e.target.value)} placeholder="Protein" style={{ width: "80px", background: C.egg, border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "4px", outline: "none", fontFamily: "inherit", fontSize: "10px", fontWeight: 600, color: C.indigo, padding: "2px 6px" }} />
+          </div>
+        ) : (
+          <>
+            <Tag>{variant.kcal}</Tag>
+            <Tag>{variant.protein}</Tag>
+          </>
+        )}
+      </div>
     </div>
   );
 }
 
-function MealCard({ variant, index, showIndex }) {
+function MealSection({ title, items, edit, onChange }) {
+  const newCard = { name: "Neue Option", basis: [], kcal: "000 kcal", protein: "00g P" };
   return (
-    <div style={{ border: "1px solid rgba(0,65,106,0.1)", borderRadius: "10px", padding: "18px 20px", background: "white" }}>
-      {showIndex && <p style={{ ...s.small, marginBottom: "6px" }}>Option {index + 1}</p>}
-      <p style={{ ...s.h3, marginBottom: "12px" }}>{variant.name}</p>
-      <hr style={s.divider} />
-      {variant.basis && (
-        <div style={{ marginBottom: "10px" }}>
-          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Basis</p>
-          <BulletList items={variant.basis} />
-        </div>
+    <>
+      <h2 style={{ ...s.h2, marginBottom: "20px" }}>{title}</h2>
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(Math.max(items.length, 1), 3)}, 1fr)`, gap: "16px" }}>
+        {items.map((v, i) => (
+          <MealCard key={i} variant={v} index={i} showIndex={items.length > 1} edit={edit}
+            onChange={updated => { const n = [...items]; n[i] = updated; onChange(n); }}
+            onDelete={() => onChange(items.filter((_, j) => j !== i))} />
+        ))}
+      </div>
+      {edit && (
+        <button onClick={() => onChange([...items, { ...newCard }])}
+          style={{ marginTop: "12px", background: "none", border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "8px", cursor: "pointer", color: C.indigo, fontSize: "11px", fontWeight: 600, padding: "8px 16px", display: "flex", alignItems: "center", gap: "6px" }}>
+          <Plus size={11} /> Karte hinzufügen
+        </button>
       )}
-      {variant.beilagen && (
-        <div style={{ marginBottom: "10px" }}>
-          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilagen</p>
-          <BulletList items={variant.beilagen} />
-        </div>
-      )}
-      {variant.beilage1 && (
-        <div style={{ marginBottom: "10px" }}>
-          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilage 1</p>
-          <BulletList items={variant.beilage1} />
-        </div>
-      )}
-      {variant.beilage2 && (
-        <div style={{ marginBottom: "10px" }}>
-          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilage 2</p>
-          <BulletList items={variant.beilage2} />
-        </div>
-      )}
-      <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid rgba(0,65,106,0.07)" }}>
-        <Tag>{variant.kcal}</Tag>
-        <Tag>{variant.protein}</Tag>
+    </>
+  );
+}
+
+function Page({ children, pageNum }) {
+  return (
+    <div className="page" style={{
+      width: "794px", minHeight: "1123px", background: "white", margin: "0 auto 32px",
+      padding: "56px 60px", boxSizing: "border-box", boxShadow: "0 4px 40px rgba(0,0,0,0.12)",
+      display: "flex", flexDirection: "column", fontFamily: "'Inter', sans-serif",
+    }}>
+      {children}
+      <div style={{ marginTop: "auto", paddingTop: "24px", borderTop: "1px solid rgba(0,0,0,0.07)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <p style={s.small}>Leistungsarchitektur · Vertraulich</p>
+        <p style={s.small}>Seite {pageNum}</p>
       </div>
     </div>
   );
 }
 
 export default function NutritionStrategy832() {
-  const [data, setData] = useState(null);
+  const [origData, setOrigData] = useState(null);
+  const [draft, setDraft] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const entityId = useRef(null);
 
   useEffect(() => {
     const id = new URLSearchParams(window.location.search).get("id");
+    entityId.current = id;
     if (id) {
       base44.entities.NutritionStrategy.list().then(all => {
-        setData(all.find(c => c.id === id) || null);
+        const found = all.find(c => c.id === id);
+        if (found) {
+          setOrigData(found);
+          setDraft(toDraft(found));
+        }
       });
     }
   }, []);
 
-  if (!data) return (
+  function toDraft(d) {
+    return {
+      client_name: d.client_name || "",
+      version: d.version || "1",
+      ist_summary: d.ist_summary || "",
+      soll_summary: d.soll_summary || "",
+      kalorien_ziel: d.kalorien_ziel || "",
+      kalorien_defizit: d.kalorien_defizit || "",
+      protein_ziel: d.protein_ziel || "",
+      protein_info: d.protein_info || "",
+      warum: parse(d.warum_json, []),
+      mahlzeiten: parse(d.mahlzeiten_json, []),
+      morgens: parse(d.morgens_json, []),
+      mittags: parse(d.mittags_json, []),
+      snack: parse(d.snack_json, []),
+      abend: parse(d.abend_json, []),
+    };
+  }
+
+  async function handleSave() {
+    setSaving(true);
+    await base44.entities.NutritionStrategy.update(entityId.current, {
+      client_name: draft.client_name,
+      version: draft.version,
+      ist_summary: draft.ist_summary,
+      soll_summary: draft.soll_summary,
+      kalorien_ziel: Number(draft.kalorien_ziel),
+      kalorien_defizit: draft.kalorien_defizit,
+      protein_ziel: Number(draft.protein_ziel),
+      protein_info: draft.protein_info,
+      warum_json: JSON.stringify(draft.warum),
+      mahlzeiten_json: JSON.stringify(draft.mahlzeiten),
+      morgens_json: JSON.stringify(draft.morgens),
+      mittags_json: JSON.stringify(draft.mittags),
+      snack_json: JSON.stringify(draft.snack),
+      abend_json: JSON.stringify(draft.abend),
+    });
+    setSaving(false);
+    setEditMode(false);
+  }
+
+  function handleDiscard() {
+    setDraft(toDraft(origData));
+    setEditMode(false);
+  }
+
+  const upd = (key, val) => setDraft(d => ({ ...d, [key]: val }));
+  const updWhy = (i, key, val) => setDraft(d => { const w = [...d.warum]; w[i] = { ...w[i], [key]: val }; return { ...d, warum: w }; });
+  const updMeal = (i, key, val) => setDraft(d => { const m = [...d.mahlzeiten]; m[i] = { ...m[i], [key]: val }; return { ...d, mahlzeiten: m }; });
+
+  const e = editMode;
+  const date = new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" });
+
+  if (!draft) return (
     <div style={{ minHeight: "100vh", background: C.egg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Inter, sans-serif" }}>
       <p style={{ color: "rgba(0,0,0,0.3)", fontSize: "14px" }}>Laden…</p>
     </div>
   );
-
-  const warum = parse(data.warum_json, []);
-  const mahlzeiten = parse(data.mahlzeiten_json, []);
-  const morgens = parse(data.morgens_json, []);
-  const mittags = parse(data.mittags_json, []);
-  const snack = parse(data.snack_json, []);
-  const abend = parse(data.abend_json, []);
-  const date = new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" });
 
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+        input, textarea { font-family: 'Inter', sans-serif; }
         @media print {
           body { background: white !important; }
           .no-print { display: none !important; }
@@ -135,139 +262,180 @@ export default function NutritionStrategy832() {
         }
       `}</style>
 
-      {/* Print bar */}
-      <div className="no-print" style={{ background: C.indigo, color: "white", padding: "12px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: 0, zIndex: 50 }}>
-        <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", opacity: 0.5 }}>
-          Ernährungsstrategie · {data.client_name}
+      {/* Toolbar */}
+      <div className="no-print" style={{ background: C.indigo, color: "white", padding: "10px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: 0, zIndex: 50, gap: "12px" }}>
+        <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", opacity: 0.5, flexShrink: 0 }}>
+          Ernährungsstrategie · {draft.client_name}
         </span>
-        <button onClick={() => window.print()} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 16px", background: "white", color: C.indigo, border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: 700, cursor: "pointer" }}>
-          <Printer size={13} /> Als PDF speichern
-        </button>
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          {!editMode ? (
+            <>
+              <button onClick={() => setEditMode(true)} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 14px", background: "rgba(255,255,255,0.15)", color: "white", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "8px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
+                <Pencil size={12} /> Bearbeiten
+              </button>
+              <button onClick={() => window.print()} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 14px", background: "white", color: C.indigo, border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: 700, cursor: "pointer" }}>
+                <Printer size={12} /> Als PDF
+              </button>
+            </>
+          ) : (
+            <>
+              <span style={{ fontSize: "10px", opacity: 0.6, fontStyle: "italic" }}>Bearbeitungsmodus aktiv</span>
+              <button onClick={handleDiscard} style={{ display: "flex", alignItems: "center", gap: "5px", padding: "6px 14px", background: "rgba(255,255,255,0.1)", color: "white", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "8px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
+                <X size={11} /> Verwerfen
+              </button>
+              <button onClick={handleSave} disabled={saving} style={{ display: "flex", alignItems: "center", gap: "5px", padding: "6px 14px", background: "#22c55e", color: "white", border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: 700, cursor: "pointer", opacity: saving ? 0.7 : 1 }}>
+                <Check size={11} /> {saving ? "Speichern…" : "Speichern"}
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
       <div style={{ background: "#e8e2d0", padding: "40px 20px" }}>
 
-        {/* ── SEITE 1: Cover + Warum ── */}
+        {/* SEITE 1: Cover + Warum */}
         <Page pageNum={1}>
-          {/* Header */}
           <div style={{ paddingBottom: "28px", marginBottom: "28px", borderBottom: `2px solid ${C.indigo}` }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-              <div>
-                <SectionLabel>Leistungsarchitektur · Ernährungsstrategie</SectionLabel>
-                <h1 style={s.h1}>{data.client_name}</h1>
-                <p style={{ ...s.body, marginTop: "6px" }}>Version {data.version || "1"}</p>
+              <div style={{ flex: 1 }}>
+                <p style={s.label}>Leistungsarchitektur · Ernährungsstrategie</p>
+                <E value={draft.client_name} onChange={v => upd("client_name", v)} edit={e} style={s.h1} placeholder="Kundenname" />
+                <div style={{ marginTop: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span style={{ ...s.body }}>Version </span>
+                  <E value={draft.version} onChange={v => upd("version", v)} edit={e} style={{ ...s.body, width: e ? "40px" : "auto" }} placeholder="1" />
+                </div>
               </div>
-              <div style={{ textAlign: "right" }}>
+              <div style={{ textAlign: "right", flexShrink: 0 }}>
                 <p style={s.small}>Erstellt am</p>
                 <p style={{ fontSize: "11px", fontWeight: 600, color: "rgba(0,0,0,0.5)", marginTop: "2px" }}>{date}</p>
               </div>
             </div>
 
-            {/* IST / SOLL */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginTop: "24px" }}>
-              <div style={{ background: "rgba(240,234,214,0.6)", borderRadius: "8px", padding: "14px 16px" }}>
+              <div style={{ background: "rgba(240,234,214,0.8)", borderRadius: "8px", padding: "14px 16px" }}>
                 <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.15em", textTransform: "uppercase" }}>IST-Zustand</p>
-                <p style={{ fontSize: "12px", fontWeight: 600, color: "rgba(0,0,0,0.7)" }}>{data.ist_summary}</p>
+                <E value={draft.ist_summary} onChange={v => upd("ist_summary", v)} edit={e} multiline style={{ fontSize: "12px", fontWeight: 600, color: "rgba(0,0,0,0.7)" }} placeholder="IST-Zustand beschreiben" />
               </div>
               <div style={{ background: C.indigo, borderRadius: "8px", padding: "14px 16px" }}>
                 <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>Zielzustand</p>
-                <p style={{ fontSize: "12px", fontWeight: 600, color: "white" }}>{data.soll_summary}</p>
+                <E value={draft.soll_summary} onChange={v => upd("soll_summary", v)} edit={e} multiline style={{ fontSize: "12px", fontWeight: 600, color: e ? "rgba(0,0,0,0.7)" : "white" }} placeholder="Zielzustand beschreiben" />
               </div>
             </div>
           </div>
 
-          {/* Warum */}
-          <SectionLabel>Begründung</SectionLabel>
+          <p style={s.label}>Begründung</p>
           <h2 style={{ ...s.h2, marginBottom: "20px" }}>Warum diese Strategie?</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            {warum.map((item, i) => (
+            {draft.warum.map((item, i) => (
               <div key={i} style={{ display: "grid", gridTemplateColumns: "40px 1fr", gap: "16px", alignItems: "start" }}>
                 <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: C.egg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   <span style={{ fontSize: "12px", fontWeight: 800, color: C.indigo }}>{i + 1}</span>
                 </div>
-                <div>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: C.indigo, marginBottom: "3px" }}>
-                    {item.title}
-                    {item.subtitle && <span style={{ fontWeight: 500, opacity: 0.6 }}> – „{item.subtitle}"</span>}
-                  </p>
-                  <p style={s.body}>{item.text}</p>
+                <div style={{ position: "relative" }}>
+                  {e && (
+                    <button onClick={() => setDraft(d => ({ ...d, warum: d.warum.filter((_, j) => j !== i) }))}
+                      style={{ position: "absolute", top: 0, right: 0, background: "none", border: "none", cursor: "pointer", color: "#cc3333", padding: 0 }}>
+                      <X size={11} />
+                    </button>
+                  )}
+                  <div style={{ display: "flex", gap: "4px", marginBottom: "3px", flexWrap: "wrap" }}>
+                    <E value={item.title} onChange={v => updWhy(i, "title", v)} edit={e} style={{ fontSize: "13px", fontWeight: 700, color: C.indigo }} placeholder="Titel" />
+                    {(item.subtitle || e) && (
+                      <>
+                        <span style={{ fontSize: "13px", fontWeight: 500, color: C.indigo, opacity: 0.6 }}> – „</span>
+                        <E value={item.subtitle} onChange={v => updWhy(i, "subtitle", v)} edit={e} style={{ fontSize: "13px", fontWeight: 500, color: C.indigo, opacity: 0.6 }} placeholder="Untertitel" />
+                        <span style={{ fontSize: "13px", fontWeight: 500, color: C.indigo, opacity: 0.6 }}>"</span>
+                      </>
+                    )}
+                  </div>
+                  <E value={item.text} onChange={v => updWhy(i, "text", v)} edit={e} multiline style={s.body} placeholder="Beschreibung" />
                 </div>
               </div>
             ))}
+            {e && (
+              <button onClick={() => setDraft(d => ({ ...d, warum: [...d.warum, { title: "", subtitle: "", text: "" }] }))}
+                style={{ alignSelf: "flex-start", background: "none", border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "8px", cursor: "pointer", color: C.indigo, fontSize: "11px", fontWeight: 600, padding: "8px 16px", display: "flex", alignItems: "center", gap: "6px" }}>
+                <Plus size={11} /> Punkt hinzufügen
+              </button>
+            )}
           </div>
         </Page>
 
-        {/* ── SEITE 2: Wie / Tagesstruktur ── */}
+        {/* SEITE 2: Tagesstruktur */}
         <Page pageNum={2}>
-          <SectionLabel>Umsetzung</SectionLabel>
+          <p style={s.label}>Umsetzung</p>
           <h2 style={{ ...s.h2, marginBottom: "24px" }}>Tagesstruktur & Ziele</h2>
 
-          {/* Ziele */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "28px" }}>
             <div style={{ background: C.egg, borderRadius: "10px", padding: "20px 24px" }}>
               <p style={s.label}>Kalorienziel</p>
-              <p style={{ fontSize: "36px", fontWeight: 800, color: C.indigo, lineHeight: 1, margin: "0 0 4px" }}>{data.kalorien_ziel}</p>
-              <p style={s.body}>kcal · {data.kalorien_defizit}</p>
+              <E value={String(draft.kalorien_ziel)} onChange={v => upd("kalorien_ziel", v)} edit={e} style={{ fontSize: "36px", fontWeight: 800, color: C.indigo, lineHeight: 1, display: "block", marginBottom: "4px" }} placeholder="2000" />
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <span style={s.body}>kcal · </span>
+                <E value={draft.kalorien_defizit} onChange={v => upd("kalorien_defizit", v)} edit={e} style={s.body} placeholder="z.B. 500 kcal Defizit" />
+              </div>
             </div>
             <div style={{ background: C.egg, borderRadius: "10px", padding: "20px 24px" }}>
               <p style={s.label}>Proteinziel</p>
-              <p style={{ fontSize: "36px", fontWeight: 800, color: C.indigo, lineHeight: 1, margin: "0 0 4px" }}>{data.protein_ziel}g</p>
-              <p style={s.body}>Eiweiß täglich · {data.protein_info}</p>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
+                <E value={String(draft.protein_ziel)} onChange={v => upd("protein_ziel", v)} edit={e} style={{ fontSize: "36px", fontWeight: 800, color: C.indigo, lineHeight: 1, marginBottom: "4px", display: "block" }} placeholder="180" />
+                {!e && <span style={{ fontSize: "20px", fontWeight: 800, color: C.indigo }}>g</span>}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <span style={s.body}>Eiweiß täglich · </span>
+                <E value={draft.protein_info} onChange={v => upd("protein_info", v)} edit={e} style={s.body} placeholder="Info" />
+              </div>
             </div>
           </div>
 
           <hr style={s.divider} />
 
-          {/* Mahlzeiten-Übersicht */}
           <p style={{ ...s.label, marginBottom: "14px" }}>Mahlzeitenstruktur</p>
           <div style={{ border: "1px solid rgba(0,65,106,0.1)", borderRadius: "10px", overflow: "hidden" }}>
-            {mahlzeiten.map((m, i) => (
-              <div key={i} style={{
-                display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
-                padding: "12px 20px",
-                background: i % 2 === 0 ? "white" : "rgba(240,234,214,0.35)",
-                borderBottom: i < mahlzeiten.length - 1 ? "1px solid rgba(0,65,106,0.06)" : "none"
-              }}>
-                <p style={{ fontSize: "12px", fontWeight: 700, color: C.indigo }}>{m.name}</p>
-                <p style={{ ...s.body, fontSize: "11px" }}>{m.kcal} · {m.protein}</p>
-                <p style={{ ...s.small, textAlign: "right", fontSize: "10px" }}>{m.zeit}</p>
+            {draft.mahlzeiten.map((m, i) => (
+              <div key={i} style={{ display: "grid", gridTemplateColumns: e ? "1fr 1fr 1fr 30px" : "1fr 1fr 1fr", padding: "12px 20px", background: i % 2 === 0 ? "white" : "rgba(240,234,214,0.5)", borderBottom: i < draft.mahlzeiten.length - 1 ? "1px solid rgba(0,65,106,0.06)" : "none", alignItems: "center" }}>
+                <E value={m.name} onChange={v => updMeal(i, "name", v)} edit={e} style={{ fontSize: "12px", fontWeight: 700, color: C.indigo }} placeholder="Name" />
+                <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+                  <E value={m.kcal} onChange={v => updMeal(i, "kcal", v)} edit={e} style={{ ...s.body, fontSize: "11px" }} placeholder="kcal" />
+                  {!e && <span style={{ ...s.body, fontSize: "11px" }}> · </span>}
+                  <E value={m.protein} onChange={v => updMeal(i, "protein", v)} edit={e} style={{ ...s.body, fontSize: "11px" }} placeholder="Protein" />
+                </div>
+                <E value={m.zeit} onChange={v => updMeal(i, "zeit", v)} edit={e} style={{ ...s.small, textAlign: e ? "left" : "right", fontSize: "10px" }} placeholder="Zeit" />
+                {e && (
+                  <button onClick={() => setDraft(d => ({ ...d, mahlzeiten: d.mahlzeiten.filter((_, j) => j !== i) }))}
+                    style={{ background: "none", border: "none", cursor: "pointer", color: "#cc3333", padding: "2px" }}>
+                    <X size={11} />
+                  </button>
+                )}
               </div>
             ))}
           </div>
+          {e && (
+            <button onClick={() => setDraft(d => ({ ...d, mahlzeiten: [...d.mahlzeiten, { name: "", kcal: "", protein: "", zeit: "" }] }))}
+              style={{ marginTop: "8px", background: "none", border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "8px", cursor: "pointer", color: C.indigo, fontSize: "11px", fontWeight: 600, padding: "6px 14px", display: "flex", alignItems: "center", gap: "6px" }}>
+              <Plus size={11} /> Zeile hinzufügen
+            </button>
+          )}
         </Page>
 
-        {/* ── SEITE 3: Morgens + Snack ── */}
+        {/* SEITE 3: Morgens + Snack */}
         <Page pageNum={3}>
-          <SectionLabel>Mahlzeiten</SectionLabel>
-          <h2 style={{ ...s.h2, marginBottom: "20px" }}>Morgens</h2>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(morgens.length, 3)}, 1fr)`, gap: "16px", marginBottom: "32px" }}>
-            {morgens.map((v, i) => <MealCard key={i} variant={v} index={i} showIndex={morgens.length > 1} />)}
-          </div>
-
-          <hr style={s.divider} />
-
-          <h2 style={{ ...s.h2, marginBottom: "20px" }}>Snack</h2>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(snack.length, 3)}, 1fr)`, gap: "16px" }}>
-            {snack.map((v, i) => <MealCard key={i} variant={v} index={i} showIndex={snack.length > 1} />)}
-          </div>
+          <p style={s.label}>Mahlzeiten</p>
+          <MealSection title="Morgens" items={draft.morgens} edit={e} onChange={v => upd("morgens", v)} />
+          <hr style={{ ...s.divider, margin: "28px 0" }} />
+          <MealSection title="Snack" items={draft.snack} edit={e} onChange={v => upd("snack", v)} />
         </Page>
 
-        {/* ── SEITE 4: Mittags ── */}
+        {/* SEITE 4: Mittags */}
         <Page pageNum={4}>
-          <SectionLabel>Mahlzeiten</SectionLabel>
-          <h2 style={{ ...s.h2, marginBottom: "20px" }}>Mittags</h2>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(mittags.length, 3)}, 1fr)`, gap: "16px" }}>
-            {mittags.map((v, i) => <MealCard key={i} variant={v} index={i} showIndex={mittags.length > 1} />)}
-          </div>
+          <p style={s.label}>Mahlzeiten</p>
+          <MealSection title="Mittags" items={draft.mittags} edit={e} onChange={v => upd("mittags", v)} />
         </Page>
 
-        {/* ── SEITE 5: Abendessen ── */}
+        {/* SEITE 5: Abendessen */}
         <Page pageNum={5}>
-          <SectionLabel>Mahlzeiten</SectionLabel>
-          <h2 style={{ ...s.h2, marginBottom: "20px" }}>Abendessen</h2>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(abend.length, 3)}, 1fr)`, gap: "16px" }}>
-            {abend.map((v, i) => <MealCard key={i} variant={v} index={i} showIndex={abend.length > 1} />)}
-          </div>
+          <p style={s.label}>Mahlzeiten</p>
+          <MealSection title="Abendessen" items={draft.abend} edit={e} onChange={v => upd("abend", v)} />
         </Page>
 
       </div>
