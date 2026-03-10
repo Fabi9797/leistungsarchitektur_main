@@ -39,7 +39,7 @@ export default function FrameworkSection() {
           className="text-center mb-12 sm:mb-20"
         >
           <span className="text-xs font-bold text-[#00416A]/40 tracking-[0.2em] uppercase">
-            Die Methode
+          Methodik
           </span>
           <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-black tracking-tight">
             Die Leistungsarchitektur
