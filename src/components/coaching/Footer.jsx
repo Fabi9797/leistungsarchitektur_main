@@ -3,8 +3,8 @@ import React from "react";
 export default function Footer() {
   return (
     <footer className="bg-black py-16">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
