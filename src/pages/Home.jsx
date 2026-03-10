@@ -11,11 +11,11 @@ import FAQSection from "../components/coaching/FAQSection";
 import FinalCTA from "../components/coaching/FinalCTA";
 import Footer from "../components/coaching/Footer";
 
-const HERO_IMAGE = "/__generating__/img_406ea1d77629.png";
+const HERO_IMAGE = "https://media.base44.com/images/public/69b064c89953b727c5202e21/a7caf5338_generated_bc51b5fd.png";
 const TRANSFORMATION_IMAGES = [
-  "/__generating__/img_3a769332b338.png",
-  "/__generating__/img_77f348096ea5.png",
-  "/__generating__/img_c60b7be73b57.png",
+  "https://media.base44.com/images/public/69b064c89953b727c5202e21/f50e0a380_generated_700bd329.png",
+  "https://media.base44.com/images/public/69b064c89953b727c5202e21/8efbcabb0_generated_4ee9203c.png",
+  "https://media.base44.com/images/public/69b064c89953b727c5202e21/4624958ce_generated_fd1cdad5.png",
 ];
 
 export default function Home() {
