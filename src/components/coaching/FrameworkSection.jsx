@@ -26,62 +26,9 @@ export default function FrameworkSection() {
         </motion.div>
 
         {/* Architecture Visual */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto mb-20"
-        >
-          <div className="relative">
-            {/* Roof / Dach */}
-            <div className="relative bg-[#00416A] text-white rounded-t-2xl p-8 text-center">
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2">
-                <div className="w-12 h-12 bg-[#00416A] rounded-full flex items-center justify-center shadow-lg">
-                  <TrendingUp className="w-5 h-5 text-white" />
-                </div>
-              </div>
-              <p className="text-xs font-bold tracking-[0.2em] uppercase text-white/50 mt-4">Dach</p>
-              <h3 className="text-xl lg:text-2xl font-bold mt-2">Dein neues Ich</h3>
-              <p className="text-white/60 text-sm mt-2">Dauerhafte Form. Nachhaltige Gewohnheiten. Kontrolle.</p>
-            </div>
-
-            {/* Pillars / Säulen */}
-            <div className="grid grid-cols-3 gap-0 border-l border-r border-black/10">
-              {pillars.map((p, i) => {
-                const Icon = p.icon;
-                return (
-                  <div
-                    key={p.label}
-                    className={`p-4 sm:p-8 text-center bg-[#F0EAD6]/50 ${
-                      i < 2 ? "border-r border-black/10" : ""
-                    }`}
-                  >
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl flex items-center justify-center mx-auto shadow-sm">
-                      <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-[#00416A]" />
-                    </div>
-                    <p className="mt-3 text-[9px] sm:text-xs font-bold tracking-[0.1em] uppercase text-[#00416A]/60">
-                      Säule 0{i + 1}
-                    </p>
-                    <p className="mt-1 text-xs sm:text-base font-semibold text-black">{p.label}</p>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Foundation / Fundament */}
-            <div className="bg-black text-white rounded-b-2xl p-8 text-center">
-              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto">
-                <Target className="w-5 h-5 text-[#F0EAD6]" />
-              </div>
-              <p className="text-xs font-bold tracking-[0.2em] uppercase text-white/40 mt-4">Fundament</p>
-              <h3 className="text-xl lg:text-2xl font-bold mt-2">Hebelanalyse & Steuerung</h3>
-              <p className="text-white/50 text-sm mt-2">
-                Die Basis, auf der alles aufbaut. Wir identifizieren, was bei dir wirklich zählt.
-              </p>
-            </div>
-          </div>
-        </motion.div>
+        <div className="mb-12 sm:mb-20 px-4 sm:px-0">
+          <TempleGraphic />
+        </div>
 
         {/* Explanation Text */}
         <div className="max-w-3xl mx-auto">
