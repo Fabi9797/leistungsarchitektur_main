@@ -167,21 +167,21 @@ export default function Clients832() {
                       {[c.alter && `${c.alter} J.`, c.gewicht && `${c.gewicht} kg`, c.coaching_ziel].filter(Boolean).join(" · ")}
                     </p>
                   </div>
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  <a
-                    href={createPageUrl(`FactSheet832?id=${c.id}`)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 px-4 py-2 bg-[#00416A] text-white rounded-lg text-sm font-medium hover:bg-[#003356] transition"
-                  >
-                    <Eye className="w-4 h-4" /> Fact Sheet
-                  </a>
-                  <button onClick={() => handleDelete(c.id)} className="p-2 text-black/20 hover:text-red-500 transition">
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <a
+                      href={createPageUrl(`FactSheet832?id=${c.id}`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 px-4 py-2 bg-[#00416A] text-white rounded-lg text-sm font-medium hover:bg-[#003356] transition"
+                    >
+                      <Eye className="w-4 h-4" /> Fact Sheet
+                    </a>
+                    <button onClick={() => handleDelete(c.id)} className="p-2 text-black/20 hover:text-red-500 transition">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <ClientDocuments client={c} onUpdate={load} />
+                <ClientDocuments client={c} onUpdate={load} />
             ))}
           </div>
         )}
