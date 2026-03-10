@@ -10,7 +10,7 @@ const steps = [
   {
     num: "02",
     title: "System-Design",
-    desc: "Erstellung deines individuellen Frameworks. Training, Ernährung und Gewohnheiten werden so aufeinander abgestimmt, dass sie sich nahtlos in deinen Alltag integrieren – ohne Extreme, ohne Überforderung.",
+    desc: "Auf Basis der Analyse entsteht dein persönliches Framework – Schritt für Schritt aufgebaut, nicht alles auf einmal. Training, Ernährung und Gewohnheiten werden so gestaltet, dass sie realistisch in deinen Alltag passen. Gut genug, um zu funktionieren. Nicht perfekt, um zu überfordern.",
   },
   {
     num: "03",
