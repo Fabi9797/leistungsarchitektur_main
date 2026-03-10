@@ -1,12 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Target, Dumbbell, Apple, CalendarCheck, TrendingUp } from "lucide-react";
-
-const pillars = [
-  { icon: Dumbbell, label: "Training" },
-  { icon: Apple, label: "Ernährung" },
-  { icon: CalendarCheck, label: "Gewohnheiten" },
-];
+import TempleGraphic from "./TempleGraphic";
 
 export default function FrameworkSection() {
   return (
