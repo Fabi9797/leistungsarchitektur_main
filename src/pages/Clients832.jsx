@@ -160,12 +160,13 @@ export default function Clients832() {
           <div className="space-y-3">
             {clients.map(c => (
               <div key={c.id} className="bg-white rounded-2xl px-5 py-4 shadow-sm">
-                <div>
-                  <p className="font-bold text-[#00416A] text-base">{c.name}</p>
-                  <p className="text-xs text-black/40 mt-0.5">
-                    {[c.alter && `${c.alter} J.`, c.gewicht && `${c.gewicht} kg`, c.coaching_ziel].filter(Boolean).join(" · ")}
-                  </p>
-                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-bold text-[#00416A] text-base">{c.name}</p>
+                    <p className="text-xs text-black/40 mt-0.5">
+                      {[c.alter && `${c.alter} J.`, c.gewicht && `${c.gewicht} kg`, c.coaching_ziel].filter(Boolean).join(" · ")}
+                    </p>
+                  </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <a
                     href={createPageUrl(`FactSheet832?id=${c.id}`)}
