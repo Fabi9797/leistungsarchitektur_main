@@ -13,7 +13,7 @@ const faqs = [
   },
   {
     q: "Muss ich komplett auf alles verzichten?",
-    a: "Nein. Es geht nicht um Verzicht, sondern um Steuerung. Wir finden die Stellschrauben, an denen kleine Veränderungen große Wirkung haben. Extreme Diäten gehören nicht zu meiner Methode.",
+    a: "Nein. Es geht nicht um Perfektion, sondern darum, was zuverlässig funktioniert. Wir finden die Stellschrauben, an denen kleine, machbare Veränderungen die größte Wirkung haben. Extreme gehören nicht dazu.",
   },
   {
     q: "Was ist die Analyse am Anfang genau?",
