@@ -154,6 +154,7 @@ function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
           </>
         )}
       </div>
+      </div>{/* end padding div */}
     </div>
   );
 }
