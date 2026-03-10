@@ -91,18 +91,21 @@ function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
 
   return (
     <div style={{ border: "1px solid rgba(0,65,106,0.1)", borderRadius: "10px", overflow: "hidden", background: "white", position: "relative" }}>
-      {/* Bild */}
       <div style={{ width: "100%", height: "140px", background: C.egg, position: "relative", overflow: "hidden" }}>
-        {variant.image_url
-          ? <img src={variant.image_url} alt={variant.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <p style={{ ...s.small, opacity: 0.5 }}>Kein Bild</p>
-            </div>
-        }
+        {variant.image_url ? (
+          <img src={variant.image_url} alt={variant.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        ) : (
+          <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <p style={{ ...s.small, opacity: 0.5 }}>Kein Bild</p>
+          </div>
+        )}
         {edit && (
-          <button onClick={generateImage} disabled={genLoading}
-            style={{ position: "absolute", bottom: "8px", right: "8px", background: C.indigo, color: "white", border: "none", borderRadius: "6px", padding: "4px 10px", fontSize: "10px", fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: "4px", opacity: genLoading ? 0.7 : 1 }}>
-            {genLoading ? <><Loader2 size={9} style={{ animation: "spin 1s linear infinite" }} /> Generieren…</> : <><Sparkles size={9} /> KI-Bild</>}
+          <button onClick={generateImage} disabled={genLoading} style={{ position: "absolute", bottom: "8px", right: "8px", background: C.indigo, color: "white", border: "none", borderRadius: "6px", padding: "4px 10px", fontSize: "10px", fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: "4px", opacity: genLoading ? 0.7 : 1 }}>
+            {genLoading ? (
+              <><Loader2 size={9} style={{ animation: "spin 1s linear infinite" }} /> Generieren…</>
+            ) : (
+              <><Sparkles size={9} /> KI-Bild</>
+            )}
           </button>
         )}
       </div>
@@ -112,49 +115,47 @@ function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
         </button>
       )}
       <div style={{ padding: "14px 16px" }}>
-      {showIndex && <p style={{ ...s.small, marginBottom: "6px" }}>Option {index + 1}</p>}
-      <E value={variant.name} onChange={v => upd("name", v)} edit={edit} style={{ ...s.h3, marginBottom: "12px", display: "block" }} placeholder="Name" />
-      <hr style={s.divider} />
-
-      {(variant.basis || edit) && (
-        <div style={{ marginBottom: "10px" }}>
-          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Basis</p>
-          <EditableList items={variant.basis || []} onChange={v => updList("basis", v)} edit={edit} />
-        </div>
-      )}
-      {(variant.beilagen || edit) && (
-        <div style={{ marginBottom: "10px" }}>
-          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilagen</p>
-          <EditableList items={variant.beilagen || []} onChange={v => updList("beilagen", v)} edit={edit} />
-        </div>
-      )}
-      {(variant.beilage1 || edit) && (
-        <div style={{ marginBottom: "10px" }}>
-          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilage 1</p>
-          <EditableList items={variant.beilage1 || []} onChange={v => updList("beilage1", v)} edit={edit} />
-        </div>
-      )}
-      {(variant.beilage2 || edit) && (
-        <div style={{ marginBottom: "10px" }}>
-          <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilage 2</p>
-          <EditableList items={variant.beilage2 || []} onChange={v => updList("beilage2", v)} edit={edit} />
-        </div>
-      )}
-
-      <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid rgba(0,65,106,0.07)" }}>
-        {edit ? (
-          <div style={{ display: "flex", gap: "8px" }}>
-            <input value={variant.kcal || ""} onChange={e => upd("kcal", e.target.value)} placeholder="kcal" style={{ width: "80px", background: C.egg, border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "4px", outline: "none", fontFamily: "inherit", fontSize: "10px", fontWeight: 600, color: C.indigo, padding: "2px 6px" }} />
-            <input value={variant.protein || ""} onChange={e => upd("protein", e.target.value)} placeholder="Protein" style={{ width: "80px", background: C.egg, border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "4px", outline: "none", fontFamily: "inherit", fontSize: "10px", fontWeight: 600, color: C.indigo, padding: "2px 6px" }} />
+        {showIndex && <p style={{ ...s.small, marginBottom: "6px" }}>Option {index + 1}</p>}
+        <E value={variant.name} onChange={v => upd("name", v)} edit={edit} style={{ ...s.h3, marginBottom: "12px", display: "block" }} placeholder="Name" />
+        <hr style={s.divider} />
+        {(variant.basis || edit) && (
+          <div style={{ marginBottom: "10px" }}>
+            <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Basis</p>
+            <EditableList items={variant.basis || []} onChange={v => updList("basis", v)} edit={edit} />
           </div>
-        ) : (
-          <>
-            <Tag>{variant.kcal}</Tag>
-            <Tag>{variant.protein}</Tag>
-          </>
         )}
+        {(variant.beilagen || edit) && (
+          <div style={{ marginBottom: "10px" }}>
+            <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilagen</p>
+            <EditableList items={variant.beilagen || []} onChange={v => updList("beilagen", v)} edit={edit} />
+          </div>
+        )}
+        {(variant.beilage1 || edit) && (
+          <div style={{ marginBottom: "10px" }}>
+            <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilage 1</p>
+            <EditableList items={variant.beilage1 || []} onChange={v => updList("beilage1", v)} edit={edit} />
+          </div>
+        )}
+        {(variant.beilage2 || edit) && (
+          <div style={{ marginBottom: "10px" }}>
+            <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilage 2</p>
+            <EditableList items={variant.beilage2 || []} onChange={v => updList("beilage2", v)} edit={edit} />
+          </div>
+        )}
+        <div style={{ marginTop: "14px", paddingTop: "10px", borderTop: "1px solid rgba(0,65,106,0.07)" }}>
+          {edit ? (
+            <div style={{ display: "flex", gap: "8px" }}>
+              <input value={variant.kcal || ""} onChange={ev => upd("kcal", ev.target.value)} placeholder="kcal" style={{ width: "80px", background: C.egg, border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "4px", outline: "none", fontFamily: "inherit", fontSize: "10px", fontWeight: 600, color: C.indigo, padding: "2px 6px" }} />
+              <input value={variant.protein || ""} onChange={ev => upd("protein", ev.target.value)} placeholder="Protein" style={{ width: "80px", background: C.egg, border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "4px", outline: "none", fontFamily: "inherit", fontSize: "10px", fontWeight: 600, color: C.indigo, padding: "2px 6px" }} />
+            </div>
+          ) : (
+            <>
+              <Tag>{variant.kcal}</Tag>
+              <Tag>{variant.protein}</Tag>
+            </>
+          )}
+        </div>
       </div>
-      </div>{/* end padding div */}
     </div>
   );
 }
