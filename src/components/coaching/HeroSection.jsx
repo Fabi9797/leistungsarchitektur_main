@@ -50,6 +50,18 @@ export default function HeroSection({ heroImage }) {
               Wir bringen Training, Ernährung und Alltag in ein funktionierendes System – damit du in Form kommst und es langfristig bleibst.
             </p>
 
+            {/* Video */}
+            <div className="mt-6 rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: "16/9" }}>
+              <iframe
+                src="https://www.youtube.com/embed/yZqY3uymfk4"
+                title="Performance Architecture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+                style={{ border: 0 }}
+              />
+            </div>
+
             {/* Bullet Points */}
             <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
               {bullets.map((b, i) => (
