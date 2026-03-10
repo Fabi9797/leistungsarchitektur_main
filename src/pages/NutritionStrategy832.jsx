@@ -283,6 +283,7 @@ export default function NutritionStrategy832() {
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
         input, textarea { font-family: 'Inter', sans-serif; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @media print {
           body { background: white !important; }
           .no-print { display: none !important; }
