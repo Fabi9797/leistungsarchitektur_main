@@ -22,7 +22,7 @@ const pillars = [
   {
     icon: BarChart2,
     label: "Steuerung",
-    text: "Ganzheitliche Betreuung durch praktische Datenerfassung mit hilfreicher Technik.",
+    text: "Begleitung anhand deiner echten Daten – Anpassungen erfolgen dann, wenn sie sinnvoll sind, nicht nach starrem Takt.",
   },
 ];
 
