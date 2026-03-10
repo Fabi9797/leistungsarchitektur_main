@@ -102,10 +102,10 @@ export default function FrameworkSection() {
               transition={{ duration: 0.6, delay: 0.15 }}
             >
               <p className="text-base text-black/60 leading-relaxed">
-                Darauf aufbauend bringen wir Training, Ernährung und Alltag in ein <strong className="text-black">funktionierendes System</strong> und steuern dieses laufend anhand deiner Entwicklung.
+                Darauf aufbauend entsteht dein persönliches Framework – <strong className="text-black">ein Baustein nach dem anderen</strong>. Nicht alles auf einmal, sondern so, wie es in deinen Alltag passt.
               </p>
               <p className="mt-4 text-base text-black/60 leading-relaxed">
-                So entstehen Gewohnheiten, die dich nicht nur wieder in Form bringen, sondern dich dort auch <strong className="text-black">dauerhaft halten</strong>.
+                So entstehen Gewohnheiten, die nicht perfekt sein müssen – sondern die <strong className="text-black">zuverlässig funktionieren</strong> und dich dauerhaft in Form halten.
               </p>
             </motion.div>
           </div>
