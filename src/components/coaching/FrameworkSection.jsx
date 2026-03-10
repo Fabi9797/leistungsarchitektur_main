@@ -57,9 +57,10 @@ export default function FrameworkSection() {
           transition={{ duration: 0.6 }}
           className="mb-12 sm:mb-20 max-w-3xl mx-auto"
         >
-          <div className="relative w-full rounded-2xl overflow-hidden shadow-xl" style={{ paddingBottom: "56.25%" }}>
+          <div className="rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: "16/9" }}>
             <iframe
-              className="absolute inset-0 w-full h-full"
+              width="100%"
+              height="100%"
               src="https://www.youtube.com/embed/yZqY3uymfk4"
               title="Performance Architecture"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
