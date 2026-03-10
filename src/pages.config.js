@@ -52,6 +52,7 @@ import Clients832 from './pages/Clients832';
 import ClientOverview832 from './pages/ClientOverview832';
 import FactSheet832 from './pages/FactSheet832';
 import NutritionAdmin832 from './pages/NutritionAdmin832';
+import NutritionStrategy832 from './pages/NutritionStrategy832';
 
 
 export const PAGES = {
@@ -60,6 +61,7 @@ export const PAGES = {
     "ClientOverview832": ClientOverview832,
     "FactSheet832": FactSheet832,
     "NutritionAdmin832": NutritionAdmin832,
+    "NutritionStrategy832": NutritionStrategy832,
 }
 
 export const pagesConfig = {
