@@ -76,6 +76,17 @@ function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
   const upd = (key, val) => onChange({ ...variant, [key]: val });
   const updList = (key, val) => onChange({ ...variant, [key]: val });
   const [genLoading, setGenLoading] = useState(false);
+  const fileInputRef = React.useRef(null);
+  const [uploadLoading, setUploadLoading] = useState(false);
+
+  async function handleUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploadLoading(true);
+    const result = await base44.integrations.Core.UploadFile({ file });
+    onChange({ ...variant, image_url: result.file_url });
+    setUploadLoading(false);
+  }
 
   async function generateImage() {
     const basis = variant.basis || [];
