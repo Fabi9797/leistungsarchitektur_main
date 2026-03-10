@@ -15,7 +15,7 @@ const steps = [
   {
     num: "03",
     title: "Iterative Steuerung",
-    desc: "Wöchentliche Anpassung basierend auf deinen Daten und deiner Entwicklung. Kein starrer Plan – sondern ein lebendes System, das mit dir mitwächst und bei Bedarf nachjustiert wird.",
+    desc: "Dein System wird laufend begleitet und bei Bedarf angepasst – immer dann, wenn es sinnvoll ist. Kein starrer Takt, kein Druck. Sondern ein lebendiges System, das mit dir wächst und sich deiner Realität anpasst.",
   },
 ];
 
