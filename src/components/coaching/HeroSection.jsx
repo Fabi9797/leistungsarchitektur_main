@@ -23,7 +23,7 @@ export default function HeroSection({ heroImage }) {
         backgroundSize: '60px 60px'
       }} />
 
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-24 pb-14 lg:pt-32 lg:pb-24 w-full">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-16 pb-14 lg:pt-32 lg:pb-24 w-full">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left Content */}
           <motion.div
