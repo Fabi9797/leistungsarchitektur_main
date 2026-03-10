@@ -94,24 +94,35 @@ export default function HeroSection({ heroImage }) {
             </div>
           </motion.div>
 
-          {/* Right Image */}
+          {/* Right: YouTube Video */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="relative hidden lg:block"
           >
-            <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-md ml-auto">
+            <a
+              href="https://www.youtube.com/watch?v=yZqY3uymfk4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block relative rounded-2xl overflow-hidden shadow-2xl group"
+              style={{ aspectRatio: "16/9" }}
+            >
               <img
-                src={heroImage}
-                alt="Premium Fitness Coaching"
+                src="https://img.youtube.com/vi/yZqY3uymfk4/maxresdefault.jpg"
+                alt="Performance Architecture Video"
                 className="w-full h-full object-cover"
               />
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#00416A]/20 to-transparent" />
-            </div>
+              <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+                <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl group-hover:scale-105 transition-transform">
+                  <svg className="w-9 h-9 text-[#00416A] ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+            </a>
             {/* Floating stat card */}
-            <div className="absolute -left-6 bottom-24 bg-white rounded-xl shadow-2xl p-5 border border-black/5">
+            <div className="absolute -left-6 bottom-6 bg-white rounded-xl shadow-2xl p-5 border border-black/5">
               <p className="text-xs font-semibold text-black/40 uppercase tracking-wider">Ø Ergebnis</p>
               <p className="text-2xl font-bold text-[#00416A] mt-1">-8.4 kg</p>
               <p className="text-xs text-black/40 mt-1">Körperfett in 12 Wochen</p>
