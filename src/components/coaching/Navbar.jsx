@@ -33,7 +33,7 @@ export default function Navbar() {
             {/* Logo */}
             <a href="#" className="flex items-center gap-2">
               <div className="w-9 h-9 bg-[#00416A] rounded-lg flex items-center justify-center overflow-hidden">
-                <img src="https://media.base44.com/images/public/69b064c89953b727c5202e21/25b63ccc5_generated_image.png" alt="Logo" className="w-full h-full object-contain p-1 brightness-0 invert" />
+                <img src="https://media.base44.com/images/public/69b064c89953b727c5202e21/d3ce57978_generated_image.png" alt="Logo" className="w-full h-full object-contain p-1" />
               </div>
               <span className="hidden sm:block text-sm font-semibold tracking-tight text-[#00416A]">
                 PERFORMANCE<br className="leading-none" />
