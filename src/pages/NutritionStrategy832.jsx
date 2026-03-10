@@ -106,12 +106,12 @@ function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
           </button>
         )}
       </div>
-      <div style={{ padding: "14px 16px" }}>
       {edit && (
-        <button onClick={onDelete} style={{ position: "absolute", top: "8px", right: "8px", background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "4px", cursor: "pointer", color: "#cc3333", padding: "2px 6px", fontSize: "10px", display: "flex", alignItems: "center", gap: "3px" }}>
+        <button onClick={onDelete} style={{ position: "absolute", top: "8px", left: "8px", zIndex: 2, background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "4px", cursor: "pointer", color: "#cc3333", padding: "2px 6px", fontSize: "10px", display: "flex", alignItems: "center", gap: "3px" }}>
           <Trash2 size={9} /> Löschen
         </button>
       )}
+      <div style={{ padding: "14px 16px" }}>
       {showIndex && <p style={{ ...s.small, marginBottom: "6px" }}>Option {index + 1}</p>}
       <E value={variant.name} onChange={v => upd("name", v)} edit={edit} style={{ ...s.h3, marginBottom: "12px", display: "block" }} placeholder="Name" />
       <hr style={s.divider} />
