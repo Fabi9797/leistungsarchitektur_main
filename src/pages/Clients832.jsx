@@ -159,7 +159,7 @@ export default function Clients832() {
         ) : (
           <div className="space-y-3">
             {clients.map(c => (
-              <div key={c.id} className="bg-white rounded-2xl px-5 py-4 flex items-center justify-between shadow-sm">
+              <div key={c.id} className="bg-white rounded-2xl px-5 py-4 shadow-sm">
                 <div>
                   <p className="font-bold text-[#00416A] text-base">{c.name}</p>
                   <p className="text-xs text-black/40 mt-0.5">
