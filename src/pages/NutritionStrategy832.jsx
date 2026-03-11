@@ -140,19 +140,19 @@ function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
             <EditableList items={variant.basis || []} onChange={v => updList("basis", v)} edit={edit} />
           </div>
         )}
-        {(variant.beilagen || edit) && (
+        {(variant.beilagen?.length > 0 || edit) && (
           <div style={{ marginBottom: "10px" }}>
             <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilagen</p>
             <EditableList items={variant.beilagen || []} onChange={v => updList("beilagen", v)} edit={edit} />
           </div>
         )}
-        {(variant.beilage1 || edit) && (
+        {(variant.beilage1?.length > 0 || edit) && (
           <div style={{ marginBottom: "10px" }}>
             <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilage 1</p>
             <EditableList items={variant.beilage1 || []} onChange={v => updList("beilage1", v)} edit={edit} />
           </div>
         )}
-        {(variant.beilage2 || edit) && (
+        {(variant.beilage2?.length > 0 || edit) && (
           <div style={{ marginBottom: "10px" }}>
             <p style={{ ...s.small, marginBottom: "5px", letterSpacing: "0.12em", textTransform: "uppercase" }}>Beilage 2</p>
             <EditableList items={variant.beilage2 || []} onChange={v => updList("beilage2", v)} edit={edit} />
