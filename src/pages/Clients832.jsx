@@ -169,6 +169,12 @@ export default function Clients832() {
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <a
+                      href={createPageUrl(`CoachingDashboard832?clientId=${c.id}&name=${encodeURIComponent(c.name)}`)}
+                      className="flex items-center gap-1.5 px-4 py-2 bg-[#00416A]/10 text-[#00416A] rounded-lg text-sm font-medium hover:bg-[#00416A]/20 transition"
+                    >
+                      <LayoutDashboard className="w-4 h-4" /> Control
+                    </a>
+                    <a
                       href={createPageUrl(`FactSheet832?id=${c.id}`)}
                       target="_blank"
                       rel="noopener noreferrer"
