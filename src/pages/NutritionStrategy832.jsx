@@ -479,25 +479,48 @@ export default function NutritionStrategy832() {
           )}
         </Page>
 
-        {/* SEITE 3: Morgens + Snack */}
-        <Page pageNum={3}>
-          <p style={s.label}>Mahlzeiten</p>
-          <MealSection title="Morgens" items={draft.morgens} edit={e} onChange={v => upd("morgens", v)} />
-          <hr style={{ ...s.divider, margin: "28px 0" }} />
-          <MealSection title="Snack" items={draft.snack} edit={e} onChange={v => upd("snack", v)} />
-        </Page>
-
-        {/* SEITE 4: Mittags */}
-        <Page pageNum={4}>
-          <p style={s.label}>Mahlzeiten</p>
-          <MealSection title="Mittags" items={draft.mittags} edit={e} onChange={v => upd("mittags", v)} />
-        </Page>
-
-        {/* SEITE 5: Abendessen */}
-        <Page pageNum={5}>
-          <p style={s.label}>Mahlzeiten</p>
-          <MealSection title="Abends" items={draft.abend} edit={e} onChange={v => upd("abend", v)} />
-        </Page>
+        {/* SEITEN 3+: Mahlzeiten in konfigurierbarer Reihenfolge */}
+        {draft.sectionOrder.map((key, idx) => (
+          <Page key={key} pageNum={idx + 3}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "4px" }}>
+              <p style={s.label}>Mahlzeiten</p>
+              {e && (
+                <div style={{ display: "flex", gap: "4px" }} className="no-print">
+                  <button
+                    onClick={() => {
+                      if (idx === 0) return;
+                      const o = [...draft.sectionOrder];
+                      [o[idx - 1], o[idx]] = [o[idx], o[idx - 1]];
+                      upd("sectionOrder", o);
+                    }}
+                    disabled={idx === 0}
+                    style={{ background: "rgba(0,65,106,0.08)", border: "none", borderRadius: "6px", padding: "4px 8px", cursor: idx === 0 ? "default" : "pointer", opacity: idx === 0 ? 0.3 : 1, display: "flex", alignItems: "center", gap: "3px", fontSize: "10px", fontWeight: 600, color: C.indigo }}
+                  >
+                    <ArrowUp size={11} /> Seite vor
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (idx === draft.sectionOrder.length - 1) return;
+                      const o = [...draft.sectionOrder];
+                      [o[idx], o[idx + 1]] = [o[idx + 1], o[idx]];
+                      upd("sectionOrder", o);
+                    }}
+                    disabled={idx === draft.sectionOrder.length - 1}
+                    style={{ background: "rgba(0,65,106,0.08)", border: "none", borderRadius: "6px", padding: "4px 8px", cursor: idx === draft.sectionOrder.length - 1 ? "default" : "pointer", opacity: idx === draft.sectionOrder.length - 1 ? 0.3 : 1, display: "flex", alignItems: "center", gap: "3px", fontSize: "10px", fontWeight: 600, color: C.indigo }}
+                  >
+                    Seite zurück <ArrowDown size={11} />
+                  </button>
+                </div>
+              )}
+            </div>
+            <MealSection
+              title={SECTION_LABELS[key]}
+              items={draft[key]}
+              edit={e}
+              onChange={v => upd(key, v)}
+            />
+          </Page>
+        ))}
 
       </div>
     </>
