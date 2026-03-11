@@ -53,6 +53,7 @@ import FactSheet832 from './pages/FactSheet832';
 import Home from './pages/Home';
 import NutritionAdmin832 from './pages/NutritionAdmin832';
 import NutritionStrategy832 from './pages/NutritionStrategy832';
+import CoachingDashboard832 from './pages/CoachingDashboard832';
 
 
 export const PAGES = {
@@ -62,6 +63,7 @@ export const PAGES = {
     "Home": Home,
     "NutritionAdmin832": NutritionAdmin832,
     "NutritionStrategy832": NutritionStrategy832,
+    "CoachingDashboard832": CoachingDashboard832,
 }
 
 export const pagesConfig = {
