@@ -251,6 +251,7 @@ export default function NutritionStrategy832() {
       mittags: parse(d.mittags_json, []),
       snack: parse(d.snack_json, []),
       abend: parse(d.abend_json, []),
+      sectionOrder: parse(d.section_order_json, DEFAULT_ORDER),
     };
   }
 
