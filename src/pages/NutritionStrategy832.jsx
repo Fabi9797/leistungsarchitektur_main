@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { base44 } from "@/api/base44Client";
-import { Printer, Pencil, Check, X, Plus, Trash2, Sparkles, Loader2 } from "lucide-react";
+import { Printer, Pencil, Check, X, Plus, Trash2, Sparkles, Loader2, ArrowUp, ArrowDown } from "lucide-react";
+
+const DEFAULT_ORDER = ["morgens", "mittags", "snack", "abend"];
+const SECTION_LABELS = { morgens: "Morgens", mittags: "Mittags", snack: "Snack", abend: "Abends" };
 
 const parse = (str, fallback = []) => { try { return JSON.parse(str); } catch { return fallback; } };
 const C = { indigo: "#00416A", egg: "#F0EAD6" };
