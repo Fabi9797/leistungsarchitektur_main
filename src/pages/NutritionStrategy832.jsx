@@ -272,6 +272,7 @@ export default function NutritionStrategy832() {
       mittags_json: JSON.stringify(draft.mittags),
       snack_json: JSON.stringify(draft.snack),
       abend_json: JSON.stringify(draft.abend),
+      section_order_json: JSON.stringify(draft.sectionOrder),
     });
     setSaving(false);
     setEditMode(false);
