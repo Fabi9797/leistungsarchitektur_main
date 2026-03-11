@@ -491,7 +491,7 @@ export default function NutritionStrategy832() {
         {/* SEITE 5: Abendessen */}
         <Page pageNum={5}>
           <p style={s.label}>Mahlzeiten</p>
-          <MealSection title="Abendessen" items={draft.abend} edit={e} onChange={v => upd("abend", v)} />
+          <MealSection title="Abends" items={draft.abend} edit={e} onChange={v => upd("abend", v)} />
         </Page>
 
       </div>

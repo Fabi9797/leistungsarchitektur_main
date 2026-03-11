@@ -49,21 +49,21 @@
  */
 import ClientOverview832 from './pages/ClientOverview832';
 import Clients832 from './pages/Clients832';
+import CoachingDashboard832 from './pages/CoachingDashboard832';
 import FactSheet832 from './pages/FactSheet832';
 import Home from './pages/Home';
 import NutritionAdmin832 from './pages/NutritionAdmin832';
 import NutritionStrategy832 from './pages/NutritionStrategy832';
-import CoachingDashboard832 from './pages/CoachingDashboard832';
 
 
 export const PAGES = {
     "ClientOverview832": ClientOverview832,
     "Clients832": Clients832,
+    "CoachingDashboard832": CoachingDashboard832,
     "FactSheet832": FactSheet832,
     "Home": Home,
     "NutritionAdmin832": NutritionAdmin832,
     "NutritionStrategy832": NutritionStrategy832,
-    "CoachingDashboard832": CoachingDashboard832,
 }
 
 export const pagesConfig = {
