@@ -270,14 +270,6 @@ Supplemente: ${names}`,
     }));
   };
 
-  // Group supplements
-  const grouped = {};
-  (draft?.supplements || []).forEach((s, idx) => {
-    const g = s.gruppe || "Sonstige";
-    if (!grouped[g]) grouped[g] = [];
-    grouped[g].push({ ...s, _idx: idx });
-  });
-
   const updExpl = (name, field, val) => {
     setExplanations(e => ({ ...e, [name]: { ...(e[name] || {}), [field]: val } }));
   };
