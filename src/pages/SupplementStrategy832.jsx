@@ -21,115 +21,92 @@ function EditableCell({ value, onChange, placeholder = "" }) {
   );
 }
 
-// ───────── SEITE 1: Karten-Layout ─────────
-function SupplementCard({ row, idx, edit, onUpdate, onRemove }) {
-  const timings = TIMING_KEYS.filter(k => row[k]);
+// ───────── TAGESPLAN ─────────
+function DailySchedule({ supplements }) {
+  const SLOTS = [
+    { key: "morgens", label: "☀️ Morgens", ...TIMING_COLORS.morgens },
+    { key: "mittags", label: "🌤 Mittags", ...TIMING_COLORS.mittags },
+    { key: "abends", label: "🌆 Abends", ...TIMING_COLORS.abends },
+    { key: "zur_nacht", label: "🌙 Zur Nacht", ...TIMING_COLORS.zur_nacht },
+  ];
 
   return (
-    <div style={{
-      background: C.white,
-      border: "1px solid rgba(0,65,106,0.1)",
-      borderRadius: "14px",
-      padding: "16px 18px",
-      marginBottom: "12px",
-      display: "grid",
-      gridTemplateColumns: "1fr auto",
-      gap: "10px",
-      pageBreakInside: "avoid"
-    }}>
-      <div>
-        {/* Name */}
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-          {edit ? (
-            <EditableCell value={row.naehrstoff} onChange={v => onUpdate("naehrstoff", v)} placeholder="Nährstoff" />
-          ) : (
-            <span style={{ fontSize: "15px", fontWeight: 800, color: C.indigo }}>{row.naehrstoff}</span>
-          )}
-          {row.produkt && !edit && (
-            <span style={{ fontSize: "10px", color: "#888", background: "rgba(0,65,106,0.06)", padding: "2px 8px", borderRadius: "20px", fontWeight: 600 }}>{row.produkt}</span>
-          )}
-          {edit && (
-            <EditableCell value={row.produkt} onChange={v => onUpdate("produkt", v)} placeholder="Produkt/Marke" />
-          )}
-        </div>
-
-        {/* Tagesdosis prominent */}
-        <div style={{ marginBottom: "10px" }}>
-          <span style={{ fontSize: "9px", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: C.indigo, opacity: 0.4 }}>Tagesdosis</span>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "2px" }}>
-            {edit ? (
-              <EditableCell value={row.dosis_tag} onChange={v => onUpdate("dosis_tag", v)} placeholder="z.B. 4000 IE" />
-            ) : (
-              <span style={{ fontSize: "16px", fontWeight: 900, color: C.indigo }}>{row.dosis_tag || "–"}</span>
-            )}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px", marginBottom: "20px" }}>
+      {SLOTS.map(slot => {
+        const items = supplements.filter(s => s[slot.key]);
+        return (
+          <div key={slot.key} style={{ background: slot.bg, borderRadius: "12px", padding: "12px 14px", minHeight: "90px" }}>
+            <p style={{ fontSize: "10px", fontWeight: 800, color: slot.text, margin: "0 0 8px", letterSpacing: "0.05em" }}>{slot.label}</p>
+            {items.length === 0 ? (
+              <p style={{ fontSize: "10px", color: slot.text, opacity: 0.35, fontStyle: "italic", margin: 0 }}>–</p>
+            ) : items.map((s, i) => (
+              <div key={i} style={{ marginBottom: "6px" }}>
+                <p style={{ fontSize: "11px", fontWeight: 700, color: slot.text, margin: 0 }}>{s.naehrstoff}</p>
+                <p style={{ fontSize: "10px", color: slot.text, opacity: 0.7, margin: 0 }}>{s[slot.key]}</p>
+              </div>
+            ))}
           </div>
-        </div>
-
-        {/* Timing Tags */}
-        <div>
-          <span style={{ fontSize: "9px", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: C.indigo, opacity: 0.4 }}>Wann einnehmen</span>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "5px", marginTop: "5px" }}>
-            {edit ? (
-              TIMING_KEYS.map(k => (
-                <div key={k} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                  <span style={{ fontSize: "10px", color: "#555", minWidth: "60px" }}>{TIMING_LABELS[k]}:</span>
-                  <input value={row[k] || ""} onChange={e => onUpdate(k, e.target.value)} placeholder="–"
-                    style={{ width: "120px", border: "1px solid rgba(0,65,106,0.15)", borderRadius: "5px", padding: "2px 6px", fontSize: "10px", background: "rgba(0,65,106,0.02)" }} />
-                </div>
-              ))
-            ) : timings.length > 0 ? (
-              timings.map(k => (
-                <span key={k} style={{
-                  display: "inline-flex", alignItems: "center", gap: "4px",
-                  background: TIMING_COLORS[k].bg, color: TIMING_COLORS[k].text,
-                  fontSize: "10px", fontWeight: 700, padding: "4px 10px", borderRadius: "20px"
-                }}>
-                  <span style={{ fontSize: "9px", opacity: 0.7 }}>{TIMING_LABELS[k]}</span>
-                  {row[k] !== TIMING_LABELS[k] && row[k] && <span>· {row[k]}</span>}
-                </span>
-              ))
-            ) : (
-              <span style={{ fontSize: "10px", color: "#ccc" }}>Keine Angabe</span>
-            )}
-          </div>
-        </div>
-
-        {/* Notiz */}
-        {(row.notiz || edit) && (
-          <div style={{ marginTop: "8px" }}>
-            {edit ? (
-              <EditableCell value={row.notiz} onChange={v => onUpdate("notiz", v)} placeholder="Hinweis / Notiz…" />
-            ) : row.notiz ? (
-              <p style={{ fontSize: "10px", color: "#888", fontStyle: "italic", margin: 0 }}>💬 {row.notiz}</p>
-            ) : null}
-          </div>
-        )}
-      </div>
-
-      {/* Rechte Seite: Kauflink + Edit-Controls */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px", minWidth: "120px" }}>
-        {edit ? (
-          <>
-            <EditableCell value={row.kauflink} onChange={v => onUpdate("kauflink", v)} placeholder="https://…" />
-            <button onClick={onRemove} style={{ background: "none", border: "none", cursor: "pointer", color: "#e55", padding: "2px" }}>
-              <Trash2 size={14} />
-            </button>
-          </>
-        ) : row.kauflink ? (
-          <a href={row.kauflink} target="_blank" rel="noopener noreferrer"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: "5px",
-              background: C.indigo, color: C.white,
-              fontSize: "11px", fontWeight: 700, padding: "8px 14px", borderRadius: "10px",
-              textDecoration: "none", whiteSpace: "nowrap"
-            }}>
-            <ExternalLink size={12} /> Bestellen
-          </a>
-        ) : (
-          <span style={{ fontSize: "10px", color: "#ddd" }}>Kein Link</span>
-        )}
-      </div>
+        );
+      })}
     </div>
+  );
+}
+
+// ───────── DETAIL-TABELLE ─────────
+function DetailTable({ supplements, edit, onUpdate, onRemove }) {
+  return (
+    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "10.5px" }}>
+      <thead>
+        <tr style={{ background: "rgba(0,65,106,0.05)" }}>
+          {["Supplement", "Tagesdosis", "Produkt", "Kauflink", "Hinweis", ...(edit ? [""] : [])].map(h => (
+            <th key={h} style={{ padding: "7px 10px", textAlign: "left", fontWeight: 800, color: C.indigo, fontSize: "9px", letterSpacing: "0.1em", textTransform: "uppercase", borderBottom: "2px solid rgba(0,65,106,0.1)" }}>{h}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {supplements.map((row, i) => (
+          <tr key={i} style={{ borderBottom: "1px solid rgba(0,65,106,0.06)" }}>
+            <td style={{ padding: "8px 10px", fontWeight: 700, color: "#111" }}>
+              {edit ? <EditableCell value={row.naehrstoff} onChange={v => onUpdate(i, "naehrstoff", v)} placeholder="Nährstoff" /> : row.naehrstoff}
+            </td>
+            <td style={{ padding: "8px 10px", fontWeight: 700, color: C.indigo }}>
+              {edit ? <EditableCell value={row.dosis_tag} onChange={v => onUpdate(i, "dosis_tag", v)} placeholder="z.B. 5g" /> : row.dosis_tag || "–"}
+            </td>
+            <td style={{ padding: "8px 10px", color: "#555" }}>
+              {edit ? <EditableCell value={row.produkt} onChange={v => onUpdate(i, "produkt", v)} placeholder="Marke" /> : row.produkt || "–"}
+            </td>
+            <td style={{ padding: "8px 10px" }}>
+              {edit ? <EditableCell value={row.kauflink} onChange={v => onUpdate(i, "kauflink", v)} placeholder="https://…" /> :
+                row.kauflink ? (
+                  <a href={row.kauflink} target="_blank" rel="noopener noreferrer"
+                    style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: C.indigo, color: C.white, fontSize: "10px", fontWeight: 700, padding: "4px 10px", borderRadius: "8px", textDecoration: "none" }}>
+                    <ExternalLink size={10} /> Bestellen
+                  </a>
+                ) : <span style={{ color: "#ccc" }}>–</span>}
+            </td>
+            <td style={{ padding: "8px 10px", color: "#888", fontSize: "10px", fontStyle: "italic" }}>
+              {edit ? <EditableCell value={row.notiz} onChange={v => onUpdate(i, "notiz", v)} placeholder="Notiz…" /> : row.notiz || ""}
+            </td>
+            {edit && (
+              <td style={{ padding: "8px 10px" }}>
+                <div style={{ display: "grid", gap: "4px" }}>
+                  {TIMING_KEYS.map(k => (
+                    <div key={k} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      <span style={{ fontSize: "9px", color: "#888", width: "55px" }}>{TIMING_LABELS[k]}:</span>
+                      <input value={row[k] || ""} onChange={e => onUpdate(i, k, e.target.value)} placeholder="–"
+                        style={{ width: "100px", border: "1px solid rgba(0,65,106,0.15)", borderRadius: "5px", padding: "2px 5px", fontSize: "9px" }} />
+                    </div>
+                  ))}
+                  <button onClick={() => onRemove(i)} style={{ background: "none", border: "none", cursor: "pointer", color: "#e55", marginTop: "2px", textAlign: "left" }}>
+                    <Trash2 size={12} />
+                  </button>
+                </div>
+              </td>
+            )}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
