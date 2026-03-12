@@ -379,38 +379,26 @@ Supplemente: ${names}`,
           </div>
         )}
 
-        <hr style={{ border: "none", borderTop: "1px solid rgba(0,65,106,0.08)", margin: "0 0 18px" }} />
+        <hr style={{ border: "none", borderTop: "1px solid rgba(0,65,106,0.08)", margin: "0 0 16px" }} />
 
-        {/* Supplement-Karten */}
-        {Object.entries(grouped).map(([gruppe, rows]) => (
-          <div key={gruppe} style={{ marginBottom: "16px" }}>
-            {/* Gruppen-Header */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-              {edit ? (
-                <input value={rows[0].gruppe || ""} onChange={e => rows.forEach(r => updSupp(r._idx, "gruppe", e.target.value))}
-                  style={{ border: "none", borderBottom: "1px solid rgba(0,65,106,0.2)", background: "transparent", fontSize: "9px", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: C.indigo, outline: "none", opacity: 0.5 }} />
-              ) : (
-                <span style={{ fontSize: "9px", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: C.indigo, opacity: 0.45 }}>{gruppe}</span>
-              )}
-              <div style={{ flex: 1, height: "1px", background: "rgba(0,65,106,0.08)" }} />
-            </div>
+        {/* TAGESPLAN */}
+        <p style={{ fontSize: "9px", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: C.indigo, opacity: 0.45, margin: "0 0 8px" }}>Dein Tagesplan</p>
+        <DailySchedule supplements={draft.supplements} />
 
-            {rows.map(row => (
-              <SupplementCard
-                key={row._idx}
-                row={row}
-                idx={row._idx}
-                edit={edit}
-                onUpdate={(field, val) => updSupp(row._idx, field, val)}
-                onRemove={() => setDraft(d => ({ ...d, supplements: d.supplements.filter((_, i) => i !== row._idx) }))}
-              />
-            ))}
-          </div>
-        ))}
+        <hr style={{ border: "none", borderTop: "1px solid rgba(0,65,106,0.08)", margin: "0 0 16px" }} />
+
+        {/* DETAIL-TABELLE */}
+        <p style={{ fontSize: "9px", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: C.indigo, opacity: 0.45, margin: "0 0 10px" }}>Alle Supplemente im Detail</p>
+        <DetailTable
+          supplements={draft.supplements}
+          edit={edit}
+          onUpdate={(idx, field, val) => updSupp(idx, field, val)}
+          onRemove={idx => setDraft(d => ({ ...d, supplements: d.supplements.filter((_, i) => i !== idx) }))}
+        />
 
         {edit && (
           <button onClick={addRow} className="no-print"
-            style={{ marginTop: "8px", display: "flex", alignItems: "center", gap: "6px", padding: "8px 16px", background: "rgba(0,65,106,0.05)", color: C.indigo, border: "1px dashed rgba(0,65,106,0.2)", borderRadius: "10px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
+            style={{ marginTop: "12px", display: "flex", alignItems: "center", gap: "6px", padding: "8px 16px", background: "rgba(0,65,106,0.05)", color: C.indigo, border: "1px dashed rgba(0,65,106,0.2)", borderRadius: "10px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
             <Plus size={14} /> Supplement hinzufügen
           </button>
         )}
