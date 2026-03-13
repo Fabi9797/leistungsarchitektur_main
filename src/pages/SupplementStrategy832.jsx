@@ -72,8 +72,32 @@ function DetailTable({ supplements, edit, onUpdate, onRemove }) {
             <td style={{ padding: "8px 10px", fontWeight: 700, color: C.indigo }}>
               {edit ? <EditableCell value={row.dosis_tag} onChange={v => onUpdate(i, "dosis_tag", v)} placeholder="z.B. 5g" /> : row.dosis_tag || "–"}
             </td>
-            <td style={{ padding: "8px 10px", color: "#555" }}>
-              {edit ? <EditableCell value={row.produkt} onChange={v => onUpdate(i, "produkt", v)} placeholder="Marke" /> : row.produkt || "–"}
+            <td style={{ padding: "8px 10px" }}>
+              {edit ? (
+                <div style={{ display: "grid", gap: "3px" }}>
+                  <EditableCell value={row.produkt} onChange={v => onUpdate(i, "produkt", v)} placeholder="Marke / Name" />
+                  <EditableCell value={row.produkt_foto} onChange={v => onUpdate(i, "produkt_foto", v)} placeholder="Foto-URL (https://…)" />
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+                  {row.kauflink ? (
+                    <a href={row.kauflink} target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
+                      {row.produkt_foto ? (
+                        <img src={row.produkt_foto} alt={row.produkt || row.naehrstoff}
+                          style={{ width: "52px", height: "52px", objectFit: "contain", borderRadius: "8px", border: "1px solid rgba(0,65,106,0.1)", background: "#fafafa" }} />
+                      ) : (
+                        <div style={{ width: "52px", height: "52px", borderRadius: "8px", border: "1px dashed rgba(0,65,106,0.2)", display: "flex", alignItems: "center", justifyContent: "center", background: "#fafafa" }}>
+                          <ExternalLink size={14} color={C.indigo} opacity={0.3} />
+                        </div>
+                      )}
+                    </a>
+                  ) : row.produkt_foto ? (
+                    <img src={row.produkt_foto} alt={row.produkt || row.naehrstoff}
+                      style={{ width: "52px", height: "52px", objectFit: "contain", borderRadius: "8px", border: "1px solid rgba(0,65,106,0.1)", background: "#fafafa" }} />
+                  ) : null}
+                  {row.produkt && <span style={{ fontSize: "10px", color: "#666", textAlign: "center" }}>{row.produkt}</span>}
+                </div>
+              )}
             </td>
             <td style={{ padding: "8px 10px" }}>
               {edit ? <EditableCell value={row.kauflink} onChange={v => onUpdate(i, "kauflink", v)} placeholder="https://…" /> :
