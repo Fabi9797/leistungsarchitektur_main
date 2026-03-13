@@ -53,6 +53,47 @@ function DailySchedule({ supplements }) {
 }
 
 // ───────── DETAIL-TABELLE ─────────
+function ProductCell({ row, i, onUpdate }) {
+  const [fetching, setFetching] = React.useState(false);
+  const [error, setError] = React.useState("");
+
+  const fetchImage = async () => {
+    if (!row.kauflink) return;
+    setFetching(true);
+    setError("");
+    const res = await base44.functions.invoke("fetchProductImage", { url: row.kauflink });
+    if (res.data?.image_url) {
+      onUpdate(i, "produkt_foto", res.data.image_url);
+    } else {
+      setError("Kein Bild gefunden");
+    }
+    setFetching(false);
+  };
+
+  return (
+    <div style={{ display: "grid", gap: "3px" }}>
+      <EditableCell value={row.produkt} onChange={v => onUpdate(i, "produkt", v)} placeholder="Marke / Name" />
+      <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+        <input value={row.kauflink || ""} onChange={e => onUpdate(i, "kauflink", e.target.value)} placeholder="Kauflink (https://…)"
+          style={{ flex: 1, border: "1px solid rgba(0,65,106,0.2)", borderRadius: "6px", padding: "4px 7px", fontSize: "11px", fontFamily: "inherit", background: "rgba(0,65,106,0.03)", outline: "none" }} />
+        <button onClick={fetchImage} disabled={fetching || !row.kauflink} title="Produktbild automatisch laden"
+          style={{ padding: "4px 8px", background: fetching ? "#eee" : "rgba(0,65,106,0.1)", border: "none", borderRadius: "6px", cursor: row.kauflink ? "pointer" : "not-allowed", color: C.indigo, display: "flex", alignItems: "center", gap: "3px", fontSize: "10px", fontWeight: 600, whiteSpace: "nowrap" }}>
+          {fetching ? <Loader2 size={11} style={{ animation: "spin 0.8s linear infinite" }} /> : <ImageIcon size={11} />}
+          {fetching ? "…" : "Bild"}
+        </button>
+      </div>
+      {row.produkt_foto && (
+        <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+          <img src={row.produkt_foto} alt="" style={{ width: "28px", height: "28px", objectFit: "contain", borderRadius: "4px", border: "1px solid #eee" }} />
+          <input value={row.produkt_foto} onChange={e => onUpdate(i, "produkt_foto", e.target.value)} placeholder="Foto-URL"
+            style={{ flex: 1, border: "1px solid rgba(0,65,106,0.15)", borderRadius: "6px", padding: "3px 6px", fontSize: "10px", fontFamily: "inherit", background: "rgba(0,65,106,0.02)", outline: "none" }} />
+        </div>
+      )}
+      {error && <span style={{ fontSize: "10px", color: "#e55" }}>{error}</span>}
+    </div>
+  );
+}
+
 function DetailTable({ supplements, edit, onUpdate, onRemove }) {
   return (
     <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "10.5px" }}>
