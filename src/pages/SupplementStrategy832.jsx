@@ -133,13 +133,13 @@ function DetailTable({ supplements, edit, onUpdate, onRemove }) {
               )}
             </td>
             <td style={{ padding: "8px 10px" }}>
-              {edit ? <EditableCell value={row.kauflink} onChange={v => onUpdate(i, "kauflink", v)} placeholder="https://…" /> :
-                row.kauflink ? (
-                  <a href={row.kauflink} target="_blank" rel="noopener noreferrer"
-                    style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: C.indigo, color: C.white, fontSize: "10px", fontWeight: 700, padding: "4px 10px", borderRadius: "8px", textDecoration: "none" }}>
-                    <ExternalLink size={10} /> Bestellen
-                  </a>
-                ) : <span style={{ color: "#ccc" }}>–</span>}
+              {!edit && (row.kauflink ? (
+                <a href={row.kauflink} target="_blank" rel="noopener noreferrer"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: C.indigo, color: C.white, fontSize: "10px", fontWeight: 700, padding: "4px 10px", borderRadius: "8px", textDecoration: "none" }}>
+                  <ExternalLink size={10} /> Bestellen
+                </a>
+              ) : <span style={{ color: "#ccc" }}>–</span>)}
+              {edit && <span style={{ fontSize: "10px", color: "#aaa" }}>↑ oben</span>}
             </td>
             <td style={{ padding: "8px 10px", color: "#888", fontSize: "10px", fontStyle: "italic" }}>
               {edit ? <EditableCell value={row.notiz} onChange={v => onUpdate(i, "notiz", v)} placeholder="Notiz…" /> : row.notiz || ""}
