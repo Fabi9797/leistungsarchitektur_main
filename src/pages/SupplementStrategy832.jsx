@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { ArrowLeft, Printer, Edit2, Save, Plus, Trash2, ExternalLink, Sparkles, Loader2 } from "lucide-react";
+import { ArrowLeft, Printer, Edit2, Save, Plus, Trash2, ExternalLink, Sparkles, Loader2, ImageIcon } from "lucide-react";
 import { createPageUrl } from "@/utils";
 
 const C = { indigo: "#00416A", eggshell: "#F0EAD6", white: "#FFFFFF" };
