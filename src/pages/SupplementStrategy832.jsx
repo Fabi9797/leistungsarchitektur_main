@@ -80,21 +80,16 @@ function DetailTable({ supplements, edit, onUpdate, onRemove }) {
                 </div>
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-                  {row.kauflink ? (
+                  {row.produkt_foto && row.kauflink && (
                     <a href={row.kauflink} target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
-                      {row.produkt_foto ? (
-                        <img src={row.produkt_foto} alt={row.produkt || row.naehrstoff}
-                          style={{ width: "52px", height: "52px", objectFit: "contain", borderRadius: "8px", border: "1px solid rgba(0,65,106,0.1)", background: "#fafafa" }} />
-                      ) : (
-                        <div style={{ width: "52px", height: "52px", borderRadius: "8px", border: "1px dashed rgba(0,65,106,0.2)", display: "flex", alignItems: "center", justifyContent: "center", background: "#fafafa" }}>
-                          <ExternalLink size={14} color={C.indigo} opacity={0.3} />
-                        </div>
-                      )}
+                      <img src={row.produkt_foto} alt={row.produkt || row.naehrstoff}
+                        style={{ width: "52px", height: "52px", objectFit: "contain", borderRadius: "8px", border: "1px solid rgba(0,65,106,0.1)", background: "#fafafa" }} />
                     </a>
-                  ) : row.produkt_foto ? (
+                  )}
+                  {row.produkt_foto && !row.kauflink && (
                     <img src={row.produkt_foto} alt={row.produkt || row.naehrstoff}
                       style={{ width: "52px", height: "52px", objectFit: "contain", borderRadius: "8px", border: "1px solid rgba(0,65,106,0.1)", background: "#fafafa" }} />
-                  ) : null}
+                  )}
                   {row.produkt && <span style={{ fontSize: "10px", color: "#666", textAlign: "center" }}>{row.produkt}</span>}
                 </div>
               )}
