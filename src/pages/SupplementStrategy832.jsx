@@ -58,7 +58,7 @@ function DetailTable({ supplements, edit, onUpdate, onRemove }) {
     <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "10.5px" }}>
       <thead>
         <tr style={{ background: "rgba(0,65,106,0.05)" }}>
-          {["Supplement", "Tagesdosis", "Produkt / Foto", "Kauflink", "Hinweis", ...(edit ? [""] : [])].map(h => (
+          {["Supplement", "Tagesdosis", "Produkt", "Kauflink", "Hinweis", ...(edit ? [""] : [])].map(h => (
             <th key={h} style={{ padding: "7px 10px", textAlign: "left", fontWeight: 800, color: C.indigo, fontSize: "9px", letterSpacing: "0.1em", textTransform: "uppercase", borderBottom: "2px solid rgba(0,65,106,0.1)" }}>{h}</th>
           ))}
         </tr>
