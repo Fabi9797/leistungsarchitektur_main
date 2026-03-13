@@ -33,7 +33,7 @@ function DailySchedule({ supplements }) {
   ];
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px", marginBottom: "20px" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "10px", marginBottom: "20px" }}>
       {SLOTS.map(slot => {
         const items = supplements.filter(s => s[slot.key]);
         return (
