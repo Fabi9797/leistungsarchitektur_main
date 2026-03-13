@@ -5,9 +5,10 @@ import { createPageUrl } from "@/utils";
 
 const C = { indigo: "#00416A", eggshell: "#F0EAD6", white: "#FFFFFF" };
 
-const TIMING_KEYS = ["morgens", "mittags", "abends", "zur_nacht"];
-const TIMING_LABELS = { morgens: "Morgens", mittags: "Mittags", abends: "Abends", zur_nacht: "Zur Nacht" };
+const TIMING_KEYS = ["erste_mahlzeit", "morgens", "mittags", "abends", "zur_nacht"];
+const TIMING_LABELS = { erste_mahlzeit: "Erste Mahlzeit", morgens: "Morgens", mittags: "Mittags", abends: "Abends", zur_nacht: "Zur Nacht" };
 const TIMING_COLORS = {
+  erste_mahlzeit: { bg: "#FFF3E0", text: "#E65100" },
   morgens: { bg: "#FFF8E1", text: "#B45309" },
   mittags: { bg: "#E8F5E9", text: "#2E7D32" },
   abends: { bg: "#E3F2FD", text: "#1565C0" },
