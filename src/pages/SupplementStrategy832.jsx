@@ -113,12 +113,9 @@ function DetailTable({ supplements, edit, onUpdate, onRemove }) {
             <td style={{ padding: "8px 10px", fontWeight: 700, color: C.indigo }}>
               {edit ? <EditableCell value={row.dosis_tag} onChange={v => onUpdate(i, "dosis_tag", v)} placeholder="z.B. 5g" /> : row.dosis_tag || "–"}
             </td>
-            <td style={{ padding: "8px 10px" }}>
+            <td style={{ padding: "8px 10px", minWidth: "160px" }}>
               {edit ? (
-                <div style={{ display: "grid", gap: "3px" }}>
-                  <EditableCell value={row.produkt} onChange={v => onUpdate(i, "produkt", v)} placeholder="Marke / Name" />
-                  <EditableCell value={row.produkt_foto} onChange={v => onUpdate(i, "produkt_foto", v)} placeholder="Foto-URL (https://…)" />
-                </div>
+                <ProductCell row={row} i={i} onUpdate={onUpdate} />
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
                   {row.produkt_foto && row.kauflink && (
