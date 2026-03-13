@@ -32,9 +32,11 @@ function DailySchedule({ supplements }) {
     { key: "zur_nacht", label: "🌙 Zur Nacht", ...TIMING_COLORS.zur_nacht },
   ];
 
+  const filledSlots = SLOTS.filter(slot => supplements.some(s => s[slot.key]));
+
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "10px", marginBottom: "20px" }}>
-      {SLOTS.map(slot => {
+    <div style={{ display: "grid", gridTemplateColumns: `repeat(${filledSlots.length || 1}, 1fr)`, gap: "10px", marginBottom: "20px" }}>
+      {filledSlots.map(slot => {
         const items = supplements.filter(s => s[slot.key]);
         return (
           <div key={slot.key} style={{ background: slot.bg, borderRadius: "12px", padding: "12px 14px", minHeight: "90px" }}>
