@@ -56,11 +56,19 @@ export default function Clients832() {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({});
   const [openSection, setOpenSection] = useState("Person");
+  const [supplementPlans, setSupplementPlans] = useState([]);
+  const [nutritionStrategies, setNutritionStrategies] = useState([]);
 
   const load = async () => {
     setLoading(true);
-    const data = await base44.entities.ClientProfile.list("-created_date");
+    const [data, supps, nutris] = await Promise.all([
+      base44.entities.ClientProfile.list("-created_date"),
+      base44.entities.SupplementPlan.list("-updated_date"),
+      base44.entities.NutritionStrategy.list("-updated_date"),
+    ]);
     setClients(data);
+    setSupplementPlans(supps);
+    setNutritionStrategies(nutris);
     setLoading(false);
   };
 
