@@ -195,6 +195,30 @@ export default function Clients832() {
                     </button>
                   </div>
                 </div>
+
+                {/* Verknüpfte Dokumente */}
+                {(() => {
+                  const supp = supplementPlans.find(s => s.client_name?.toLowerCase() === c.name?.toLowerCase());
+                  const nutri = nutritionStrategies.find(n => n.client_name?.toLowerCase() === c.name?.toLowerCase());
+                  if (!supp && !nutri) return null;
+                  return (
+                    <div className="mt-3 pt-3 border-t border-black/5 flex flex-wrap gap-2">
+                      {supp && (
+                        <a href={createPageUrl(`SupplementStrategy832?id=${supp.id}`)} target="_blank" rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 text-purple-700 border border-purple-100 rounded-lg text-xs font-semibold hover:bg-purple-100 transition">
+                          <Pill className="w-3 h-3" /> Supplementplan v{supp.version}
+                        </a>
+                      )}
+                      {nutri && (
+                        <a href={createPageUrl(`NutritionStrategy832?id=${nutri.id}`)} target="_blank" rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 border border-green-100 rounded-lg text-xs font-semibold hover:bg-green-100 transition">
+                          <Utensils className="w-3 h-3" /> Ernährungsstrategie v{nutri.version}
+                        </a>
+                      )}
+                    </div>
+                  );
+                })()}
+
                 <ClientDocuments client={c} onUpdate={load} />
               </div>
             ))}
