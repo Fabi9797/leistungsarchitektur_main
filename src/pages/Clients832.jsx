@@ -203,6 +203,11 @@ export default function Clients832() {
                     <p className="text-xs text-black/40 mt-0.5">
                       {[c.alter && `${c.alter} J.`, c.gewicht && `${c.gewicht} kg`, c.coaching_ziel].filter(Boolean).join(" · ")}
                     </p>
+                    {(c.email || c.telefon) && (
+                      <p className="text-xs text-[#00416A]/50 mt-0.5">
+                        {[c.email, c.telefon].filter(Boolean).join(" · ")}
+                      </p>
+                    )}
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <a
