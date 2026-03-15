@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Plus, Eye, Trash2, ChevronDown, ChevronUp, LayoutDashboard, FileText, Pill, Utensils } from "lucide-react";
+import { Plus, Eye, Trash2, ChevronDown, ChevronUp, LayoutDashboard, FileText, Pill, Utensils, Users, UserPlus } from "lucide-react";
 import { createPageUrl } from "@/utils";
 import ClientDocuments from "../components/clients/ClientDocuments";
+import LeadsSection from "../components/clients/LeadsSection";
 
 const FIELDS = [
   { section: "Person", fields: [
