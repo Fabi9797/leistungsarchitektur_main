@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { base44 } from "@/api/base44Client";
-import { X, Download, Trash2, Plus, Sparkles, Loader2 } from "lucide-react";
+import { X, Download, Trash2, Plus, Sparkles, Loader2, Wand2 } from "lucide-react";
 import { TypeBadge, CategoryBadge, StatusBadge } from "./ContentBadge";
 import jsPDF from "jspdf";
 
 const VIDEO_DURATIONS = ["15 Sek", "30 Sek", "45 Sek", "60 Sek", "90 Sek"];
-
 const TYPES = ["Reden", "B-Roll", "Slideshow", "Reel", "Story", "Carousel"];
 const CATEGORIES = ["Training", "Ernährung", "Supplements", "Steuerung"];
 const STATUSES = ["Idee", "In Planung", "Gedreht", "Geschnitten", "Veröffentlicht"];
@@ -13,13 +12,30 @@ const STATUSES = ["Idee", "In Planung", "Gedreht", "Geschnitten", "Veröffentlic
 export default function ContentEditor({ piece, onClose, onSaved }) {
   const [form, setForm] = useState(piece || {
     title: "", type: "Reden", category: "Training", status: "Idee",
-    planned_date: "", hook: "", script: "", notes: "", hashtags: "", cta: "", images: []
+    planned_date: "", hook: "", script: "", notes: "", hashtags: "", cta: "", images: [],
+    video_duration: "60 Sek"
   });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [generatingScript, setGeneratingScript] = useState(false);
 
+  // Selection-based refinement state
+  const [selection, setSelection] = useState(null); // { text, start, end }
+  const [refinePopup, setRefinePopup] = useState(null); // { x, y }
+  const [refinePrompt, setRefinePrompt] = useState("");
+  const [refining, setRefining] = useState(false);
+  const scriptRef = useRef(null);
+
   const set = (key, val) => setForm(p => ({ ...p, [key]: val }));
+
+  // Fetch last 10 scripts for style context
+  const getRecentScripts = async () => {
+    const allPieces = await base44.entities.ContentPiece.list("-created_date", 20);
+    return allPieces
+      .filter(p => p.script && p.script.trim().length > 50 && p.id !== form.id)
+      .slice(0, 10)
+      .map(p => p.script);
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -76,59 +92,41 @@ export default function ContentEditor({ piece, onClose, onSaved }) {
     doc.setTextColor(100);
     doc.text(`${form.type} · ${form.category} · ${form.status}`, margin, y);
     y += 8;
-    if (form.planned_date) {
-      doc.text(`Datum: ${form.planned_date}`, margin, y);
-      y += 8;
-    }
+    if (form.planned_date) { doc.text(`Datum: ${form.planned_date}`, margin, y); y += 8; }
     y += 4;
     doc.setDrawColor(200);
     doc.line(margin, y, 190, y);
     y += 8;
 
     if (form.hook) {
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.setTextColor(0);
-      doc.text("HOOK", margin, y);
-      y += 7;
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(11);
+      doc.setFontSize(12); doc.setFont("helvetica", "bold"); doc.setTextColor(0);
+      doc.text("HOOK", margin, y); y += 7;
+      doc.setFont("helvetica", "normal"); doc.setFontSize(11);
       const hookLines = doc.splitTextToSize(form.hook, 170);
-      doc.text(hookLines, margin, y);
-      y += hookLines.length * 6 + 8;
+      doc.text(hookLines, margin, y); y += hookLines.length * 6 + 8;
     }
 
     if (form.script) {
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.setTextColor(0);
-      doc.text("SKRIPT", margin, y);
-      y += 7;
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
+      doc.setFontSize(12); doc.setFont("helvetica", "bold"); doc.setTextColor(0);
+      doc.text("SKRIPT", margin, y); y += 7;
+      doc.setFont("helvetica", "normal"); doc.setFontSize(10);
       const lines = doc.splitTextToSize(form.script, 170);
       lines.forEach(line => {
         if (y > 270) { doc.addPage(); y = margin; }
-        doc.text(line, margin, y);
-        y += 6;
+        doc.text(line, margin, y); y += 6;
       });
       y += 6;
     }
 
     if (form.cta) {
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.text("CALL-TO-ACTION", margin, y);
-      y += 7;
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      doc.text(doc.splitTextToSize(form.cta, 170), margin, y);
-      y += 10;
+      doc.setFontSize(12); doc.setFont("helvetica", "bold");
+      doc.text("CALL-TO-ACTION", margin, y); y += 7;
+      doc.setFont("helvetica", "normal"); doc.setFontSize(10);
+      doc.text(doc.splitTextToSize(form.cta, 170), margin, y); y += 10;
     }
 
     if (form.hashtags) {
-      doc.setFontSize(10);
-      doc.setTextColor(100);
+      doc.setFontSize(10); doc.setTextColor(100);
       doc.text(form.hashtags, margin, y);
     }
 
@@ -140,10 +138,14 @@ export default function ContentEditor({ piece, onClose, onSaved }) {
     setGeneratingScript(true);
 
     const durationSeconds = parseInt((form.video_duration || "60 Sek").replace(" Sek", ""));
-    const wordsPerMinute = 130;
-    const targetWords = Math.round((durationSeconds / 60) * wordsPerMinute);
+    const targetWords = Math.round((durationSeconds / 60) * 130);
+    const recentScripts = await getRecentScripts();
 
-    const prompt = `Du bist ein Experte für Instagram-Kurzvideos und schreibst Skripte nach einem präzisen Framework. 
+    const styleContext = recentScripts.length > 0
+      ? `\n\nSTIL-REFERENZ (letzte ${recentScripts.length} Skripte – übernimm den Sprachstil, Tonalität und Rhythmus):\n${recentScripts.map((s, i) => `--- Skript ${i + 1} ---\n${s}`).join("\n\n")}`
+      : "";
+
+    const prompt = `Du bist ein Experte für Instagram-Kurzvideos und schreibst Skripte nach einem präzisen Framework.
 
 HOOK (bereits festgelegt): "${form.hook || "(kein Hook angegeben)"}"
 THEMA / WEITERE INFOS: "${form.topic_info || "(keine weiteren Infos)"}"
@@ -153,36 +155,78 @@ VIDEOLÄNGE: ${form.video_duration} (ca. ${targetWords} Wörter)
 
 FRAMEWORK das du STRIKT befolgen musst:
 
-1. STRUKTUR (Aber/Deshalb-Methode nach Trey Parker & Matt Stone):
-   - Hook (0-3 Sek): Nutze den vorgegebenen Hook. Muss Widerspruch/Reibung erzeugen. Starte NICHT mit "Ich".
-   - Aber (3-10 Sek): Konflikt/Fehler sichtbar machen → "Viele glauben ..., aber ..."
-   - Deshalb (10-20 Sek): Konsequenz/Lösung liefern → "Deshalb machst du ..."
-   - Neues Aber (20-35 Sek): Einwand vorwegnehmen → "Aber Achtung: ..."
+1. STRUKTUR (Aber/Deshalb-Methode):
+   - Hook (0-3 Sek): Nutze den vorgegebenen Hook exakt. Starte NICHT mit "Ich".
+   - Aber (3-10 Sek): Konflikt/Fehler sichtbar machen
+   - Deshalb (10-20 Sek): Konsequenz/Lösung liefern
+   - Neues Aber (20-35 Sek): Einwand vorwegnehmen
    - Finales Deshalb (35-50 Sek): Auflösung, Rahmen schließen
    - CTA (letzte 5-10 Sek): Konkrete Handlungsaufforderung
 
-2. RHETORIK-WERKZEUGKASTEN (alle einbauen):
-   - Kontraste: alt vs. neu, falsch vs. richtig, vorher vs. nachher
-   - Direkte Ansprache mit "du"
-   - Mindestens eine rhetorische Frage
-   - Einwände antizipieren und führen
-   - Beispiele und bildhafte Vergleiche
-   - Triaden (Dreieraufzählungen) wo passend
-   - Kurze und lange Sätze wechseln (Satzrhythmus)
+2. RHETORIK: Kontraste, direkte "du"-Ansprache, rhetorische Fragen, Einwände antizipieren, bildhafte Vergleiche, Triaden, wechselnder Satzrhythmus.
 
-3. TONALITÄT: Klar, ruhig, authentisch, sicher. Keine Übertreibungen. Kompetent und menschlich.
+3. TONALITÄT: Klar, ruhig, authentisch, sicher. Keine Übertreibungen.
 
-4. LÄNGE: Exakt auf ${form.video_duration} ausgelegt (~${targetWords} Wörter).
+4. LÄNGE: Exakt ~${targetWords} Wörter.${styleContext}
 
-Schreibe NUR das fertige Skript. Kein Kommentar, keine Erklärung drumherum. Formatiere es mit Zeilenumbrüchen für natürliche Sprechpausen.`;
+Schreibe NUR das fertige Skript. Kein Kommentar drumherum. Zeilenumbrüche für Sprechpausen.`;
 
-    const result = await base44.integrations.Core.InvokeLLM({
-      prompt,
-      model: "claude_sonnet_4_6"
-    });
-
+    const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
     set("script", result);
     setGeneratingScript(false);
+  };
+
+  // Handle text selection in the script textarea
+  const handleScriptMouseUp = () => {
+    const textarea = scriptRef.current;
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value.substring(start, end).trim();
+
+    if (text.length > 3) {
+      const rect = textarea.getBoundingClientRect();
+      // Position popup near the selection
+      setSelection({ text, start, end });
+      setRefinePopup({ x: rect.left + rect.width / 2, y: rect.top + 10 });
+      setRefinePrompt("");
+    } else {
+      setSelection(null);
+      setRefinePopup(null);
+    }
+  };
+
+  const handleRefine = async () => {
+    if (!selection || !refinePrompt.trim()) return;
+    setRefining(true);
+
+    const recentScripts = await getRecentScripts();
+    const styleContext = recentScripts.length > 0
+      ? `\n\nSTIL-REFERENZ (letzte ${recentScripts.length} Skripte – halte diesen Sprachstil bei):\n${recentScripts.map((s, i) => `--- Skript ${i + 1} ---\n${s}`).join("\n\n")}`
+      : "";
+
+    const prompt = `Du überarbeitest eine markierte Textpassage aus einem Instagram-Kurzvideos-Skript.
+
+VOLLSTÄNDIGES SKRIPT (Kontext):
+${form.script}
+
+MARKIERTE PASSAGE die überarbeitet werden soll:
+"${selection.text}"
+
+ANWEISUNG DES NUTZERS: ${refinePrompt}
+
+WICHTIG: Gib NUR den überarbeiteten Text für die markierte Passage zurück. Kein Kommentar, keine Erklärung. Gleiche Länge wie das Original anstreben.${styleContext}`;
+
+    const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
+
+    // Replace the selected passage in the script
+    const newScript = form.script.substring(0, selection.start) + result.trim() + form.script.substring(selection.end);
+    set("script", newScript);
+
+    setRefining(false);
+    setSelection(null);
+    setRefinePopup(null);
+    setRefinePrompt("");
   };
 
   const isSlideshow = form.type === "Slideshow" || form.type === "Carousel";
@@ -281,7 +325,10 @@ Schreibe NUR das fertige Skript. Kein Kommentar, keine Erklärung drumherum. For
           ) : (
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="label-xs">📝 Skript</label>
+                <label className="label-xs">
+                  📝 Skript
+                  {form.script && <span className="ml-2 text-black/30 normal-case font-normal">· Text markieren zum Überarbeiten</span>}
+                </label>
                 {(form.hook || form.topic_info) && (
                   <button type="button" onClick={generateScript} disabled={generatingScript}
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-600 text-white rounded-lg text-xs font-semibold hover:bg-purple-700 transition disabled:opacity-60">
@@ -289,9 +336,42 @@ Schreibe NUR das fertige Skript. Kein Kommentar, keine Erklärung drumherum. For
                   </button>
                 )}
               </div>
-              <textarea value={form.script || ""} onChange={e => set("script", e.target.value)}
-                rows={8} placeholder="Skript hier eingeben oder oben mit Claude generieren lassen..."
-                className="input-field resize-none font-mono text-sm" />
+
+              {/* Refine popup */}
+              {refinePopup && selection && (
+                <div className="mb-2 bg-purple-50 border border-purple-200 rounded-xl p-3">
+                  <p className="text-xs text-purple-700 font-semibold mb-1.5">
+                    ✏️ Markiert: <span className="font-normal italic">„{selection.text.length > 60 ? selection.text.substring(0, 60) + "…" : selection.text}"</span>
+                  </p>
+                  <div className="flex gap-2">
+                    <input
+                      value={refinePrompt}
+                      onChange={e => setRefinePrompt(e.target.value)}
+                      onKeyDown={e => e.key === "Enter" && handleRefine()}
+                      placeholder="Was soll Claude ändern? z.B. 'mehr Spannung', 'kürzer', 'direkter'"
+                      autoFocus
+                      className="flex-1 border border-purple-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+                    />
+                    <button onClick={handleRefine} disabled={refining || !refinePrompt.trim()}
+                      className="flex items-center gap-1 px-3 py-1.5 bg-purple-600 text-white rounded-lg text-xs font-semibold hover:bg-purple-700 transition disabled:opacity-50">
+                      {refining ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Wand2 className="w-3.5 h-3.5" />}
+                    </button>
+                    <button onClick={() => { setSelection(null); setRefinePopup(null); }}
+                      className="px-2 py-1.5 text-purple-400 hover:text-purple-600 text-xs">✕</button>
+                  </div>
+                </div>
+              )}
+
+              <textarea
+                ref={scriptRef}
+                value={form.script || ""}
+                onChange={e => set("script", e.target.value)}
+                onMouseUp={handleScriptMouseUp}
+                onKeyUp={handleScriptMouseUp}
+                rows={10}
+                placeholder="Skript hier eingeben oder oben mit Claude generieren lassen..."
+                className="input-field resize-none font-mono text-sm"
+              />
             </div>
           )}
 
