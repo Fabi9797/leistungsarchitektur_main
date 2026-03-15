@@ -336,6 +336,9 @@ export default function NutritionStrategy832() {
               <button onClick={() => setEditMode(true)} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 14px", background: "rgba(255,255,255,0.15)", color: "white", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "8px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
                 <Pencil size={12} /> Bearbeiten
               </button>
+              <button onClick={() => setShowEmailModal(true)} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 14px", background: "rgba(255,255,255,0.15)", color: "white", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "8px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
+                <Mail size={12} /> E-Mail senden
+              </button>
               <button onClick={() => window.print()} style={{ display: "flex", alignItems: "center", gap: "6px", padding: "6px 14px", background: "white", color: C.indigo, border: "none", borderRadius: "8px", fontSize: "12px", fontWeight: 700, cursor: "pointer" }}>
                 <Printer size={12} /> Als PDF
               </button>
