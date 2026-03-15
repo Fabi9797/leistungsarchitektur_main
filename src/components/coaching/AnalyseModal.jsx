@@ -38,7 +38,7 @@ const STEPS = [
 
 export default function AnalyseModal({ onClose }) {
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState({ 3: { selected: [], other: "" } });
+  const [answers, setAnswers] = useState({ 3: { selected: [], other: "" }, 5: { name: "", phone: "", email: "", consent: false } });
   const [done, setDone] = useState(false);
 
   const current = STEPS[step];
