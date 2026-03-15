@@ -1,8 +1,10 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Shield } from "lucide-react";
+import AnalyseModal from "./AnalyseModal";
 
 export default function FinalCTA() {
+  const [showModal, setShowModal] = useState(false);
   return (
     <section id="analyse" className="py-16 lg:py-32 bg-[#F0EAD6] relative overflow-hidden">
       {/* Subtle decorative line */}
