@@ -64,6 +64,7 @@ export default function Clients832() {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({});
   const [openSection, setOpenSection] = useState("Stammdaten");
+  const [editingClient, setEditingClient] = useState(null);
   const [supplementPlans, setSupplementPlans] = useState([]);
   const [nutritionStrategies, setNutritionStrategies] = useState([]);
 
