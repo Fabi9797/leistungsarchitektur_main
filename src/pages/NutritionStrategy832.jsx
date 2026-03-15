@@ -369,6 +369,7 @@ export default function NutritionStrategy832() {
         <EmailNutritionModal
           draft={draft}
           strategyId={entityId.current}
+          defaultEmail={clientEmail}
           onClose={() => setShowEmailModal(false)}
         />
       )}
