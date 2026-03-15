@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { X, Send, Loader2 } from "lucide-react";
+import { X, Send, Loader2, AlertCircle } from "lucide-react";
 
 const C = { indigo: "#00416A", egg: "#F0EAD6" };
 
