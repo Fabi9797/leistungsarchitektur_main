@@ -85,10 +85,23 @@ export default function Clients832() {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    await base44.entities.ClientProfile.create(form);
+    if (editingClient) {
+      await base44.entities.ClientProfile.update(editingClient.id, form);
+      setEditingClient(null);
+    } else {
+      await base44.entities.ClientProfile.create(form);
+    }
     setForm({});
     setShowForm(false);
     load();
+  };
+
+  const handleEdit = (client) => {
+    setEditingClient(client);
+    setForm({ ...client });
+    setOpenSection("Stammdaten");
+    setShowForm(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleDelete = async (id) => {
