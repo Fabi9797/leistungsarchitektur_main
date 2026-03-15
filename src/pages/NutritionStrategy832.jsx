@@ -220,6 +220,7 @@ export default function NutritionStrategy832() {
   const [draft, setDraft] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
   const entityId = useRef(null);
 
   useEffect(() => {
