@@ -4,8 +4,8 @@ import { X, Send, Loader2 } from "lucide-react";
 
 const C = { indigo: "#00416A", egg: "#F0EAD6" };
 
-export default function EmailNutritionModal({ draft, strategyId, onClose }) {
-  const [email, setEmail] = useState("");
+export default function EmailNutritionModal({ draft, strategyId, defaultEmail = "", onClose }) {
+  const [email, setEmail] = useState(defaultEmail);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
