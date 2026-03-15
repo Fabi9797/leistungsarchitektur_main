@@ -184,9 +184,9 @@ export default function Clients832() {
 
         {activeTab === "clients" && loading ? (
           <p className="text-black/30 text-sm text-center py-10">Laden...</p>
-        ) : clients.length === 0 ? (
+        ) : activeTab === "clients" && clients.length === 0 ? (
           <div className="text-center py-20 text-black/30 text-sm">Noch keine Profile vorhanden.</div>
-        ) : (
+        ) : activeTab === "clients" ? (
           <div className="space-y-3">
             {clients.map(c => (
               <div key={c.id} className="bg-white rounded-2xl px-5 py-4 shadow-sm">
