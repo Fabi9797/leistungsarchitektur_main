@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { base44 } from "@/api/base44Client";
-import { Printer, Pencil, Check, X, Plus, Trash2, Sparkles, Loader2, ArrowUp, ArrowDown } from "lucide-react";
+import { Printer, Pencil, Check, X, Plus, Trash2, Sparkles, Loader2, ArrowUp, ArrowDown, Mail } from "lucide-react";
+import EmailNutritionModal from "@/components/content/EmailNutritionModal";
 
 const DEFAULT_ORDER = ["morgens", "mittags", "snack", "abend"];
 const SECTION_LABELS = { morgens: "Morgens", mittags: "Mittags", snack: "Snack", abend: "Abends" };
