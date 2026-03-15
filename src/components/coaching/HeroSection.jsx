@@ -1,6 +1,7 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import AnalyseModal from "./AnalyseModal";
 
 const bullets = [
   "Verstehe, welche Faktoren bei dir wirklich über Abnehmen oder Stillstand entscheiden.",
