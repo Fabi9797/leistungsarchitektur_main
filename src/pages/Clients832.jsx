@@ -6,8 +6,14 @@ import ClientDocuments from "../components/clients/ClientDocuments";
 import LeadsSection from "../components/clients/LeadsSection";
 
 const FIELDS = [
-  { section: "Person", fields: [
+  { section: "Stammdaten", fields: [
     { key: "name", label: "Name", required: true },
+    { key: "email", label: "E-Mail" },
+    { key: "telefon", label: "Telefon / WhatsApp" },
+    { key: "geburtstag", label: "Geburtstag", type: "date" },
+    { key: "instagram", label: "Instagram" },
+  ]},
+  { section: "Person", fields: [
     { key: "alter", label: "Alter", type: "number" },
     { key: "groesse", label: "Größe (cm)", type: "number" },
     { key: "gewicht", label: "Gewicht (kg)", type: "number" },
