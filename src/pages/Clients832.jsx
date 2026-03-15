@@ -238,6 +238,9 @@ export default function Clients832() {
                     >
                       <Eye className="w-4 h-4" /> Fact Sheet
                     </a>
+                    <button onClick={() => handleEdit(c)} className="p-2 text-black/20 hover:text-[#00416A] transition">
+                      <Pencil className="w-4 h-4" />
+                    </button>
                     <button onClick={() => handleDelete(c.id)} className="p-2 text-black/20 hover:text-red-500 transition">
                       <Trash2 className="w-4 h-4" />
                     </button>
