@@ -258,6 +258,47 @@ WICHTIG: Gib NUR den überarbeiteten Text für die markierte Passage zurück. Ke
     setRefinePrompt("");
   };
 
+  const generateSlides = async () => {
+    if (!form.hook && !form.topic_info) return;
+    setGeneratingSlides(true);
+
+    const prompt = `Du bist ein Experte für virale Instagram-Karussell-Slideshows. Erstelle eine textbasierte Slideshow nach folgendem Framework.
+
+HOOK (Slide 1): "${form.hook || "(kein Hook)"}"
+THEMA / WEITERE INFOS: "${form.topic_info || "(keine weiteren Infos)"}"
+KATEGORIE: ${form.category}
+
+FRAMEWORK für eine virale Slideshow (strikt einhalten):
+
+Slide 1 – HOOK: Nutze den Hook exakt so wie angegeben. Wenn er eine Aussage wie "Morgen geht's los!" enthält, schreibe sie mit ~~Durchstreichung~~ (z.B. "~~Morgen geht's los!~~") und füge darunter eine kurze provokante Gegenfrage oder Aussage hinzu. Max 2 Zeilen.
+
+Slide 2 – PROBLEM ENTLARVEN: Benenne das Kernproblem direkt und emotional. 2-3 kurze Sätze.
+
+Slide 3 – DIE KOSTEN: 3-4 konkrete negative Folgen als Aufzählung. Jede Zeile mit einem ❌ davor.
+
+Slide 4 – PSYCHOLOGIE / WARUM: Schafft Empathie und Verständnis. 2-3 Sätze. Kein Vorwurf.
+
+Slide 5 – DIE LÖSUNG: Konkrete, einfache Handlung. Ein Schlüsselwort in GROSSBUCHSTABEN. Max 3 Sätze.
+
+Slide 6 – MINDSET / MOMENTUM: Eine kraftvolle Aussage oder Zitat-Stil. 1-2 Sätze.
+
+Slide 7 – TRANSFORMATION: Das Wunschbild malen. 3-4 Stichworte oder kurze Sätze, die das positive Ergebnis beschreiben.
+
+Slide 8 – CTA: Direkte Frage ans Publikum für Kommentare ODER Aufforderung zu speichern/teilen. Kurz und klar. + Hinweis auf "Link in Bio" falls passend.
+
+WICHTIG:
+- Jeder Slide-Text kommt auf eine eigene Zeile, getrennt durch "---SLIDE---"
+- Kein Kommentar, keine Nummerierung, nur der reine Slide-Text
+- Kurz und lesbar: max 40 Wörter pro Slide
+- Direkte "du"-Ansprache
+- Starte NIEMALS einen Slide mit "Ich"`;
+
+    const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
+    const slides = result.split("---SLIDE---").map(s => s.trim()).filter(s => s.length > 2);
+    set("slideshow_slides", slides);
+    setGeneratingSlides(false);
+  };
+
   const isSlideshow = form.type === "Slideshow" || form.type === "Carousel";
 
   return (
