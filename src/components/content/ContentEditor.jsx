@@ -135,6 +135,31 @@ export default function ContentEditor({ piece, onClose, onSaved }) {
     doc.save(`${(form.title || "content").replace(/\s+/g, "_")}.pdf`);
   };
 
+  const generateHookSuggestions = async () => {
+    setGeneratingHooks(true);
+    setHookSuggestions([]);
+    const prompt = `Du bist ein Experte für Instagram-Kurzvideos. Generiere 3 alternative Hook-Formulierungen für folgendes Thema.
+
+AKTUELLER HOOK: "${form.hook || "(noch kein Hook)"}"
+THEMA / INFOS: "${form.topic_info || "(keine weiteren Infos)"}"
+CONTENT-ART: ${form.type}
+KATEGORIE: ${form.category}
+
+HOOK-LEITFADEN (strikt einhalten):
+- Starte NIEMALS mit "Ich"
+- Erzeuge sofort Widerspruch, Reibung oder Neugier
+- Sprich den Zuschauer direkt an ("du") oder stelle eine provokante Behauptung auf
+- Max. 1-2 kurze Sätze
+- Jeder Hook soll einen anderen Ansatz nutzen: z.B. Provokation, Frage, Fehler aufdecken, überraschendes Fact
+
+Antworte mit genau 3 Hooks, einer pro Zeile, ohne Nummerierung oder Erklärung.`;
+
+    const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
+    const lines = result.split("\n").map(l => l.trim()).filter(l => l.length > 5).slice(0, 3);
+    setHookSuggestions(lines);
+    setGeneratingHooks(false);
+  };
+
   const generateScript = async () => {
     if (!form.hook && !form.topic_info) return;
     setGeneratingScript(true);
