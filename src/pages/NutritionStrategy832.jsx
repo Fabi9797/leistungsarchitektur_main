@@ -357,6 +357,14 @@ export default function NutritionStrategy832() {
         </div>
       </div>
 
+      {showEmailModal && (
+        <EmailNutritionModal
+          draft={draft}
+          strategyId={entityId.current}
+          onClose={() => setShowEmailModal(false)}
+        />
+      )}
+
       <div className="print-wrapper" style={{ background: "#e8e2d0", padding: "40px 20px" }}>
 
         {/* SEITE 1: Cover + Warum */}
