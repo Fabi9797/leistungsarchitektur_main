@@ -135,6 +135,56 @@ export default function ContentEditor({ piece, onClose, onSaved }) {
     doc.save(`${(form.title || "content").replace(/\s+/g, "_")}.pdf`);
   };
 
+  const generateScript = async () => {
+    if (!form.hook && !form.topic_info) return;
+    setGeneratingScript(true);
+
+    const durationSeconds = parseInt((form.video_duration || "60 Sek").replace(" Sek", ""));
+    const wordsPerMinute = 130;
+    const targetWords = Math.round((durationSeconds / 60) * wordsPerMinute);
+
+    const prompt = `Du bist ein Experte für Instagram-Kurzvideos und schreibst Skripte nach einem präzisen Framework. 
+
+HOOK (bereits festgelegt): "${form.hook || "(kein Hook angegeben)"}"
+THEMA / WEITERE INFOS: "${form.topic_info || "(keine weiteren Infos)"}"
+CONTENT-ART: ${form.type}
+KATEGORIE: ${form.category}
+VIDEOLÄNGE: ${form.video_duration} (ca. ${targetWords} Wörter)
+
+FRAMEWORK das du STRIKT befolgen musst:
+
+1. STRUKTUR (Aber/Deshalb-Methode nach Trey Parker & Matt Stone):
+   - Hook (0-3 Sek): Nutze den vorgegebenen Hook. Muss Widerspruch/Reibung erzeugen. Starte NICHT mit "Ich".
+   - Aber (3-10 Sek): Konflikt/Fehler sichtbar machen → "Viele glauben ..., aber ..."
+   - Deshalb (10-20 Sek): Konsequenz/Lösung liefern → "Deshalb machst du ..."
+   - Neues Aber (20-35 Sek): Einwand vorwegnehmen → "Aber Achtung: ..."
+   - Finales Deshalb (35-50 Sek): Auflösung, Rahmen schließen
+   - CTA (letzte 5-10 Sek): Konkrete Handlungsaufforderung
+
+2. RHETORIK-WERKZEUGKASTEN (alle einbauen):
+   - Kontraste: alt vs. neu, falsch vs. richtig, vorher vs. nachher
+   - Direkte Ansprache mit "du"
+   - Mindestens eine rhetorische Frage
+   - Einwände antizipieren und führen
+   - Beispiele und bildhafte Vergleiche
+   - Triaden (Dreieraufzählungen) wo passend
+   - Kurze und lange Sätze wechseln (Satzrhythmus)
+
+3. TONALITÄT: Klar, ruhig, authentisch, sicher. Keine Übertreibungen. Kompetent und menschlich.
+
+4. LÄNGE: Exakt auf ${form.video_duration} ausgelegt (~${targetWords} Wörter).
+
+Schreibe NUR das fertige Skript. Kein Kommentar, keine Erklärung drumherum. Formatiere es mit Zeilenumbrüchen für natürliche Sprechpausen.`;
+
+    const result = await base44.integrations.Core.InvokeLLM({
+      prompt,
+      model: "claude_sonnet_4_6"
+    });
+
+    set("script", result);
+    setGeneratingScript(false);
+  };
+
   const isSlideshow = form.type === "Slideshow" || form.type === "Carousel";
 
   return (
