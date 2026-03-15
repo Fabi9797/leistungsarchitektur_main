@@ -82,13 +82,16 @@ export default function HeroSection({ heroImage }) {
 
             {/* CTA */}
             <div className="mt-8 sm:mt-10">
-              <a
-                href="#analyse"
+              <button
+                onClick={() => setShowModal(true)}
                 className="group w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-3 px-8 py-4 bg-[#00416A] text-white text-base font-semibold rounded-xl hover:bg-[#003356] transition-all duration-300 shadow-lg shadow-[#00416A]/20 min-h-[52px]"
               >
                 Analyse starten
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </button>
+              <AnimatePresence>
+                {showModal && <AnalyseModal onClose={() => setShowModal(false)} />}
+              </AnimatePresence>
               <p className="mt-3 text-sm text-black/40 text-center sm:text-left">
                 2 Minuten · Finde heraus, ob mein Coaching für dich passt
               </p>
