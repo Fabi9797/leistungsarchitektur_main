@@ -280,9 +280,17 @@ Schreibe NUR das fertige Skript. Kein Kommentar, keine Erklärung drumherum. For
             </div>
           ) : (
             <div>
-              <label className="label-xs">📝 Skript</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="label-xs">📝 Skript</label>
+                {(form.hook || form.topic_info) && (
+                  <button type="button" onClick={generateScript} disabled={generatingScript}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-600 text-white rounded-lg text-xs font-semibold hover:bg-purple-700 transition disabled:opacity-60">
+                    {generatingScript ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Generiert...</> : <><Sparkles className="w-3.5 h-3.5" /> Mit Claude schreiben</>}
+                  </button>
+                )}
+              </div>
               <textarea value={form.script || ""} onChange={e => set("script", e.target.value)}
-                rows={8} placeholder="Schreibe dein vollständiges Skript hier..."
+                rows={8} placeholder="Skript hier eingeben oder oben mit Claude generieren lassen..."
                 className="input-field resize-none font-mono text-sm" />
             </div>
           )}
