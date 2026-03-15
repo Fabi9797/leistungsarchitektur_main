@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
+import AdminNav from '@/components/AdminNav';
 import SupplementAdmin832 from './pages/SupplementAdmin832';
 import SupplementStrategy832 from './pages/SupplementStrategy832';
 import ContentPlanning832 from './pages/ContentPlanning832';
