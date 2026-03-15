@@ -153,7 +153,7 @@ export default function Clients832() {
         {activeTab === "clients" && showForm && (
           <form onSubmit={handleCreate} className="bg-white rounded-2xl shadow-sm mb-8 overflow-hidden">
             <div className="px-6 py-5 border-b border-black/8">
-              <h2 className="text-base font-bold text-[#00416A]">Neues Kundenprofil erstellen</h2>
+              <h2 className="text-base font-bold text-[#00416A]">{editingClient ? `${editingClient.name} bearbeiten` : "Neues Kundenprofil erstellen"}</h2>
             </div>
             {FIELDS.map(({ section, fields }) => (
               <div key={section} className="border-b border-black/5 last:border-0">
