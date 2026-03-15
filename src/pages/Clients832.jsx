@@ -246,7 +246,7 @@ export default function Clients832() {
               </div>
             ))}
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );
