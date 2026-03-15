@@ -102,11 +102,29 @@ export default function Clients832() {
             <h1 className="text-2xl font-bold text-[#00416A]">Kundenprofile</h1>
             <p className="text-xs text-black/40 mt-1 uppercase tracking-widest">Intern · Leistungsarchitektur</p>
           </div>
+          {activeTab === "clients" && (
+            <button
+              onClick={() => setShowForm(!showForm)}
+              className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white rounded-xl text-sm font-semibold hover:bg-[#003356] transition"
+            >
+              <Plus className="w-4 h-4" /> Neuer Kunde
+            </button>
+          )}
+        </div>
+
+        {/* Tabs */}
+        <div className="flex gap-1 mb-6 bg-black/5 rounded-xl p-1">
           <button
-            onClick={() => setShowForm(!showForm)}
-            className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white rounded-xl text-sm font-semibold hover:bg-[#003356] transition"
+            onClick={() => setActiveTab("clients")}
+            className={`flex items-center gap-2 flex-1 justify-center px-4 py-2.5 rounded-lg text-sm font-semibold transition ${activeTab === "clients" ? "bg-white text-[#00416A] shadow-sm" : "text-black/40 hover:text-black/60"}`}
           >
-            <Plus className="w-4 h-4" /> Neuer Kunde
+            <Users className="w-4 h-4" /> Kunden
+          </button>
+          <button
+            onClick={() => setActiveTab("leads")}
+            className={`flex items-center gap-2 flex-1 justify-center px-4 py-2.5 rounded-lg text-sm font-semibold transition ${activeTab === "leads" ? "bg-white text-[#00416A] shadow-sm" : "text-black/40 hover:text-black/60"}`}
+          >
+            <UserPlus className="w-4 h-4" /> Leads
           </button>
         </div>
 
