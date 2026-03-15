@@ -16,73 +16,20 @@ export default function EmailNutritionModal({ draft, strategyId, defaultEmail = 
     if (!email.trim()) return;
     setSending(true);
 
-    const body = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="margin:0;padding:0;background:#f5f0e8;font-family:'Inter',Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f0e8;padding:40px 20px;">
-    <tr>
-      <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+    const body = `Hallo ${firstName},
 
-          <!-- Header -->
-          <tr>
-            <td style="background:#00416A;border-radius:12px 12px 0 0;padding:32px 40px;">
-              <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.45);">Leistungsarchitektur</p>
-              <h1 style="margin:8px 0 0;font-size:26px;font-weight:800;color:white;line-height:1.2;">Deine individuelle<br>Ernährungsstrategie</h1>
-            </td>
-          </tr>
+hier ist Version ${draft.version} deiner individuellen Ernährungsstrategie – speziell auf dein Ziel und deine Ausgangssituation zugeschnitten.
 
-          <!-- Body -->
-          <tr>
-            <td style="background:white;padding:36px 40px;">
-              <p style="margin:0 0 20px;font-size:15px;color:#333;line-height:1.7;">Hallo ${firstName},</p>
-              <p style="margin:0 0 20px;font-size:15px;color:#333;line-height:1.7;">
-                hier ist die <strong>Version ${draft.version}</strong> deiner individuellen Ernährungsstrategie – speziell auf dein Ziel und deine Ausgangssituation zugeschnitten.
-              </p>
-              <p style="margin:0 0 28px;font-size:15px;color:#333;line-height:1.7;">
-                Du findest darin deine Kalorienziele (${draft.kalorien_ziel} kcal), dein Proteinziel (${draft.protein_ziel}g), deine Mahlzeitenstruktur sowie konkrete Essensoptionen für jeden Tagesabschnitt.
-              </p>
+Kalorienziel: ${draft.kalorien_ziel} kcal
+Proteinziel: ${draft.protein_ziel}g
 
-              <!-- CTA Button -->
-              <table cellpadding="0" cellspacing="0" style="margin:0 0 32px;">
-                <tr>
-                  <td style="background:#00416A;border-radius:8px;padding:14px 28px;">
-                    <a href="${strategyUrl}" style="color:white;font-size:14px;font-weight:700;text-decoration:none;letter-spacing:0.03em;">
-                      → Ernährungsstrategie öffnen
-                    </a>
-                  </td>
-                </tr>
-              </table>
+Hier kannst du deine vollständige Strategie einsehen:
+${strategyUrl}
 
-              <hr style="border:none;border-top:1px solid rgba(0,0,0,0.08);margin:0 0 24px;">
+Bei Fragen melde dich jederzeit.
+Viel Erfolg & beste Grüße
 
-              <p style="margin:0 0 8px;font-size:13px;color:#888;line-height:1.6;">
-                Lies dir die Strategie in Ruhe durch. Bei Fragen melde dich jederzeit.
-              </p>
-              <p style="margin:0;font-size:13px;color:#888;line-height:1.6;">
-                Viel Erfolg & beste Grüße 💪
-              </p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="background:#F0EAD6;border-radius:0 0 12px 12px;padding:20px 40px;">
-              <p style="margin:0;font-size:10px;color:rgba(0,65,106,0.5);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;">Leistungsarchitektur · Vertraulich</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
+– Leistungsarchitektur`;
 
     await base44.integrations.Core.SendEmail({
       to: email.trim(),
