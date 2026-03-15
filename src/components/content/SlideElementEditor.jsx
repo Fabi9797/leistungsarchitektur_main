@@ -307,7 +307,14 @@ export default function SlideElementEditor({ slide, slideNumber, onChange }) {
 
       {/* Preview + element list */}
       <div className="flex gap-3">
-        <SlidePreview elements={elements} selectedId={selectedId} onSelect={setSelectedId} />
+        <SlidePreview
+          elements={elements}
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+          onMove={(id, x, y) => {
+            updateElements(elements.map(el => el.id === id ? { ...el, x, y } : el));
+          }}
+        />
 
         {/* Element list */}
         <div className="flex-1 space-y-1.5 min-w-0">
