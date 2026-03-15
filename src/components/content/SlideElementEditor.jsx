@@ -232,27 +232,7 @@ function ElementControls({ el, onChange, onDelete }) {
         </div>
       </div>
 
-      {/* Position */}
-      <div className="flex gap-3">
-        <div className="flex flex-col gap-0.5 flex-1">
-          <span className="text-[10px] text-black/40 font-semibold uppercase">Position X (%)</span>
-          <input
-            type="range" min={5} max={95} value={el.x}
-            onChange={e => onChange({ ...el, x: Number(e.target.value) })}
-            className="w-full accent-blue-500"
-          />
-          <span className="text-[10px] text-black/40 text-center">{el.x}%</span>
-        </div>
-        <div className="flex flex-col gap-0.5 flex-1">
-          <span className="text-[10px] text-black/40 font-semibold uppercase">Position Y (%)</span>
-          <input
-            type="range" min={5} max={95} value={el.y}
-            onChange={e => onChange({ ...el, y: Number(e.target.value) })}
-            className="w-full accent-blue-500"
-          />
-          <span className="text-[10px] text-black/40 text-center">{el.y}%</span>
-        </div>
-      </div>
+      <p className="text-[10px] text-black/30 italic">↖ Element in der Vorschau links verschieben</p>
     </div>
   );
 }
