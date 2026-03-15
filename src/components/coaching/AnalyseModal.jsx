@@ -58,6 +58,10 @@ export default function AnalyseModal({ onClose }) {
       const a = getAnswer();
       return a.selected.length > 0 || a.other.trim().length > 0;
     }
+    if (current.type === "contact") {
+      const a = getAnswer();
+      return a.name.trim().length > 0 && a.phone.trim().length > 0 && a.email.trim().length > 0 && a.consent;
+    }
     return (getAnswer() || "").trim().length > 0;
   };
 
