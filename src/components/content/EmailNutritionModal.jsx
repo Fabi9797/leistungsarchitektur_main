@@ -16,30 +16,34 @@ export default function EmailNutritionModal({ draft, strategyId, defaultEmail = 
   const handleSend = async () => {
     if (!email.trim()) return;
     setSending(true);
+    setError("");
 
-    const body = `Hallo ${firstName},
+    try {
+      const body = `Hallo ${firstName},
 
-hier ist Version ${draft.version} deiner individuellen Ernährungsstrategie – speziell auf dein Ziel und deine Ausgangssituation zugeschnitten.
+hier ist Version ${draft.version} deiner individuellen Ernaehrungsstrategie.
 
 Kalorienziel: ${draft.kalorien_ziel} kcal
 Proteinziel: ${draft.protein_ziel}g
 
-Hier kannst du deine vollständige Strategie einsehen:
+Strategie ansehen:
 ${strategyUrl}
 
-Bei Fragen melde dich jederzeit.
-Viel Erfolg & beste Grüße
+Viel Erfolg!
+Leistungsarchitektur`;
 
-– Leistungsarchitektur`;
+      await base44.integrations.Core.SendEmail({
+        to: email.trim(),
+        subject: `Ernaehrungsstrategie v${draft.version} - ${draft.client_name}`,
+        body,
+      });
 
-    await base44.integrations.Core.SendEmail({
-      to: email.trim(),
-      subject: `Deine Ernährungsstrategie v${draft.version} – ${draft.client_name}`,
-      body,
-    });
-
-    setSending(false);
-    setSent(true);
+      setSent(true);
+    } catch (err) {
+      setError(err?.message || "Fehler beim Senden. Bitte versuche es erneut.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
