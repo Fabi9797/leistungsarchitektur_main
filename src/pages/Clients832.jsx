@@ -195,7 +195,7 @@ export default function Clients832() {
               <button type="submit" className="px-5 py-2 bg-[#00416A] text-white rounded-xl text-sm font-semibold hover:bg-[#003356] transition">
                 Speichern
               </button>
-              <button type="button" onClick={() => setShowForm(false)} className="px-5 py-2 border border-black/10 rounded-xl text-sm text-black/50 hover:bg-white transition">
+              <button type="button" onClick={() => { setShowForm(false); setEditingClient(null); setForm({}); }} className="px-5 py-2 border border-black/10 rounded-xl text-sm text-black/50 hover:bg-white transition">
                 Abbrechen
               </button>
             </div>
