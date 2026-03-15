@@ -291,7 +291,15 @@ WICHTIG:
 - Kein Kommentar, keine Nummerierung, nur der reine Slide-Text
 - Kurz und lesbar: max 40 Wörter pro Slide
 - Direkte "du"-Ansprache
-- Starte NIEMALS einen Slide mit "Ich"`;
+- Starte NIEMALS einen Slide mit "Ich"
+
+ANTI-KI-REGELN (unbedingt einhalten):
+- Keine KI-Floskeln: niemals "Stell dir vor", "Das ist der Schlüssel", "Es ist an der Zeit", "Auf deiner Reise", "Lass uns", "Im heutigen schnelllebigen..."
+- Keine aufgeblasenen Phrasen – sag es direkt und kurz
+- Klingt wie ein Mensch der redet, nicht wie ein Ratgeber-Blog
+- Keine Emojis außer wo explizit im Framework angegeben (❌, ✅)
+- Kein "du schaffst das!" oder Motivations-Poster-Sprache
+- Konkret statt abstrakt: echte Situationen, echte Gefühle`;
 
     const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
     const rawSlides = result.split("---SLIDE---").map(s => s.trim()).filter(s => s.length > 2);
