@@ -32,11 +32,12 @@ ${strategyUrl}
 Viel Erfolg!
 Leistungsarchitektur`;
 
-      await base44.integrations.Core.SendEmail({
+      const res = await base44.functions.invoke('sendEmail', {
         to: email.trim(),
         subject: `Ernaehrungsstrategie v${draft.version} - ${draft.client_name}`,
         body,
       });
+      if (res.data?.error) throw new Error(res.data.error);
 
       setSent(true);
     } catch (err) {
