@@ -2,52 +2,42 @@ import React, { useRef } from "react";
 import { base44 } from "@/api/base44Client";
 import { Sparkles, Loader2, Trash2, Plus, Image, GripVertical } from "lucide-react";
 
-// Draws a single slide as PNG (4:5 ratio = 1080x1350) and triggers download
-function downloadSlideAsPng(text, slideNumber) {
-  const W = 1080;
-  const H = 1350;
-  const canvas = document.createElement("canvas");
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext("2d");
+// List item prefixes that should each start on their own line
+const LIST_PREFIXES = ["❌", "✅", "✓", "•", "-", "→", "▪", "◆", "⚡", "🔥", "💡", "⚠️", "👉", "✔️"];
 
-  // White background
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, W, H);
-
-  // Slide number (top left, subtle)
-  ctx.fillStyle = "#cccccc";
-  ctx.font = "bold 36px Inter, Arial, sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`${slideNumber}`, 80, 80);
-
-  // Main text – centered, Inter, black
-  const padding = 100;
-  const maxWidth = W - padding * 2;
-  const lines = wrapText(ctx, text, maxWidth, "52px Inter, Arial, sans-serif");
-  const lineHeight = 72;
-  const totalHeight = lines.length * lineHeight;
-  let y = (H - totalHeight) / 2 + 52 / 2;
-
-  ctx.fillStyle = "#111111";
-  ctx.font = "52px Inter, Arial, sans-serif";
-  ctx.textAlign = "center";
-  lines.forEach(line => {
-    ctx.fillText(line, W / 2, y);
-    y += lineHeight;
-  });
-
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `slide_${slideNumber}.png`;
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+function isListItem(line) {
+  return LIST_PREFIXES.some(p => line.trimStart().startsWith(p));
 }
 
-function wrapText(ctx, text, maxWidth, font) {
+// Split text into logical lines: respect \n AND split on list-item prefixes inline
+function splitIntoLogicalLines(text) {
+  // First split by newlines
+  const rawLines = text.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+  const result = [];
+  for (const rawLine of rawLines) {
+    // Further split a single line that has multiple list items jammed together
+    // e.g. "❌ foo ❌ bar" → ["❌ foo", "❌ bar"]
+    let remaining = rawLine;
+    let found = true;
+    while (found) {
+      found = false;
+      for (const prefix of LIST_PREFIXES) {
+        // Find a second occurrence of the prefix (after the first char)
+        const idx = remaining.indexOf(prefix, 1);
+        if (idx > 0) {
+          result.push(remaining.substring(0, idx).trim());
+          remaining = remaining.substring(idx).trim();
+          found = true;
+          break;
+        }
+      }
+    }
+    if (remaining) result.push(remaining);
+  }
+  return result;
+}
+
+function wrapTextLine(ctx, text, maxWidth, font) {
   ctx.font = font;
   const words = text.split(" ");
   const lines = [];
@@ -63,6 +53,83 @@ function wrapText(ctx, text, maxWidth, font) {
   }
   if (current) lines.push(current);
   return lines;
+}
+
+// Draws a single slide as PNG (4:5 ratio = 1080x1350) and triggers download
+function downloadSlideAsPng(text, slideNumber) {
+  const W = 1080;
+  const H = 1350;
+  const canvas = document.createElement("canvas");
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d");
+
+  // White background
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, W, H);
+
+  // Slide number (top left, subtle)
+  ctx.fillStyle = "#cccccc";
+  ctx.font = "bold 30px Inter, Arial, sans-serif";
+  ctx.textAlign = "left";
+  ctx.fillText(`${slideNumber}`, 80, 80);
+
+  // Font size 15% smaller: 52 → 44
+  const fontSize = 44;
+  const font = `${fontSize}px Inter, Arial, sans-serif`;
+  const lineHeight = 62;
+  const padding = 110;
+  const maxWidth = W - padding * 2;
+
+  // Split text into logical lines (respects \n and inline list items)
+  const logicalLines = splitIntoLogicalLines(text);
+  const isList = logicalLines.length > 1 && logicalLines.some(isListItem);
+
+  // Wrap each logical line
+  const allWrappedLines = [];
+  for (const logLine of logicalLines) {
+    const wrapped = wrapTextLine(ctx, logLine, maxWidth, font);
+    allWrappedLines.push(...wrapped);
+    // Add small gap after each logical line (except last)
+    if (logicalLines.length > 1) allWrappedLines.push(null); // null = spacer
+  }
+  // Remove trailing spacer
+  while (allWrappedLines[allWrappedLines.length - 1] === null) allWrappedLines.pop();
+
+  // Calculate total height
+  const totalHeight = allWrappedLines.reduce((sum, l) => sum + (l === null ? lineHeight * 0.4 : lineHeight), 0);
+  let y = (H - totalHeight) / 2 + fontSize * 0.75;
+
+  ctx.fillStyle = "#111111";
+  ctx.font = font;
+
+  if (isList) {
+    // Left-aligned list layout
+    ctx.textAlign = "left";
+    const listX = padding;
+    allWrappedLines.forEach(line => {
+      if (line === null) { y += lineHeight * 0.4; return; }
+      ctx.fillText(line, listX, y);
+      y += lineHeight;
+    });
+  } else {
+    // Centered layout
+    ctx.textAlign = "center";
+    allWrappedLines.forEach(line => {
+      if (line === null) { y += lineHeight * 0.4; return; }
+      ctx.fillText(line, W / 2, y);
+      y += lineHeight;
+    });
+  }
+
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `slide_${slideNumber}.png`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
 }
 
 export default function SlideshowEditor({ form, set, generatingSlides, onGenerate }) {
