@@ -18,7 +18,8 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify({
         from: "Leistungsarchitektur <onboarding@resend.dev>",
-        to: [to],
+        to: ["contact@aichem.io"],
+        reply_to: to,
         subject,
         text: body,
       }),
