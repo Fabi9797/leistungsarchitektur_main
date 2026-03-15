@@ -188,6 +188,7 @@ export default function Clients832() {
           <div className="text-center py-20 text-black/30 text-sm">Noch keine Profile vorhanden.</div>
         ) : activeTab === "clients" ? (
           <div className="space-y-3">
+
             {clients.map(c => (
               <div key={c.id} className="bg-white rounded-2xl px-5 py-4 shadow-sm">
                 <div className="flex items-center justify-between">
