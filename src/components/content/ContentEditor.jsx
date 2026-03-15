@@ -306,10 +306,27 @@ WICHTIG: Gib NUR den überarbeiteten Text für die markierte Passage zurück. Ke
 
           {/* Hook + Topic Info + Duration */}
           <div>
-            <label className="label-xs">🎣 Hook</label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="label-xs">🎣 Hook</label>
+              <button type="button" onClick={generateHookSuggestions} disabled={generatingHooks}
+                className="flex items-center gap-1.5 px-2.5 py-1 bg-amber-500 text-white rounded-lg text-xs font-semibold hover:bg-amber-600 transition disabled:opacity-60">
+                {generatingHooks ? <><Loader2 className="w-3 h-3 animate-spin" /> ...</> : <><Sparkles className="w-3 h-3" /> 3 Ideen</>}
+              </button>
+            </div>
             <textarea value={form.hook || ""} onChange={e => set("hook", e.target.value)}
               rows={2} placeholder="Der erste Satz, der die Zuschauer fesselt..."
               className="input-field resize-none" />
+            {hookSuggestions.length > 0 && (
+              <div className="mt-2 space-y-1.5">
+                {hookSuggestions.map((h, i) => (
+                  <button key={i} type="button" onClick={() => { set("hook", h); setHookSuggestions([]); }}
+                    className="w-full text-left px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-900 hover:bg-amber-100 transition">
+                    <span className="text-amber-400 font-bold mr-2">{i + 1}.</span>{h}
+                  </button>
+                ))}
+                <button onClick={() => setHookSuggestions([])} className="text-xs text-black/30 hover:text-black/50">Schließen</button>
+              </div>
+            )}
           </div>
           <div>
             <label className="label-xs">💡 Weitere Infos zum Thema</label>
