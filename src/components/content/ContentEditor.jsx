@@ -233,12 +233,29 @@ Schreibe NUR das fertige Skript. Kein Kommentar, keine Erklärung drumherum. For
             </div>
           </div>
 
-          {/* Hook */}
+          {/* Hook + Topic Info + Duration */}
           <div>
             <label className="label-xs">🎣 Hook</label>
             <textarea value={form.hook || ""} onChange={e => set("hook", e.target.value)}
               rows={2} placeholder="Der erste Satz, der die Zuschauer fesselt..."
               className="input-field resize-none" />
+          </div>
+          <div>
+            <label className="label-xs">💡 Weitere Infos zum Thema</label>
+            <textarea value={form.topic_info || ""} onChange={e => set("topic_info", e.target.value)}
+              rows={3} placeholder="Fakten, Argumente, Kernbotschaft, was du vermitteln willst..."
+              className="input-field resize-none" />
+          </div>
+          <div>
+            <label className="label-xs">⏱ Videolänge</label>
+            <div className="flex gap-2 flex-wrap mt-1">
+              {VIDEO_DURATIONS.map(d => (
+                <button key={d} type="button" onClick={() => set("video_duration", d)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition ${form.video_duration === d ? "bg-[#00416A] text-white border-[#00416A]" : "bg-white text-black/50 border-black/10 hover:border-[#00416A]/40"}`}>
+                  {d}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Skript oder Bilder */}
