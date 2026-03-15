@@ -20,6 +20,7 @@ export default function ContentEditor({ piece, onClose, onSaved }) {
   const [uploading, setUploading] = useState(false);
   const [generatingScript, setGeneratingScript] = useState(false);
   const [generatingHooks, setGeneratingHooks] = useState(false);
+  const [generatingSlides, setGeneratingSlides] = useState(false);
   const [hookSuggestions, setHookSuggestions] = useState([]);
 
   // Selection-based refinement state
