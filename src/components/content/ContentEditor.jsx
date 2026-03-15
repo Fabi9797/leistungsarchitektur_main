@@ -17,6 +17,7 @@ export default function ContentEditor({ piece, onClose, onSaved }) {
   });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [generatingScript, setGeneratingScript] = useState(false);
 
   const set = (key, val) => setForm(p => ({ ...p, [key]: val }));
 
