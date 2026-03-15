@@ -13,11 +13,13 @@ Deno.serve(async (req) => {
 
     const text = `🔔 *Neuer Lead eingegangen!*\n\n👤 *Name:* ${lead.name || "–"}\n📞 *Telefon:* ${lead.phone || "–"}\n📧 *E-Mail:* ${lead.email || "–"}\n🎯 *Ziel:* ${lead.ziel || "–"}\n📌 *Status:* ${lead.status || "Neu"}`;
 
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: chatId, text, parse_mode: "Markdown" }),
     });
+    const tgJson = await tgRes.json();
+    console.log("Telegram response:", JSON.stringify(tgJson));
 
     return Response.json({ ok: true });
   } catch (error) {
