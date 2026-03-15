@@ -67,6 +67,7 @@ const AuthenticatedApp = () => {
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     <AdminNav />
+    </>
   );
 };
 
