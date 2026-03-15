@@ -127,6 +127,42 @@ export default function AnalyseModal({ onClose }) {
                   />
                 )}
 
+                {current.type === "contact" && (
+                  <div className="space-y-3">
+                    <input
+                      value={getAnswer().name}
+                      onChange={e => setAnswer({ ...getAnswer(), name: e.target.value })}
+                      placeholder="Vollständiger Name *"
+                      className="w-full border border-black/10 rounded-xl px-4 py-3 text-sm text-black placeholder:text-black/30 focus:outline-none focus:ring-2 focus:ring-[#00416A]/20"
+                    />
+                    <input
+                      value={getAnswer().phone}
+                      onChange={e => setAnswer({ ...getAnswer(), phone: e.target.value })}
+                      placeholder="Telefonnummer *"
+                      type="tel"
+                      className="w-full border border-black/10 rounded-xl px-4 py-3 text-sm text-black placeholder:text-black/30 focus:outline-none focus:ring-2 focus:ring-[#00416A]/20"
+                    />
+                    <input
+                      value={getAnswer().email}
+                      onChange={e => setAnswer({ ...getAnswer(), email: e.target.value })}
+                      placeholder="E-Mail-Adresse *"
+                      type="email"
+                      className="w-full border border-black/10 rounded-xl px-4 py-3 text-sm text-black placeholder:text-black/30 focus:outline-none focus:ring-2 focus:ring-[#00416A]/20"
+                    />
+                    <label className="flex items-start gap-3 cursor-pointer mt-4">
+                      <div
+                        onClick={() => setAnswer({ ...getAnswer(), consent: !getAnswer().consent })}
+                        className={`mt-0.5 w-5 h-5 rounded flex-shrink-0 border-2 flex items-center justify-center transition ${getAnswer().consent ? "bg-[#00416A] border-[#00416A]" : "border-black/20 bg-white"}`}
+                      >
+                        {getAnswer().consent && <div className="w-2.5 h-2 border-b-2 border-r-2 border-white rotate-45 mb-0.5" />}
+                      </div>
+                      <span className="text-xs text-black/50 leading-relaxed">
+                        Ich bin damit einverstanden, dass mich der Coach auf Basis meiner Angaben per Telefon oder E-Mail kontaktiert. *
+                      </span>
+                    </label>
+                  </div>
+                )}
+
                 {current.type === "multiselect" && (
                   <div className="space-y-3">
                     <div className="grid grid-cols-1 gap-2">
