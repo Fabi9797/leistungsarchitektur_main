@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { X, Download, Upload, Trash2, Plus } from "lucide-react";
+import { X, Download, Trash2, Plus, Sparkles, Loader2 } from "lucide-react";
 import { TypeBadge, CategoryBadge, StatusBadge } from "./ContentBadge";
 import jsPDF from "jspdf";
+
+const VIDEO_DURATIONS = ["15 Sek", "30 Sek", "45 Sek", "60 Sek", "90 Sek"];
 
 const TYPES = ["Reden", "B-Roll", "Slideshow", "Reel", "Story", "Carousel"];
 const CATEGORIES = ["Training", "Ernährung", "Supplements", "Steuerung"];
