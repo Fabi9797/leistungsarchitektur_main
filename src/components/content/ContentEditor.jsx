@@ -389,26 +389,14 @@ WICHTIG:
             </div>
           </div>
 
-          {/* Skript oder Bilder */}
+          {/* Skript oder Slideshow */}
           {isSlideshow ? (
-            <div>
-              <label className="label-xs">🖼 Slides / Bilder</label>
-              <div className="space-y-2 mt-1">
-                {(form.images || []).map((img, idx) => (
-                  <div key={idx} className="flex items-center gap-3 bg-black/3 rounded-xl p-3">
-                    <img src={img.url} alt="" className="w-16 h-16 rounded-lg object-cover flex-shrink-0" />
-                    <input value={img.caption || ""} onChange={e => updateCaption(idx, e.target.value)}
-                      placeholder="Bildunterschrift / Text auf Slide"
-                      className="flex-1 border border-black/10 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20" />
-                    <button onClick={() => removeImage(idx)} className="text-black/20 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
-                  </div>
-                ))}
-                <label className="flex items-center gap-2 cursor-pointer px-4 py-2.5 border-2 border-dashed border-black/15 rounded-xl text-sm text-black/40 hover:border-[#00416A]/40 hover:text-[#00416A] transition">
-                  <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
-                  {uploading ? <span>Uploading...</span> : <><Plus className="w-4 h-4" /> Bild hinzufügen</>}
-                </label>
-              </div>
-            </div>
+            <SlideshowEditor
+              form={form}
+              set={set}
+              generatingSlides={generatingSlides}
+              onGenerate={generateSlides}
+            />
           ) : (
             <div>
               <div className="flex items-center justify-between mb-1">
