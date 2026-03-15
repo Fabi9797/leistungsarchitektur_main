@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Trash2, Plus, ChevronDown, ChevronUp } from "lucide-react";
 
 const FONT_SIZES = [24, 32, 40, 48, 56, 64, 72, 96];
