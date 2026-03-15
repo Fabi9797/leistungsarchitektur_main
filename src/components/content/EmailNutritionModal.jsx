@@ -8,6 +8,7 @@ export default function EmailNutritionModal({ draft, strategyId, defaultEmail = 
   const [email, setEmail] = useState(defaultEmail);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
 
   const firstName = draft.client_name?.split(" ")[0] || draft.client_name || "du";
   const strategyUrl = `${window.location.origin}/NutritionStrategy832?id=${strategyId}`;
