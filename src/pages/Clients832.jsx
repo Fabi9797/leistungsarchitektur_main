@@ -52,6 +52,7 @@ const FIELDS = [
 ];
 
 export default function Clients832() {
+  const [activeTab, setActiveTab] = useState("clients");
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
