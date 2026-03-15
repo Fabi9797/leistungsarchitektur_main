@@ -66,6 +66,7 @@ const AuthenticatedApp = () => {
       <Route path="/ContentPlanning832" element={<LayoutWrapper currentPageName="ContentPlanning832"><ContentPlanning832 /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+    <AdminNav />
   );
 };
 
