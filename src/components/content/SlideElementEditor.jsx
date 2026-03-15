@@ -89,15 +89,42 @@ export function downloadSlideAsPng(elements, slideNumber) {
   });
 }
 
-// Preview component
-function SlidePreview({ elements, selectedId, onSelect }) {
-  const SCALE = 0.22; // preview scale
+// Preview component with drag support
+function SlidePreview({ elements, selectedId, onSelect, onMove }) {
+  const SCALE = 0.22;
   const W = 1080 * SCALE;
   const H = 1350 * SCALE;
+  const previewRef = React.useRef(null);
+  const draggingRef = React.useRef(null);
+
+  const handleMouseDown = (e, elId) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onSelect(elId);
+    draggingRef.current = elId;
+
+    const onMouseMove = (me) => {
+      if (!draggingRef.current || !previewRef.current) return;
+      const rect = previewRef.current.getBoundingClientRect();
+      const x = Math.min(95, Math.max(5, ((me.clientX - rect.left) / rect.width) * 100));
+      const y = Math.min(95, Math.max(5, ((me.clientY - rect.top) / rect.height) * 100));
+      onMove(draggingRef.current, x, y);
+    };
+
+    const onMouseUp = () => {
+      draggingRef.current = null;
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+  };
 
   return (
     <div
-      className="relative bg-white border-2 border-black/10 rounded-lg overflow-hidden flex-shrink-0 cursor-pointer"
+      ref={previewRef}
+      className="relative bg-white border-2 border-black/10 rounded-lg overflow-hidden flex-shrink-0"
       style={{ width: W, height: H }}
       onClick={() => onSelect(null)}
     >
@@ -106,8 +133,8 @@ function SlidePreview({ elements, selectedId, onSelect }) {
         return (
           <div
             key={el.id}
-            onClick={e => { e.stopPropagation(); onSelect(el.id); }}
-            className={`absolute select-none cursor-pointer transition-all ${isSelected ? "ring-2 ring-blue-400 ring-offset-1" : "hover:ring-1 hover:ring-black/20"}`}
+            onMouseDown={(e) => handleMouseDown(e, el.id)}
+            className={`absolute select-none transition-all ${isSelected ? "cursor-grabbing ring-2 ring-blue-400 ring-offset-1" : "cursor-grab hover:ring-1 hover:ring-black/20"}`}
             style={{
               left: `${el.x}%`,
               top: `${el.y}%`,
