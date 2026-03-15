@@ -66,8 +66,23 @@ export default function AnalyseModal({ onClose }) {
     return (getAnswer() || "").trim().length > 0;
   };
 
-  const handleNext = () => {
-    if (isLast) { setDone(true); return; }
+  const handleNext = async () => {
+    if (isLast) {
+      const contact = answers[5] || {};
+      const zielAnswer = answers[3] || {};
+      const ziel = [...(zielAnswer.selected || []), zielAnswer.other].filter(Boolean).join(", ");
+      await base44.entities.Lead.create({
+        name: contact.name || "Unbekannt",
+        phone: contact.phone || "",
+        email: contact.email || "",
+        status: "Neu",
+        source: "Website",
+        ziel,
+        analyse_answers: JSON.stringify(answers),
+      });
+      setDone(true);
+      return;
+    }
     setStep(s => s + 1);
   };
 
