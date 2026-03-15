@@ -100,6 +100,12 @@ Leistungsarchitektur`;
                 />
               </div>
 
+              {error && (
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px", padding: "10px 14px", marginBottom: "12px" }}>
+                  <AlertCircle size={14} style={{ color: "#ef4444", flexShrink: 0 }} />
+                  <p style={{ margin: 0, fontSize: "12px", color: "#dc2626" }}>{error}</p>
+                </div>
+              )}
               <div style={{ display: "flex", gap: "10px" }}>
                 <button onClick={onClose} style={{ flex: 1, padding: "10px", background: "rgba(0,0,0,0.05)", border: "none", borderRadius: "8px", fontSize: "13px", fontWeight: 600, cursor: "pointer", color: "rgba(0,0,0,0.5)" }}>
                   Abbrechen
