@@ -294,7 +294,20 @@ WICHTIG:
 - Starte NIEMALS einen Slide mit "Ich"`;
 
     const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
-    const slides = result.split("---SLIDE---").map(s => s.trim()).filter(s => s.length > 2);
+    const rawSlides = result.split("---SLIDE---").map(s => s.trim()).filter(s => s.length > 2);
+    // Convert to element-based structure directly
+    const slides = rawSlides.map(text => ({
+      elements: [{
+        id: Date.now() + Math.random(),
+        content: text,
+        fontSize: 44,
+        fontWeight: "normal",
+        textAlign: "center",
+        color: "#111111",
+        x: 50,
+        y: 50,
+      }]
+    }));
     set("slideshow_slides", slides);
     setGeneratingSlides(false);
   };
