@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { base44 } from "@/api/base44Client";
 
 const GOALS = ["Abnehmen", "Muskelaufbau", "Leistungssteigerung"];
 
