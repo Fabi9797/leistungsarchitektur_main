@@ -29,6 +29,11 @@ const STEPS = [
     type: "textarea",
     placeholder: "z.B. Ich finde es schwer, konsequent zu bleiben und...",
   },
+  {
+    id: 5,
+    question: "Wie können wir dich erreichen?",
+    type: "contact",
+  },
 ];
 
 export default function AnalyseModal({ onClose }) {
