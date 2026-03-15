@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { base44 } from "@/api/base44Client";
 import { X, Download, Trash2, Plus, Sparkles, Loader2, Wand2 } from "lucide-react";
 import { TypeBadge, CategoryBadge, StatusBadge } from "./ContentBadge";
+import SlideshowEditor from "./SlideshowEditor";
 import jsPDF from "jspdf";
 
 const VIDEO_DURATIONS = ["15 Sek", "30 Sek", "45 Sek", "60 Sek", "90 Sek"];
