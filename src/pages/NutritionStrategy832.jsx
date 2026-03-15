@@ -218,6 +218,7 @@ function Page({ children, pageNum }) {
 export default function NutritionStrategy832() {
   const [origData, setOrigData] = useState(null);
   const [draft, setDraft] = useState(null);
+  const [clientEmail, setClientEmail] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
@@ -232,6 +233,13 @@ export default function NutritionStrategy832() {
         if (found) {
           setOrigData(found);
           setDraft(toDraft(found));
+          // Lade Client-Email aus Stammdaten
+          if (found.client_name) {
+            base44.entities.ClientProfile.list().then(clients => {
+              const client = clients.find(c => c.name?.toLowerCase() === found.client_name?.toLowerCase());
+              if (client?.email) setClientEmail(client.email);
+            });
+          }
         }
       });
     }
