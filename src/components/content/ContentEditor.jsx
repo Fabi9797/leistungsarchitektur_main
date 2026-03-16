@@ -430,12 +430,20 @@ REGELN:
                   📝 Skript
                   {form.script && <span className="ml-2 text-black/30 normal-case font-normal">· Text markieren zum Überarbeiten</span>}
                 </label>
-                {(form.hook || form.topic_info) && (
-                  <button type="button" onClick={generateScript} disabled={generatingScript}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-600 text-white rounded-lg text-xs font-semibold hover:bg-purple-700 transition disabled:opacity-60">
-                    {generatingScript ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Generiert...</> : <><Sparkles className="w-3.5 h-3.5" /> Mit Claude schreiben</>}
-                  </button>
-                )}
+                <div className="flex gap-2">
+                  {(form.hook || form.topic_info) && (
+                    <button type="button" onClick={generateScript} disabled={generatingScript}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-600 text-white rounded-lg text-xs font-semibold hover:bg-purple-700 transition disabled:opacity-60">
+                      {generatingScript ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Generiert...</> : <><Sparkles className="w-3.5 h-3.5" /> Mit Claude schreiben</>}
+                    </button>
+                  )}
+                  {selection && (
+                    <button type="button" onClick={openRefinePopup}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 text-white rounded-lg text-xs font-semibold hover:bg-amber-600 transition">
+                      <Wand2 className="w-3.5 h-3.5" /> Überarbeiten
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* Refine popup */}
