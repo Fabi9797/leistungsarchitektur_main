@@ -2,19 +2,14 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
 
 Deno.serve(async (req) => {
   try {
-    const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-
-    if (!user) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const { pdfBase64, fileName } = await req.json();
 
     if (!pdfBase64 || !fileName) {
       return Response.json({ error: 'Missing pdfBase64 or fileName' }, { status: 400 });
     }
 
+    const base44 = createClientFromRequest(req);
+    
     let accessToken;
     try {
       const conn = await base44.asServiceRole.connectors.getConnection('googledrive');
