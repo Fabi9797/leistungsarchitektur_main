@@ -175,47 +175,47 @@ Antworte mit genau 3 Hooks, einer pro Zeile, ohne Nummerierung oder Erklärung.`
       ? `\n\nSTIL-REFERENZ (letzte ${recentScripts.length} Skripte – übernimm den Sprachstil, Tonalität und Rhythmus):\n${recentScripts.map((s, i) => `--- Skript ${i + 1} ---\n${s}`).join("\n\n")}`
       : "";
 
-    const prompt = `Du bist ein Experte für Instagram-Kurzvideos und MUSST dich strikt an die AWID-Richtlinien halten.
+    const prompt = `Du bist ein Meister der AWID-Richtlinien für Instagram-Kurzvideos (nach dem South Park-Storytelling-Framework).
 
     HOOK (bereits festgelegt): "${form.hook || "(kein Hook angegeben)"}"
     THEMA / WEITERE INFOS: "${form.topic_info || "(keine weiteren Infos)"}"
-    CONTENT-ART: ${form.type}
-    KATEGORIE: ${form.category}
     VIDEOLÄNGE: ${form.video_duration} (ca. ${targetWords} Wörter)
 
-    **KRITISCHE AWID-RICHTLINIEN – NICHT VERHANDELBAR:**
+    **AWID-KERNPRINZIPIEN (deine Bibel):**
 
-    1. ABER/DESHALB-STRUKTUR (Kernprinzip – siehe South Park-Methode):
-    - Hook (0-3s): Nutze Hook exakt. NIEMALS mit "Ich" starten. Erwartung brechen.
-    - Aber (3-10s): Problem/Konflikt sichtbar machen – erzeuge Reibung
-    - Deshalb (10-20s): Konkrete Konsequenz/Lösung – erzeuge Auflösung
-    - Neues Aber (20-35s): Einwand vorwegnehmen – neue Reibung
-    - Finales Deshalb (35-50s): Finale Auflösung + Rahmen schließen
-    - CTA (50-60s): Konkrete Aktion
+    1. **ABER/DESHALB-STRUKTUR** (South Park-Methode):
+    A → aber B → deshalb C → aber D → deshalb E (Fazit/CTA)
 
-    2. RHETORIK-WERKZEUGKASTEN (alle verwenden):
-    ✓ Kontraste: alt vs neu, falsch vs richtig, "aber" erzeugt Spannung
-    ✓ Direkte "du"-Ansprache: "Du kennst das…", "Du machst…"
-    ✓ Rhetorische Fragen: Gehirn zwingen zu denken
-    ✓ Bildhafte Vergleiche: Abstrakt → visuell
-    ✓ Triaden (Dreieraufzählungen): Klingen harmonisch, geben Gewicht
-    ✓ Wechselnder Satzrhythmus: kurz (Energie) – lang (Kontext) – kurz (Fokus)
-    ✓ Pausen: "…" nach Schlüsselwörtern markieren
+    Hook (0-3s): Erwartung brechen. NIEMALS mit "Ich" starten.
+    Aber (3-10s): Konflikt/Fehler sichtbar machen → Reibung erzeugen
+    Deshalb (10-20s): Konsequenz/Lösung → Auflösung erzeugen
+    Neues Aber (20-35s): Einwand vorwegnehmen → weitere Spannung
+    Finales Deshalb (35-50s): Finale Auflösung + Rahmen schließen
+    CTA (50-60s): Konkrete Handlung
 
-    3. SATZRHYTHMUS & SPRACHMELODIE (STRIKT):
-    - Kurze Sätze = Energie, Druck, Fokus
-    - Lange Sätze = Kontext, Tiefe, Erklärung
-    - WECHSELN für Flow (wie Taktwechsel in Musik)
+    2. **HOOK-DESIGN** (erste 3 Sekunden entscheiden):
+    ✓ Widerspruch/Erwartung brechen: "Das klingt falsch – aber…"
+    ✓ Knappheit/Trend: "Überall ausverkauft – lohnt sich das?"
+    ✓ Fehler entlarven: "Die meisten machen das so – und genau das macht ihre Videos langweilig"
+    ✓ Nutzen versprechen: "Mit diesen drei Schnitten wirkst du professioneller"
 
-    4. TONALITÄT (absolut):
-    ✗ Kein "Ich" am Anfang, kein Selbstlob, keine Übertreibungen
-    ✓ Klar, ruhig, freundlich, sicher, authentisch
-    ✗ NIEMALS diese KI-Floskeln: "Stell dir vor", "Das ist der Schlüssel", "Es ist an der Zeit", "Auf deiner Reise", "Im heutigen schnelllebigen", "Lass uns"
-    ✓ Konkrete Beispiele statt abstrakte Ideen
+    3. **RHETORIK-WERKZEUGKASTEN** (ALLE nutzen):
+    ✓ Kontraste: alt ↔ neu, falsch ↔ richtig, vorher ↔ nachher
+    ✓ Direkte "du"-Ansprache: Nähe und Aktivierung schaffen
+    ✓ Rhetorische Fragen: Gehirn zwingen zu denken, Lücke füllen
+    ✓ Bildhafte Vergleiche & Beispiele: Abstrakt → Konkret & Visuell
+    ✓ Triaden (Dreieraufzählungen): Harmonisch, geben Gewicht
+    ✓ Satzrhythmus wechseln: Kurz (Energie) → Lang (Kontext) → Kurz (Fokus)
+    ✓ Pausen markieren: "…" nach Schlüsselwörtern für Betonung
 
-    5. LÄNGE: Exakt ~${targetWords} Wörter.${styleContext}
+    4. **TONALITÄT & AUTHENTIZITÄT**:
+    ✗ Niemals: "Ich...", "Stell dir vor", "Das ist der Schlüssel", "Es ist an der Zeit", "Lass uns", "Im heutigen schnelllebigen"
+    ✓ Immer: Klar, ruhig, freundlich, sicher, ehrlich
+    ✓ Keine Übertreibungen – Authentizität gewinnt gegen Lautstärke
 
-    **Schreibe NUR das fertige Skript. Keine Erklärungen. Zeilenumbrüche für Sprechpausen.**`;
+    5. **LÄNGE & EXAKTHEIT**: Exakt ~${targetWords} Wörter.${styleContext}
+
+    **SCHREIB NUR DAS SKRIPT. Keine Erklärungen, keine Kommentare. Zeilenumbrüche für Sprechpausen.**`;
 
     const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
     set("script", result);
