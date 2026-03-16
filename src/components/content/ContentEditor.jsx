@@ -22,6 +22,7 @@ export default function ContentEditor({ piece, onClose, onSaved }) {
   const [generatingHooks, setGeneratingHooks] = useState(false);
   const [generatingSlides, setGeneratingSlides] = useState(false);
   const [hookSuggestions, setHookSuggestions] = useState([]);
+  const AWID_PDF_URL = "https://media.base44.com/files/public/69b064c89953b727c5202e21/379ae2e3c_SkriptAnleitung2.pdf";
 
   // Selection-based refinement state
   const [selection, setSelection] = useState(null); // { text, start, end }
