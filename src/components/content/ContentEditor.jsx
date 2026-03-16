@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { base44 } from "@/api/base44Client";
-import { X, Download, Trash2, Plus, Sparkles, Loader2, Wand2 } from "lucide-react";
+import { X, Download, Trash2, Plus, Sparkles, Loader2, Wand2, Cloud } from "lucide-react";
 import { TypeBadge, CategoryBadge, StatusBadge } from "./ContentBadge";
 import SlideshowEditor from "./SlideshowEditor.jsx";
 import jsPDF from "jspdf";
