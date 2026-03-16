@@ -264,42 +264,43 @@ WICHTIG: Gib NUR den überarbeiteten Text für die markierte Passage zurück. Ke
 
     const prompt = `Du bist ein Experte für virale Instagram-Karussell-Slideshows. Erstelle eine textbasierte Slideshow nach folgendem Framework.
 
-HOOK (Slide 1): "${form.hook || "(kein Hook)"}"
-THEMA / WEITERE INFOS: "${form.topic_info || "(keine weiteren Infos)"}"
-KATEGORIE: ${form.category}
+Hook: "${form.hook || "(kein Hook)"}"
+Thema: "${form.topic_info || "(keine Info)"}"
 
-FRAMEWORK für eine virale Slideshow (strikt einhalten):
+Schreib Instagram-Slides wie ein echter Coach – natürlich, ehrlich, keine Manipulations-Rhetorik.
 
-Slide 1 – HOOK: Nutze den Hook exakt so wie angegeben. Wenn er eine Aussage wie "Morgen geht's los!" enthält, schreibe sie mit ~~Durchstreichung~~ (z.B. "~~Morgen geht's los!~~") und füge darunter eine kurze provokante Gegenfrage oder Aussage hinzu. Max 2 Zeilen.
+AUFBAU (8 Slides):
 
-Slide 2 – PROBLEM ENTLARVEN: Benenne das Kernproblem direkt und emotional. 2-3 kurze Sätze.
+Slide 1 – HOOK: Der Hook, wie gegeben. Wenn eine alte Gewohnheit/Glaubenssatz drin ist, durchstreichen (~~so~~) und eine echte Gegenfrage darunter. Max 2 Zeilen.
 
-Slide 3 – DIE KOSTEN: 3-4 konkrete negative Folgen als Aufzählung. Jede Zeile mit einem ❌ davor.
+Slide 2 – KERNPROBLEM: Was ist das echte Problem? Konkret, nicht abstrakt. 2-3 normale Sätze.
 
-Slide 4 – PSYCHOLOGIE / WARUM: Schafft Empathie und Verständnis. 2-3 Sätze. Kein Vorwurf.
+Slide 3 – FOLGEN: 3-4 realistische Szenarien, was ohne Veränderung passiert. Mit ❌ davor. Emotional aber ehrlich.
 
-Slide 5 – DIE LÖSUNG: Konkrete, einfache Handlung. Ein Schlüsselwort in GROSSBUCHSTABEN. Max 3 Sätze.
+Slide 4 – WARUM IST DAS SO?: Die echte Erklärung (psychologisch/biologisch). Zeigt Verständnis, kein Vorwurf. 2-3 Sätze.
 
-Slide 6 – MINDSET / MOMENTUM: Eine kraftvolle Aussage oder Zitat-Stil. 1-2 Sätze.
+Slide 5 – ERSTER SCHRITT: Eine konkrete Sache, die man HEUTE machen kann. Ein wichtiges Wort in GROSSBUCHSTABEN. 2-3 Sätze.
 
-Slide 7 – TRANSFORMATION: Das Wunschbild malen. 3-4 Stichworte oder kurze Sätze, die das positive Ergebnis beschreiben.
+Slide 6 – MINDSET: Ein starker Satz oder Wahrheit zum Umdenken. Das kann ein Zitat sein. 1-2 Sätze.
 
-Slide 8 – CTA: Direkte Frage ans Publikum für Kommentare ODER Aufforderung zu speichern/teilen. Kurz und klar. + Hinweis auf "Link in Bio" falls passend.
+Slide 7 – DAS ERGEBNIS: Wie sieht es aus, wenn es funktioniert? 3-4 Stichpunkte oder kurze Sätze.
 
-WICHTIG:
-- Jeder Slide-Text kommt auf eine eigene Zeile, getrennt durch "---SLIDE---"
-- Kein Kommentar, keine Nummerierung, nur der reine Slide-Text
-- Kurz und lesbar: max 40 Wörter pro Slide
-- Direkte "du"-Ansprache
-- Starte NIEMALS einen Slide mit "Ich"
+Slide 8 – CTA: Frag direkt um Kommentare ODER sag "speichern". Kurz. Optional "Link in Bio".
 
-ANTI-KI-REGELN (unbedingt einhalten):
-- Keine KI-Floskeln: niemals "Stell dir vor", "Das ist der Schlüssel", "Es ist an der Zeit", "Auf deiner Reise", "Lass uns", "Im heutigen schnelllebigen..."
-- Keine aufgeblasenen Phrasen – sag es direkt und kurz
-- Klingt wie ein Mensch der redet, nicht wie ein Ratgeber-Blog
-- Keine Emojis außer wo explizit im Framework angegeben (❌, ✅)
-- Kein "du schaffst das!" oder Motivations-Poster-Sprache
-- Konkret statt abstrakt: echte Situationen, echte Gefühle`;
+REGELN:
+- Pro Slide eine Zeile (separator: ---SLIDE---)
+- Max 40 Wörter pro Slide
+- Du-Ansprache
+- Keine Anfänge mit "Ich"
+- Komplette Sätze, keine Fragmente
+- Klingt wie jemand, der redet – kein Blog-Stil
+- Keine Manipulations-Fragen, keine Wiederholungen für Drama
+- Emojis NUR wenn nötig (❌, ✅)
+- Konkrete Beispiele statt Abstraktion
+- Respekt vor der Zeit des Lesers – nicht zu emotional
+- Keine KI-Floskeln: "Stell dir vor", "Das ist der Schlüssel", "Es ist an der Zeit", "Lass uns", "Im heutigen schnelllebigen..." – all das weg
+- Sei humorvoll nur wenn es passt, sonst professionell
+- Natürlich statt optimiert`;
 
     const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
     const rawSlides = result.split("---SLIDE---").map(s => s.trim()).filter(s => s.length > 2);
