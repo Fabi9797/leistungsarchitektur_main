@@ -17,16 +17,19 @@ Deno.serve(async (req) => {
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
 
-    // Find or create "Content" folder
-    const contentFolderRes = await fetch(
-      `https://www.googleapis.com/drive/v3/files?q=name='Content' and mimeType='application/vnd.google-apps.folder' and trashed=false&spaces=drive&pageSize=1`,
+    // Find "Content" folder efficiently (search all folders at once)
+    const folderSearchRes = await fetch(
+      `https://www.googleapis.com/drive/v3/files?q=(name='Content' or name='Skripte') and mimeType='application/vnd.google-apps.folder' and trashed=false&spaces=drive&pageSize=25&fields=files(id,name,parents)`,
       { headers: { 'Authorization': `Bearer ${accessToken}` } }
     );
-    const contentFolderData = await contentFolderRes.json();
-    let contentFolderId = contentFolderData.files?.[0]?.id;
+    const folderSearchData = await folderSearchRes.json();
+    
+    let contentFolderId = folderSearchData.files?.find(f => f.name === 'Content')?.id;
+    let skripteFolderId = folderSearchData.files?.find(f => f.name === 'Skripte' && f.parents?.includes(contentFolderId))?.id;
 
+    // Create "Content" folder if missing
     if (!contentFolderId) {
-      const createFolderRes = await fetch('https://www.googleapis.com/drive/v3/files?uploadType=multipart', {
+      const createFolderRes = await fetch('https://www.googleapis.com/drive/v3/files', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
@@ -41,16 +44,9 @@ Deno.serve(async (req) => {
       contentFolderId = folderData.id;
     }
 
-    // Find or create "Skripte" folder inside "Content"
-    const skripteFolderRes = await fetch(
-      `https://www.googleapis.com/drive/v3/files?q=name='Skripte' and mimeType='application/vnd.google-apps.folder' and '${contentFolderId}' in parents and trashed=false&spaces=drive&pageSize=1`,
-      { headers: { 'Authorization': `Bearer ${accessToken}` } }
-    );
-    const skripteFolderData = await skripteFolderRes.json();
-    let skripteFolderId = skripteFolderData.files?.[0]?.id;
-
+    // Create "Skripte" folder if missing
     if (!skripteFolderId) {
-      const createSkripteRes = await fetch('https://www.googleapis.com/drive/v3/files?uploadType=multipart', {
+      const createSkripteRes = await fetch('https://www.googleapis.com/drive/v3/files', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
