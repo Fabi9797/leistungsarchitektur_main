@@ -233,22 +233,27 @@ Antworte mit genau 3 Hooks, einer pro Zeile, ohne Nummerierung oder Erklärung.`
   ${script}
   ---
 
-  **SELBSTKRITISCHE FRAGEN (beantworte ehrlich):**
+  **KRITISCHE PUNKTE (SUBTIL, nicht wörtlich!):**
 
-  1. Ist die Aber/Deshalb-Struktur WIRKLICH präzise? Oder könnte ich die Übergänge spannender/flüssiger machen?
+  1. **ABER/DESHALB-STRUKTUR** (im HINTERGRUND, nicht explizit!):
+  - Die Logik muss IMPLIZIT sichtbar sein – nicht mit "Aber" und "Deshalb" Wörtern überall
+  - Der Text muss FLÜSSIG fließen wie echte Rede
+  - Beispiel FALSCH: "Aber hier ist das Problem…" / "Deshalb musst du…"
+  - Beispiel RICHTIG: "Fast jeder macht diesen Fehler. Und genau das ist die Falle."
+  - Die Struktur sollte man SPÜREN, nicht LESEN
 
   2. Der Hook – wird die Erwartung wirklich gebrochen? Oder sollte ich stärker kontrieren?
 
-  3. Nutze ich WIRKLICH ALLE Rhetorik-Werkzeuge, oder bleibe ich oberflächlich?
+  3. Nutze ich WIRKLICH ALLE Rhetorik-Werkzeuge?
   - Kontraste vorhanden?
   - Direkte "du"-Ansprache durchgehend?
   - Rhetorische Fragen an den richtigen Stellen?
   - Bildhafte Vergleiche oder zu abstrakt?
   - Triaden/Dreieraufzählungen genutzt?
 
-  4. Der Satzrhythmus – wechselt er wirklich? Oder läuft es monoton?
+  4. Der Satzrhythmus – wechselt er wirklich? Läuft es natürlich oder mechanisch?
 
-  5. Gibt es versteckte KI-Floskeln, die ich übersehen habe?
+  5. KI-Floskeln versteckt?
   - "Stell dir vor", "Das ist der Schlüssel", "Es ist an der Zeit", "Im heutigen schnelllebigen", "Auf deiner Reise"?
 
   6. Sind die Beispiele konkret genug? Oder zu abstrakt?
@@ -257,8 +262,9 @@ Antworte mit genau 3 Hooks, einer pro Zeile, ohne Nummerierung oder Erklärung.`
 
   **DEINE AUFGABE:**
   - Schreib das Skript jetzt SELBSTSTÄNDIG besser.
-  - Überall dort, wo du siehst "das könnte stärker sein, das könnte flüssiger sein, das könnte authentischer sein" → MACH ES BESSER.
-  - Nicht nur Feinschliff – echte Verbesserungen.
+  - Mach den Text FLÜSSIGER, NATÜRLICHER, ECHTE SPRACHMELODIE
+  - Die ABER/DESHALB-Logik bleibt der Unterbau – aber sie soll UNSICHTBAR sein
+  - Nicht nur Feinschliff – echte Verbesserungen für Fluss und Authentizität
   - Du entscheidest, was besser wird. Du bist der Experte.
 
   **Gib NUR das verbesserte Skript zurück. Kein Kommentar, kein Erklärtext.**`;
