@@ -15,7 +15,13 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Missing pdfBase64 or fileName' }, { status: 400 });
     }
 
-    const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
+    let accessToken;
+    try {
+      const conn = await base44.asServiceRole.connectors.getConnection('googledrive');
+      accessToken = conn.accessToken;
+    } catch (e) {
+      return Response.json({ error: 'Google Drive not authorized. Please authorize first.', details: e.message }, { status: 401 });
+    }
 
     // Find "Content" folder efficiently (search all folders at once)
     const folderSearchRes = await fetch(
