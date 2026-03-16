@@ -177,33 +177,58 @@ Antworte mit genau 3 Hooks, einer pro Zeile, ohne Nummerierung oder Erklärung.`
 
     const prompt = `Du bist ein Experte für Instagram-Kurzvideos und schreibst Skripte nach einem präzisen Framework.
 
-HOOK (bereits festgelegt): "${form.hook || "(kein Hook angegeben)"}"
-THEMA / WEITERE INFOS: "${form.topic_info || "(keine weiteren Infos)"}"
-CONTENT-ART: ${form.type}
-KATEGORIE: ${form.category}
-VIDEOLÄNGE: ${form.video_duration} (ca. ${targetWords} Wörter)
+  HOOK (bereits festgelegt): "${form.hook || "(kein Hook angegeben)"}"
+  THEMA / WEITERE INFOS: "${form.topic_info || "(keine weiteren Infos)"}"
+  CONTENT-ART: ${form.type}
+  KATEGORIE: ${form.category}
+  VIDEOLÄNGE: ${form.video_duration} (ca. ${targetWords} Wörter)
 
-FRAMEWORK das du STRIKT befolgen musst:
+  FRAMEWORK das du STRIKT befolgen musst:
 
-1. STRUKTUR (Aber/Deshalb-Methode):
-   - Hook (0-3 Sek): Nutze den vorgegebenen Hook exakt. Starte NICHT mit "Ich".
-   - Aber (3-10 Sek): Konflikt/Fehler sichtbar machen
-   - Deshalb (10-20 Sek): Konsequenz/Lösung liefern
-   - Neues Aber (20-35 Sek): Einwand vorwegnehmen
-   - Finales Deshalb (35-50 Sek): Auflösung, Rahmen schließen
-   - CTA (letzte 5-10 Sek): Konkrete Handlungsaufforderung
+  1. STRUKTUR (Aber/Deshalb-Methode):
+  - Hook (0-3 Sek): Nutze den vorgegebenen Hook exakt. Starte NICHT mit "Ich".
+  - Aber (3-10 Sek): Konflikt/Fehler sichtbar machen
+  - Deshalb (10-20 Sek): Konsequenz/Lösung liefern
+  - Neues Aber (20-35 Sek): Einwand vorwegnehmen
+  - Finales Deshalb (35-50 Sek): Auflösung, Rahmen schließen
+  - CTA (letzte 5-10 Sek): Konkrete Handlungsaufforderung
 
-2. RHETORIK: Kontraste, direkte "du"-Ansprache, rhetorische Fragen, Einwände antizipieren, bildhafte Vergleiche, Triaden, wechselnder Satzrhythmus.
+  2. RHETORIK: Kontraste, direkte "du"-Ansprache, rhetorische Fragen, Einwände antizipieren, bildhafte Vergleiche, Triaden, wechselnder Satzrhythmus.
 
-3. TONALITÄT: Klar, ruhig, authentisch, sicher. Keine Übertreibungen.
+  3. TONALITÄT: Klar, ruhig, authentisch, sicher. Keine Übertreibungen.
 
-4. LÄNGE: Exakt ~${targetWords} Wörter.${styleContext}
+  4. LÄNGE: Exakt ~${targetWords} Wörter.${styleContext}
 
-Schreibe NUR das fertige Skript. Kein Kommentar drumherum. Zeilenumbrüche für Sprechpausen.`;
+  Schreibe NUR das fertige Skript. Kein Kommentar drumherum. Zeilenumbrüche für Sprechpausen.`;
 
     const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
     set("script", result);
+
+    // Automatically verify & improve against AWID guidelines
+    await verifyAndImproveScript(result);
     setGeneratingScript(false);
+  };
+
+  const verifyAndImproveScript = async (script) => {
+    const verifyPrompt = `Du bist ein Experte für Instagram-Kurzvideos und kennst die AWID-Richtlinien für hochwertige Skripte.
+
+  AKTUELLES SKRIPT:
+  ${script}
+
+  PRÜFE das Skript anhand dieser AWID-Richtlinien und VERBESSERE es:
+  - Aber/Deshalb-Struktur: Jeder Abschnitt braucht Reibung (Aber) und Konsequenz (Deshalb)
+  - Hook-Design: Erwartet brechen, Widerspruch erzeugen, Relevanz zeigen
+  - Rhetorik: Kontraste, direkte "du"-Ansprache, rhetorische Fragen, bildhafte Vergleiche, Triaden, wechselnder Satzrhythmus
+  - Satzrhythmus & Sprachmelodie: Kurze Sätze für Energie, lange für Kontext, wechselnd für Flow
+  - Tonalität: Klar, ruhig, authentisch, sicher - keine Übertreibungen, starte NIEMALS mit "Ich"
+  - Keine KI-Floskeln: "Stell dir vor", "Das ist der Schlüssel", "Es ist an der Zeit", "Auf deiner Reise" – vermeiden
+  - Konkrete Beispiele statt abstrakte Ideen
+  - Pausen nach Schlüsselwörtern markieren mit "…"
+
+  Gib NUR das verbesserte Skript zurück. Keine Erklärungen oder Kommentare.`;
+
+    const improvedResult = await base44.integrations.Core.InvokeLLM({ verifyPrompt, model: "claude_sonnet_4_6" });
+    set("script", improvedResult.trim());
   };
 
   // Handle text selection in the script textarea
