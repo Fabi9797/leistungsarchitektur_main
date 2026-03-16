@@ -17,6 +17,55 @@ Deno.serve(async (req) => {
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
 
+    // Find or create "Content" folder
+    const contentFolderRes = await fetch(
+      `https://www.googleapis.com/drive/v3/files?q=name='Content' and mimeType='application/vnd.google-apps.folder' and trashed=false&spaces=drive&pageSize=1`,
+      { headers: { 'Authorization': `Bearer ${accessToken}` } }
+    );
+    const contentFolderData = await contentFolderRes.json();
+    let contentFolderId = contentFolderData.files?.[0]?.id;
+
+    if (!contentFolderId) {
+      const createFolderRes = await fetch('https://www.googleapis.com/drive/v3/files?uploadType=multipart', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: 'Content',
+          mimeType: 'application/vnd.google-apps.folder',
+        }),
+      });
+      const folderData = await createFolderRes.json();
+      contentFolderId = folderData.id;
+    }
+
+    // Find or create "Skripte" folder inside "Content"
+    const skripteFolderRes = await fetch(
+      `https://www.googleapis.com/drive/v3/files?q=name='Skripte' and mimeType='application/vnd.google-apps.folder' and '${contentFolderId}' in parents and trashed=false&spaces=drive&pageSize=1`,
+      { headers: { 'Authorization': `Bearer ${accessToken}` } }
+    );
+    const skripteFolderData = await skripteFolderRes.json();
+    let skripteFolderId = skripteFolderData.files?.[0]?.id;
+
+    if (!skripteFolderId) {
+      const createSkripteRes = await fetch('https://www.googleapis.com/drive/v3/files?uploadType=multipart', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: 'Skripte',
+          mimeType: 'application/vnd.google-apps.folder',
+          parents: [contentFolderId],
+        }),
+      });
+      const skripteData = await createSkripteRes.json();
+      skripteFolderId = skripteData.id;
+    }
+
     // Convert base64 to blob
     const binaryString = atob(pdfBase64);
     const bytes = new Uint8Array(binaryString.length);
@@ -25,7 +74,7 @@ Deno.serve(async (req) => {
     }
     const blob = new Blob([bytes], { type: 'application/pdf' });
 
-    // Upload to Google Drive
+    // Upload PDF to "Skripte" folder
     const formData = new FormData();
     formData.append('file', blob, fileName);
 
@@ -43,6 +92,15 @@ Deno.serve(async (req) => {
     }
 
     const result = await uploadRes.json();
+    
+    // Move file to Skripte folder
+    await fetch(`https://www.googleapis.com/drive/v3/files/${result.id}?addParents=${skripteFolderId}&removeParents=root`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    });
+
     return Response.json({ success: true, fileId: result.id, fileName: result.name });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
