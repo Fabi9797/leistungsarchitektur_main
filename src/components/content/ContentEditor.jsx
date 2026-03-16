@@ -206,24 +206,28 @@ Schreibe NUR das fertige Skript. Kein Kommentar drumherum. Zeilenumbrüche für 
   };
 
   // Handle text selection in the script textarea
-  const handleScriptMouseUp = () => {
-    const textarea = scriptRef.current;
-    if (!textarea) return;
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const text = textarea.value.substring(start, end).trim();
+   const handleScriptMouseUp = () => {
+     const textarea = scriptRef.current;
+     if (!textarea) return;
+     const start = textarea.selectionStart;
+     const end = textarea.selectionEnd;
+     const text = textarea.value.substring(start, end).trim();
 
-    if (text.length > 3) {
-      const rect = textarea.getBoundingClientRect();
-      // Position popup near the selection
-      setSelection({ text, start, end });
-      setRefinePopup({ x: rect.left + rect.width / 2, y: rect.top + 10 });
-      setRefinePrompt("");
-    } else {
-      setSelection(null);
-      setRefinePopup(null);
-    }
-  };
+     if (text.length > 3) {
+       // Only store selection, don't open popup
+       setSelection({ text, start, end });
+       setRefinePrompt("");
+     } else {
+       setSelection(null);
+     }
+   };
+
+   const openRefinePopup = () => {
+     const textarea = scriptRef.current;
+     if (!textarea || !selection) return;
+     const rect = textarea.getBoundingClientRect();
+     setRefinePopup({ x: rect.left + rect.width / 2, y: rect.top + 10 });
+   };
 
   const handleRefine = async () => {
     if (!selection || !refinePrompt.trim()) return;
