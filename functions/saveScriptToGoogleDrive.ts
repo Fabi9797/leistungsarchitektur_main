@@ -88,7 +88,7 @@ Deno.serve(async (req) => {
     const uploadedFile = await uploadRes.json();
     
     // Update file with metadata (name + parent folder)
-    const updateRes = await fetch(`https://www.googleapis.com/drive/v3/files/${uploadedFile.id}?fields=id,name,parents`, {
+    const updateRes = await fetch(`https://www.googleapis.com/drive/v3/files/${uploadedFile.id}?addParents=${skripteFolderId}&fields=id,name,parents`, {
       method: 'PATCH',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
@@ -96,7 +96,6 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify({
         name: fileName,
-        parents: [skripteFolderId],
       }),
     });
 
