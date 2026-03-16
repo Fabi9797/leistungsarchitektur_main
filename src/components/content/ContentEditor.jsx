@@ -203,10 +203,10 @@ Antworte mit genau 3 Hooks, einer pro Zeile, ohne Nummerierung oder Erklärung.`
 
     const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
     set("script", result);
-
-    // Automatically verify & improve against AWID guidelines
-    await verifyAndImproveScript(result);
     setGeneratingScript(false);
+
+    // Verify & improve in background (don't block UI)
+    verifyAndImproveScript(result);
   };
 
   const verifyAndImproveScript = async (script) => {
