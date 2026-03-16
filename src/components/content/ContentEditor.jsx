@@ -652,10 +652,16 @@ REGELN:
               </button>
             )}
             {(form.script || form.hook) && (
-              <button onClick={downloadPDF}
-                className="flex items-center gap-1.5 px-4 py-2 border border-[#00416A]/30 text-[#00416A] rounded-xl text-sm font-medium hover:bg-[#00416A]/5 transition">
-                <Download className="w-4 h-4" /> PDF
-              </button>
+              <>
+                <button onClick={downloadPDF}
+                  className="flex items-center gap-1.5 px-4 py-2 border border-[#00416A]/30 text-[#00416A] rounded-xl text-sm font-medium hover:bg-[#00416A]/5 transition">
+                  <Download className="w-4 h-4" /> PDF
+                </button>
+                <button onClick={saveScriptToDrive} disabled={savingToDrive}
+                  className="flex items-center gap-1.5 px-4 py-2 border border-blue-300 text-blue-600 rounded-xl text-sm font-medium hover:bg-blue-50 transition disabled:opacity-60">
+                  {savingToDrive ? <><Loader2 className="w-4 h-4 animate-spin" /> Speichert...</> : <><Cloud className="w-4 h-4" /> Google Drive</>}
+                </button>
+              </>
             )}
           </div>
           <div className="flex gap-2">
