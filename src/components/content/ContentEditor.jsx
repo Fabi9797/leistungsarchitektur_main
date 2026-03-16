@@ -137,7 +137,79 @@ export default function ContentEditor({ piece, onClose, onSaved }) {
     }
 
     doc.save(`${(form.title || "content").replace(/\s+/g, "_")}.pdf`);
-  };
+    };
+
+    const saveScriptToDrive = async () => {
+    if (!form.script && !form.hook) return;
+    setSavingToDrive(true);
+
+    const doc = new jsPDF();
+    const margin = 20;
+    let y = margin;
+
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text(form.title || "Ohne Titel", margin, y);
+    y += 10;
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(100);
+    doc.text(`${form.type} · ${form.category} · ${form.status}`, margin, y);
+    y += 8;
+    if (form.planned_date) { doc.text(`Datum: ${form.planned_date}`, margin, y); y += 8; }
+    y += 4;
+    doc.setDrawColor(200);
+    doc.line(margin, y, 190, y);
+    y += 8;
+
+    if (form.hook) {
+     doc.setFontSize(12); doc.setFont("helvetica", "bold"); doc.setTextColor(0);
+     doc.text("HOOK", margin, y); y += 7;
+     doc.setFont("helvetica", "normal"); doc.setFontSize(11);
+     const hookLines = doc.splitTextToSize(form.hook, 170);
+     doc.text(hookLines, margin, y); y += hookLines.length * 6 + 8;
+    }
+
+    if (form.script) {
+     doc.setFontSize(12); doc.setFont("helvetica", "bold"); doc.setTextColor(0);
+     doc.text("SKRIPT", margin, y); y += 7;
+     doc.setFont("helvetica", "normal"); doc.setFontSize(10);
+     const lines = doc.splitTextToSize(form.script, 170);
+     lines.forEach(line => {
+       if (y > 270) { doc.addPage(); y = margin; }
+       doc.text(line, margin, y); y += 6;
+     });
+     y += 6;
+    }
+
+    if (form.cta) {
+     doc.setFontSize(12); doc.setFont("helvetica", "bold");
+     doc.text("CALL-TO-ACTION", margin, y); y += 7;
+     doc.setFont("helvetica", "normal"); doc.setFontSize(10);
+     doc.text(doc.splitTextToSize(form.cta, 170), margin, y); y += 10;
+    }
+
+    if (form.hashtags) {
+     doc.setFontSize(10); doc.setTextColor(100);
+     doc.text(form.hashtags, margin, y);
+    }
+
+    const pdfBase64 = doc.output('datauristring').split(',')[1];
+    const fileName = `${(form.title || "content").replace(/\s+/g, "_")}.pdf`;
+
+    const response = await base44.functions.invoke('saveScriptToGoogleDrive', {
+     pdfBase64,
+     fileName
+    });
+
+    setSavingToDrive(false);
+    if (response.data?.success) {
+     alert(`✅ PDF zu Google Drive gespeichert: ${response.data.fileName}`);
+    } else {
+     alert(`❌ Fehler: ${response.data?.error || 'Unbekannter Fehler'}`);
+    }
+    };
 
   const generateHookSuggestions = async () => {
     setGeneratingHooks(true);
