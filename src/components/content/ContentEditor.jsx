@@ -226,51 +226,42 @@ Antworte mit genau 3 Hooks, einer pro Zeile, ohne Nummerierung oder Erklärung.`
   };
 
   const verifyAndImproveScript = async (script) => {
-    const verifyPrompt = `Du bist ein STRENGER AWID-Qualitätskontroller für Instagram-Skripte. Deine Aufgabe: Das Skript MASSIV verbessern – nicht nur Kleinigkeiten.
+    const verifyPrompt = `Du bist Claude, ein Experte für Instagram-Skripte nach AWID-Standard. Du hast das Skript selbst geschrieben. Jetzt schaust du es mit kritischem Blick an und verbesserst es selbstständig – dort, wo du siehst, dass es besser sein könnte.
 
-  AKTUELLES SKRIPT ZUM ÜBERARBEITEN:
+  SKRIPT (dein eigenes Werk):
   ---
   ${script}
   ---
 
-  STRENGE PRÜFPUNKTE (mit Aktion):
+  **SELBSTKRITISCHE FRAGEN (beantworte ehrlich):**
 
-  1. ABER/DESHALB-STRUKTUR?
-  → Ist jeder Abschnitt mit "aber" oder "deshalb" verknüpft?
-  → Wenn NICHT: Rewrite mit vollständiger Aber/Deshalb-Kette
-  → Mindestens: Hook → Aber → Deshalb → Aber → Deshalb → CTA
+  1. Ist die Aber/Deshalb-Struktur WIRKLICH präzise? Oder könnte ich die Übergänge spannender/flüssiger machen?
 
-  2. STARTET ES MIT "ICH"? 
-  → UNERLAUBT! → Ersetze sofort mit Problem/Nutzen/Aha-Moment
-  → Beispiel: "Ich weiß, das klingt falsch – aber" → "Das klingt falsch – aber"
+  2. Der Hook – wird die Erwartung wirklich gebrochen? Oder sollte ich stärker kontrieren?
 
-  3. KI-FLOSKELN VORHANDEN?
-  ✗ "Stell dir vor", "Das ist der Schlüssel", "Es ist an der Zeit", "Auf deiner Reise", "Im heutigen schnelllebigen", "Lass uns"
-  → ALLE ERSETZEN mit direkter, echten Sprache
+  3. Nutze ich WIRKLICH ALLE Rhetorik-Werkzeuge, oder bleibe ich oberflächlich?
+  - Kontraste vorhanden?
+  - Direkte "du"-Ansprache durchgehend?
+  - Rhetorische Fragen an den richtigen Stellen?
+  - Bildhafte Vergleiche oder zu abstrakt?
+  - Triaden/Dreieraufzählungen genutzt?
 
-  4. RHETORIK-WERKZEUGE GENUTZT?
-  ✓ Kontraste (alt/neu, falsch/richtig)?
-  ✓ Direkte "du"-Ansprache?
-  ✓ Rhetorische Fragen?
-  ✓ Bildhafte Vergleiche?
-  ✓ Triaden (Dreieraufzählungen)?
-  → Wenn zu wenig: HINZUFÜGEN
+  4. Der Satzrhythmus – wechselt er wirklich? Oder läuft es monoton?
 
-  5. SATZRHYTHMUS VARIIERT?
-  → Mischung: kurz + lang + kurz?
-  → Monotone Länge = Todesurteil → UMSCHREIBEN
+  5. Gibt es versteckte KI-Floskeln, die ich übersehen habe?
+  - "Stell dir vor", "Das ist der Schlüssel", "Es ist an der Zeit", "Im heutigen schnelllebigen", "Auf deiner Reise"?
 
-  6. PAUSEN MARKIERT?
-  → Nach Schlüsselwörtern "…" setzen für Betonung?
-  → Sehr wichtig für Rhythmus
+  6. Sind die Beispiele konkret genug? Oder zu abstrakt?
 
-  7. KONKRETE BEISPIELE STATT ABSTRAKTION?
-  → "Fehler" = zu abstrakt → "du uploadest in Full HD statt 4K" = konkret
-  → Überall konkretisieren
+  7. Pausen markiert mit "…" nach Schlüsselwörtern?
 
-  **MASSGEBLICH VERBESSERN – NICHT NUR FEINSCHLIFF!**
+  **DEINE AUFGABE:**
+  - Schreib das Skript jetzt SELBSTSTÄNDIG besser.
+  - Überall dort, wo du siehst "das könnte stärker sein, das könnte flüssiger sein, das könnte authentischer sein" → MACH ES BESSER.
+  - Nicht nur Feinschliff – echte Verbesserungen.
+  - Du entscheidest, was besser wird. Du bist der Experte.
 
-  Gib NUR das verbesserte Skript zurück. Keine Erklärungen, keine Kommentare, keine Einleitung.`;
+  **Gib NUR das verbesserte Skript zurück. Kein Kommentar, kein Erklärtext.**`;
 
     const improvedResult = await base44.integrations.Core.InvokeLLM({ verifyPrompt, model: "claude_sonnet_4_6" });
     set("script", improvedResult.trim());
