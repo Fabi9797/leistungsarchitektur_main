@@ -62,24 +62,21 @@ Deno.serve(async (req) => {
       skripteFolderId = skripteData.id;
     }
 
-    // Convert base64 to blob
+    // Convert base64 to binary
     const binaryString = atob(pdfBase64);
     const bytes = new Uint8Array(binaryString.length);
     for (let i = 0; i < binaryString.length; i++) {
       bytes[i] = binaryString.charCodeAt(i);
     }
-    const blob = new Blob([bytes], { type: 'application/pdf' });
 
-    // Upload PDF to "Skripte" folder
-    const formData = new FormData();
-    formData.append('file', blob, fileName);
-
-    const uploadRes = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+    // Upload PDF directly to "Skripte" folder using simple upload
+    const uploadRes = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=media', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/pdf',
       },
-      body: formData,
+      body: bytes,
     });
 
     if (!uploadRes.ok) {
@@ -87,16 +84,27 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Google Drive upload failed', details: errorText }, { status: uploadRes.status });
     }
 
-    const result = await uploadRes.json();
+    const uploadedFile = await uploadRes.json();
     
-    // Move file to Skripte folder
-    await fetch(`https://www.googleapis.com/drive/v3/files/${result.id}?addParents=${skripteFolderId}&removeParents=root`, {
+    // Update file with metadata (name + parent folder)
+    const updateRes = await fetch(`https://www.googleapis.com/drive/v3/files/${uploadedFile.id}?fields=id,name,parents`, {
       method: 'PATCH',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        name: fileName,
+        parents: [skripteFolderId],
+      }),
     });
 
+    if (!updateRes.ok) {
+      const errorText = await updateRes.text();
+      return Response.json({ error: 'Failed to move file to folder', details: errorText }, { status: updateRes.status });
+    }
+
+    const result = await updateRes.json();
     return Response.json({ success: true, fileId: result.id, fileName: result.name });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
