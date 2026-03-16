@@ -175,31 +175,47 @@ Antworte mit genau 3 Hooks, einer pro Zeile, ohne Nummerierung oder Erklärung.`
       ? `\n\nSTIL-REFERENZ (letzte ${recentScripts.length} Skripte – übernimm den Sprachstil, Tonalität und Rhythmus):\n${recentScripts.map((s, i) => `--- Skript ${i + 1} ---\n${s}`).join("\n\n")}`
       : "";
 
-    const prompt = `Du bist ein Experte für Instagram-Kurzvideos und schreibst Skripte nach einem präzisen Framework.
+    const prompt = `Du bist ein Experte für Instagram-Kurzvideos und MUSST dich strikt an die AWID-Richtlinien halten.
 
-  HOOK (bereits festgelegt): "${form.hook || "(kein Hook angegeben)"}"
-  THEMA / WEITERE INFOS: "${form.topic_info || "(keine weiteren Infos)"}"
-  CONTENT-ART: ${form.type}
-  KATEGORIE: ${form.category}
-  VIDEOLÄNGE: ${form.video_duration} (ca. ${targetWords} Wörter)
+    HOOK (bereits festgelegt): "${form.hook || "(kein Hook angegeben)"}"
+    THEMA / WEITERE INFOS: "${form.topic_info || "(keine weiteren Infos)"}"
+    CONTENT-ART: ${form.type}
+    KATEGORIE: ${form.category}
+    VIDEOLÄNGE: ${form.video_duration} (ca. ${targetWords} Wörter)
 
-  FRAMEWORK das du STRIKT befolgen musst:
+    **KRITISCHE AWID-RICHTLINIEN – NICHT VERHANDELBAR:**
 
-  1. STRUKTUR (Aber/Deshalb-Methode):
-  - Hook (0-3 Sek): Nutze den vorgegebenen Hook exakt. Starte NICHT mit "Ich".
-  - Aber (3-10 Sek): Konflikt/Fehler sichtbar machen
-  - Deshalb (10-20 Sek): Konsequenz/Lösung liefern
-  - Neues Aber (20-35 Sek): Einwand vorwegnehmen
-  - Finales Deshalb (35-50 Sek): Auflösung, Rahmen schließen
-  - CTA (letzte 5-10 Sek): Konkrete Handlungsaufforderung
+    1. ABER/DESHALB-STRUKTUR (Kernprinzip – siehe South Park-Methode):
+    - Hook (0-3s): Nutze Hook exakt. NIEMALS mit "Ich" starten. Erwartung brechen.
+    - Aber (3-10s): Problem/Konflikt sichtbar machen – erzeuge Reibung
+    - Deshalb (10-20s): Konkrete Konsequenz/Lösung – erzeuge Auflösung
+    - Neues Aber (20-35s): Einwand vorwegnehmen – neue Reibung
+    - Finales Deshalb (35-50s): Finale Auflösung + Rahmen schließen
+    - CTA (50-60s): Konkrete Aktion
 
-  2. RHETORIK: Kontraste, direkte "du"-Ansprache, rhetorische Fragen, Einwände antizipieren, bildhafte Vergleiche, Triaden, wechselnder Satzrhythmus.
+    2. RHETORIK-WERKZEUGKASTEN (alle verwenden):
+    ✓ Kontraste: alt vs neu, falsch vs richtig, "aber" erzeugt Spannung
+    ✓ Direkte "du"-Ansprache: "Du kennst das…", "Du machst…"
+    ✓ Rhetorische Fragen: Gehirn zwingen zu denken
+    ✓ Bildhafte Vergleiche: Abstrakt → visuell
+    ✓ Triaden (Dreieraufzählungen): Klingen harmonisch, geben Gewicht
+    ✓ Wechselnder Satzrhythmus: kurz (Energie) – lang (Kontext) – kurz (Fokus)
+    ✓ Pausen: "…" nach Schlüsselwörtern markieren
 
-  3. TONALITÄT: Klar, ruhig, authentisch, sicher. Keine Übertreibungen.
+    3. SATZRHYTHMUS & SPRACHMELODIE (STRIKT):
+    - Kurze Sätze = Energie, Druck, Fokus
+    - Lange Sätze = Kontext, Tiefe, Erklärung
+    - WECHSELN für Flow (wie Taktwechsel in Musik)
 
-  4. LÄNGE: Exakt ~${targetWords} Wörter.${styleContext}
+    4. TONALITÄT (absolut):
+    ✗ Kein "Ich" am Anfang, kein Selbstlob, keine Übertreibungen
+    ✓ Klar, ruhig, freundlich, sicher, authentisch
+    ✗ NIEMALS diese KI-Floskeln: "Stell dir vor", "Das ist der Schlüssel", "Es ist an der Zeit", "Auf deiner Reise", "Im heutigen schnelllebigen", "Lass uns"
+    ✓ Konkrete Beispiele statt abstrakte Ideen
 
-  Schreibe NUR das fertige Skript. Kein Kommentar drumherum. Zeilenumbrüche für Sprechpausen.`;
+    5. LÄNGE: Exakt ~${targetWords} Wörter.${styleContext}
+
+    **Schreibe NUR das fertige Skript. Keine Erklärungen. Zeilenumbrüche für Sprechpausen.**`;
 
     const result = await base44.integrations.Core.InvokeLLM({ prompt, model: "claude_sonnet_4_6" });
     set("script", result);
