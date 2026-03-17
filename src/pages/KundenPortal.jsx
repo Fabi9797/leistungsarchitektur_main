@@ -274,41 +274,6 @@ export default function KundenPortal() {
           </div>
         )}
 
-        {/* Nutrilize App - DUPLICATE REMOVED */}
-        <div className="card" style={{ display: "none" }}>
-          <div>
-            <img alt="" />
-            <div style={{ flex: 1 }}>
-              <h2 style={{ fontSize: "17px", fontWeight: 800, color: C.indigo, margin: "0 0 4px" }}>Nutrilize App</h2>
-              <p style={{ fontSize: "13px", color: "rgba(0,0,0,0.45)", margin: "0 0 16px", lineHeight: 1.5 }}>
-                Hier findest du deinen <strong>Trainingsplan</strong> und kannst dein <strong>Ernährungstracking</strong> durchführen.
-              </p>
-              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                <a
-                  href="nutrilize://"
-                  onClick={e => {
-                    e.preventDefault();
-                    const start = Date.now();
-                    window.location.href = "nutrilize://";
-                    setTimeout(() => {
-                      if (Date.now() - start < 2000) {
-                        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-                        window.location.href = isIOS
-                          ? "https://apps.apple.com/de/app/nutrilize/id1528478978"
-                          : "https://play.google.com/store/apps/details?id=com.snapandtrack&hl=de";
-                      }
-                    }, 1500);
-                  }}
-                  className="portal-btn"
-                  style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: C.indigo, color: "white", padding: "10px 20px", borderRadius: "10px", textDecoration: "none", fontSize: "13px", fontWeight: 700 }}
-                >
-                  App öffnen / Download
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Footer */}
         <p style={{ textAlign: "center", fontSize: "11px", color: "rgba(0,65,106,0.35)", marginTop: "40px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>
           Leistungsarchitektur · Fabian Aichem
