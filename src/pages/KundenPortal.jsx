@@ -6,9 +6,8 @@ import { FileText, Salad, Pill, Download, ExternalLink, Loader2, ChevronRight } 
 const C = { indigo: "#00416A", egg: "#F0EAD6", white: "#FFFFFF" };
 
 export default function KundenPortal() {
-  const pathname = window.location.pathname; // e.g. /kunde/Max-Mustermann
-  const slug = pathname.replace(/^\/kunde\//, "").replace(/-/g, " ");
-  const clientNameDecoded = decodeURIComponent(slug);
+  const { clientName } = useParams();
+  const clientNameDecoded = decodeURIComponent((clientName || "").replace(/-/g, " "));
 
   const [client, setClient] = useState(null);
   const [nutritionPlan, setNutritionPlan] = useState(null);
