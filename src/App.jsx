@@ -10,6 +10,7 @@ import AdminNav from '@/components/AdminNav';
 import SupplementAdmin832 from './pages/SupplementAdmin832';
 import SupplementStrategy832 from './pages/SupplementStrategy832';
 import ContentPlanning832 from './pages/ContentPlanning832';
+import KundenPortal from './pages/KundenPortal';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
