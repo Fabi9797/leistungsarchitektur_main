@@ -236,7 +236,7 @@ export default function KundenPortal() {
         )}
 
         {/* Nutrilize App */}
-        <div className="card" style={{ background: "white", borderRadius: "16px", marginTop: "16px", overflow: "hidden", boxShadow: "0 2px 20px rgba(0,65,106,0.08)" }}>
+        <div className="card" style={{ background: "white", borderRadius: "16px", marginBottom: "16px", overflow: "hidden", boxShadow: "0 2px 20px rgba(0,65,106,0.08)" }}>
           <div style={{ padding: "24px", display: "flex", alignItems: "flex-start", gap: "16px" }}>
             <img
               src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/e9/b2/c1/e9b2c1b3-1e9e-4b5a-9c2e-7a2e2e2e2e2e/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/230x0w.webp"
