@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
+import { useParams } from "react-router-dom";
 import { FileText, Salad, Pill, Download, ExternalLink, Loader2, ChevronRight } from "lucide-react";
 
 const C = { indigo: "#00416A", egg: "#F0EAD6", white: "#FFFFFF" };
