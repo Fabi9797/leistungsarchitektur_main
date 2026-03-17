@@ -31,13 +31,18 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <a href="#" className="flex items-center gap-2">
-              <div className="w-9 h-9 bg-[#00416A] rounded-lg flex items-center justify-center overflow-hidden">
-                <img src="https://media.base44.com/images/public/69b064c89953b727c5202e21/18a3ead6a_DesignohneTitel22.png" alt="Logo" className="w-full h-full object-contain p-1" style={{ filter: 'brightness(0) invert(1)' }} />
+            <a href="#" className="flex items-center gap-2.5">
+              <div className="w-9 h-9 bg-[#00416A] rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="14" width="4" height="6" rx="1" fill="white"/>
+                  <rect x="9" y="9" width="4" height="11" rx="1" fill="white" opacity="0.85"/>
+                  <rect x="16" y="4" width="4" height="16" rx="1" fill="white" opacity="0.7"/>
+                  <path d="M4 14L11 9L18 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+                </svg>
               </div>
-              <span className="hidden sm:block text-sm font-semibold tracking-tight text-[#00416A]">
-                PERFORMANCE<br className="leading-none" />
-                <span className="font-light">ARCHITECTURE</span>
+              <span className="hidden sm:block text-xs font-bold tracking-widest text-[#00416A] leading-tight uppercase">
+                LEISTUNGS<br/>
+                <span className="font-light tracking-widest">ARCHITEKTUR</span>
               </span>
             </a>
 
