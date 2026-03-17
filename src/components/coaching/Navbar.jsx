@@ -33,11 +33,18 @@ export default function Navbar() {
             {/* Logo */}
             <a href="#" className="flex items-center gap-2.5">
               <div className="w-9 h-9 bg-[#00416A] rounded-lg flex items-center justify-center flex-shrink-0">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2" y="14" width="4" height="6" rx="1" fill="white"/>
-                  <rect x="9" y="9" width="4" height="11" rx="1" fill="white" opacity="0.85"/>
-                  <rect x="16" y="4" width="4" height="16" rx="1" fill="white" opacity="0.7"/>
-                  <path d="M4 14L11 9L18 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Tempel-Dach / Giebel */}
+                  <path d="M3 8H21" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
+                  <path d="M12 3L21 8H3L12 3Z" fill="white" fillOpacity="0.9"/>
+                  {/* Säulen */}
+                  <rect x="5" y="8.5" width="2" height="10" rx="0.5" fill="white" fillOpacity="0.85"/>
+                  <rect x="11" y="8.5" width="2" height="10" rx="0.5" fill="white" fillOpacity="0.85"/>
+                  <rect x="17" y="8.5" width="2" height="10" rx="0.5" fill="white" fillOpacity="0.85"/>
+                  {/* Basis */}
+                  <path d="M3 18.5H21" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
+                  {/* FA Initialen subtil in der Mitte */}
+                  <text x="12" y="16" textAnchor="middle" fontSize="4.5" fontWeight="700" fill="white" fillOpacity="0.5" fontFamily="sans-serif">FA</text>
                 </svg>
               </div>
               <span className="hidden sm:block text-xs font-bold tracking-widest text-[#00416A] leading-tight uppercase">
