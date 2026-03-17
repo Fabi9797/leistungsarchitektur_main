@@ -15,6 +15,10 @@ export default function AdminNav() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
+  // Hide on public pages
+  const isPublic = location.pathname === "/" || location.pathname.startsWith("/kunde/");
+  if (isPublic) return null;
+
   return (
     <>
       {/* Toggle button */}
