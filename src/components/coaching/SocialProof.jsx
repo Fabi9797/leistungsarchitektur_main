@@ -33,7 +33,7 @@ function VoicePlayer() {
         {playing ? <Pause className="w-4 h-4 text-white" /> : <Play className="w-4 h-4 text-white ml-0.5" />}
       </button>
       <div className="flex-1 min-w-0">
-        <p className="text-[#00416A] text-xs font-bold mb-1.5">🎙️ Sharans O-Ton</p>
+        <p className="text-[#00416A] text-xs font-bold mb-1.5">🎙️ Nachricht von {name}</p>
         <div className="relative h-1 bg-[#00416A]/20 rounded-full overflow-hidden cursor-pointer"
           onClick={e => {
             const rect = e.currentTarget.getBoundingClientRect();
