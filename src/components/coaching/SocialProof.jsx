@@ -161,7 +161,7 @@ export default function SocialProof({ images }) {
                 {/* Quote */}
                 <div className="p-6">
                   <p className="text-sm text-black/60 leading-relaxed italic">„{t.quote}"</p>
-                  {t.name === "Shayan" && <VoicePlayer />}
+                  <VoicePlayer name={t.name} />
                 </div>
               </div>
             ))}
