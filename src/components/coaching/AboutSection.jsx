@@ -118,6 +118,7 @@ export default function AboutSection({ heroImage }) {
                 Mein Ziel ist nicht, dir kurzfristig Ergebnisse zu liefern. Mein Ziel ist, dir ein System zu geben, das dich dauerhaft in Form hält – auch dann, wenn das Coaching endet.
               </p>
             </div>
+            <VoicePlayer />
             <a
               href="#analyse"
               className="mt-8 group inline-flex items-center gap-3 px-8 py-4 bg-[#F0EAD6] text-[#00416A] text-base font-semibold rounded-xl hover:bg-white transition-all duration-300"
