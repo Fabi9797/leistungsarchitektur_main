@@ -27,7 +27,7 @@ function VoicePlayer({ name }) {
     <div className="mt-4 bg-[#F0EAD6] rounded-xl p-4 flex items-center gap-3">
       <audio
         ref={audioRef}
-        src={SHAYAN_VOICE_URL}
+        src={url}
         onTimeUpdate={() => setProgress(audioRef.current?.currentTime || 0)}
         onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)}
         onEnded={() => { setPlaying(false); setProgress(0); }}
