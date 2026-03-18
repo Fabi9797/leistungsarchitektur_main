@@ -63,50 +63,14 @@ Deno.serve(async (req) => {
       skripteFolderId = skripteData.id;
     }
 
-    // Convert base64 to binary
-    const binaryString = atob(pdfBase64);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-
-    // Upload PDF with metadata directly into "Skripte" folder using multipart
-    const boundary = 'boundary_upload_' + Date.now();
-    const metadata = JSON.stringify({ name: fileName, parents: [skripteFolderId] });
-    
-    // Build multipart body manually
-    const parts = [];
-    parts.push(`--${boundary}`);
-    parts.push('Content-Type: application/json; charset=UTF-8');
-    parts.push('');
-    parts.push(metadata);
-    parts.push(`--${boundary}`);
-    parts.push('Content-Type: application/pdf');
-    parts.push('Content-Transfer-Encoding: binary');
-    parts.push('');
-    
-    const textPart = parts.join('\r\n');
-    const fullBody = new Uint8Array(textPart.length + bytes.length + (`\r\n--${boundary}--`).length);
-    
-    let offset = 0;
-    for (let i = 0; i < textPart.length; i++) {
-      fullBody[offset++] = textPart.charCodeAt(i);
-    }
-    for (let i = 0; i < bytes.length; i++) {
-      fullBody[offset++] = bytes[i];
-    }
-    const endPart = `\r\n--${boundary}--`;
-    for (let i = 0; i < endPart.length; i++) {
-      fullBody[offset++] = endPart.charCodeAt(i);
-    }
-
-    const uploadRes = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name', {
+    // Upload PDF file directly
+    const uploadRes = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=media', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': `multipart/related; boundary=${boundary}`,
+        'Content-Type': 'application/pdf',
       },
-      body: fullBody,
+      body: pdfBase64,
     });
 
     if (!uploadRes.ok) {
@@ -114,7 +78,27 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Google Drive upload failed', details: errorText }, { status: uploadRes.status });
     }
 
-    const result = await uploadRes.json();
+    const uploadedFile = await uploadRes.json();
+    
+    // Move to folder with new name in one PATCH call
+    const updateRes = await fetch(`https://www.googleapis.com/drive/v3/files/${uploadedFile.id}?fields=id,name,parents`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: fileName,
+        parents: [skripteFolderId]
+      }),
+    });
+
+    if (!updateRes.ok) {
+      const errorText = await updateRes.text();
+      return Response.json({ error: 'Failed to move file', details: errorText }, { status: updateRes.status });
+    }
+
+    const result = await updateRes.json();
     return Response.json({ success: true, fileId: result.id, fileName: result.name });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
