@@ -1,6 +1,58 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
+
+// 🎙️ ERSETZE DIESE URL MIT DEINER ECHTEN AUDIO-DATEI
+const SHAYAN_VOICE_URL = "https://DEINE_AUDIO_URL.mp3";
+
+function VoicePlayer() {
+  const audioRef = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const toggle = () => {
+    if (playing) { audioRef.current.pause(); } else { audioRef.current.play(); }
+    setPlaying(!playing);
+  };
+  const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+
+  return (
+    <div className="mt-4 bg-[#F0EAD6] rounded-xl p-4 flex items-center gap-3">
+      <audio
+        ref={audioRef}
+        src={SHAYAN_VOICE_URL}
+        onTimeUpdate={() => setProgress(audioRef.current?.currentTime || 0)}
+        onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)}
+        onEnded={() => { setPlaying(false); setProgress(0); }}
+      />
+      <button
+        onClick={toggle}
+        className="w-10 h-10 rounded-full bg-[#00416A] flex items-center justify-center flex-shrink-0 hover:bg-[#00416A]/80 transition-colors"
+      >
+        {playing ? <Pause className="w-4 h-4 text-white" /> : <Play className="w-4 h-4 text-white ml-0.5" />}
+      </button>
+      <div className="flex-1 min-w-0">
+        <p className="text-[#00416A] text-xs font-bold mb-1.5">🎙️ Sharans O-Ton</p>
+        <div className="relative h-1 bg-[#00416A]/20 rounded-full overflow-hidden cursor-pointer"
+          onClick={e => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const ratio = (e.clientX - rect.left) / rect.width;
+            audioRef.current.currentTime = ratio * duration;
+            setProgress(ratio * duration);
+          }}
+        >
+          <div className="absolute left-0 top-0 h-full bg-[#00416A] rounded-full transition-all"
+            style={{ width: duration ? `${(progress / duration) * 100}%` : "0%" }} />
+        </div>
+        <div className="flex justify-between mt-1">
+          <span className="text-[#00416A]/40 text-xs">{fmt(progress)}</span>
+          <span className="text-[#00416A]/40 text-xs">{fmt(duration)}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const transformations = [
   {
