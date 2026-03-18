@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Play, Pause } from "lucide-react";
 
 export default function AboutSection({ heroImage }) {
   return (
