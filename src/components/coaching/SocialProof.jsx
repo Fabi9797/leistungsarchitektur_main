@@ -14,6 +14,9 @@ function VoicePlayer({ name }) {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  const url = VOICE_URLS[name];
+  if (!url) return null;
+
   const toggle = () => {
     if (playing) { audioRef.current.pause(); } else { audioRef.current.play(); }
     setPlaying(!playing);
