@@ -70,20 +70,43 @@ Deno.serve(async (req) => {
       bytes[i] = binaryString.charCodeAt(i);
     }
 
-    // Upload PDF with metadata directly into "Skripte" folder
-    const formData = new FormData();
-    const metadataBlob = new Blob([JSON.stringify({ name: fileName, parents: [skripteFolderId] })], { type: 'application/json' });
-    const fileBlob = new Blob([bytes], { type: 'application/pdf' });
+    // Upload PDF with metadata directly into "Skripte" folder using multipart
+    const boundary = 'boundary_upload_' + Date.now();
+    const metadata = JSON.stringify({ name: fileName, parents: [skripteFolderId] });
     
-    formData.append('metadata', metadataBlob);
-    formData.append('file', fileBlob);
+    // Build multipart body manually
+    const parts = [];
+    parts.push(`--${boundary}`);
+    parts.push('Content-Type: application/json; charset=UTF-8');
+    parts.push('');
+    parts.push(metadata);
+    parts.push(`--${boundary}`);
+    parts.push('Content-Type: application/pdf');
+    parts.push('Content-Transfer-Encoding: binary');
+    parts.push('');
+    
+    const textPart = parts.join('\r\n');
+    const fullBody = new Uint8Array(textPart.length + bytes.length + (`\r\n--${boundary}--`).length);
+    
+    let offset = 0;
+    for (let i = 0; i < textPart.length; i++) {
+      fullBody[offset++] = textPart.charCodeAt(i);
+    }
+    for (let i = 0; i < bytes.length; i++) {
+      fullBody[offset++] = bytes[i];
+    }
+    const endPart = `\r\n--${boundary}--`;
+    for (let i = 0; i < endPart.length; i++) {
+      fullBody[offset++] = endPart.charCodeAt(i);
+    }
 
     const uploadRes = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': `multipart/related; boundary=${boundary}`,
       },
-      body: formData,
+      body: fullBody,
     });
 
     if (!uploadRes.ok) {
