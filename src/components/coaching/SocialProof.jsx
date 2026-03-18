@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 // 🎙️ ERSETZE DIESE URL MIT DEINER ECHTEN AUDIO-DATEI
 const SHAYAN_VOICE_URL = "https://DEINE_AUDIO_URL.mp3";
 
-function VoicePlayer() {
+function VoicePlayer({ name }) {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
