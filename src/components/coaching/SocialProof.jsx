@@ -2,8 +2,11 @@ import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 
-// 🎙️ ERSETZE DIESE URL MIT DEINER ECHTEN AUDIO-DATEI
-const SHAYAN_VOICE_URL = "https://DEINE_AUDIO_URL.mp3";
+const VOICE_URLS = {
+  Shayan: "https://industrial-maroon-afdxrnj55j.edgeone.app/Shayan.mp3",
+  Alex: "",
+  Freddy: "",
+};
 
 function VoicePlayer({ name }) {
   const audioRef = useRef(null);
