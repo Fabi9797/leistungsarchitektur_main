@@ -22,6 +22,8 @@ function VoicePlayer({ name }) {
   };
   const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
+  if (!url) return null;
+
   return (
     <div className="mt-4 bg-[#F0EAD6] rounded-xl p-4 flex items-center gap-3">
       <audio
