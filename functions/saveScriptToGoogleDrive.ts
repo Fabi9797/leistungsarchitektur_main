@@ -70,24 +70,20 @@ Deno.serve(async (req) => {
       bytes[i] = binaryString.charCodeAt(i);
     }
 
-    // Upload PDF with metadata directly into "Skripte" folder using multipart upload
-    const boundary = '-------314159265358979323846';
-    const delimiter = `\r\n--${boundary}\r\n`;
-    const closeDelimiter = `\r\n--${boundary}--`;
-
-    const metadata = JSON.stringify({ name: fileName, parents: [skripteFolderId] });
+    // Upload PDF with metadata directly into "Skripte" folder
+    const formData = new FormData();
+    const metadataBlob = new Blob([JSON.stringify({ name: fileName, parents: [skripteFolderId] })], { type: 'application/json' });
+    const fileBlob = new Blob([bytes], { type: 'application/pdf' });
     
-    const metadataPart = `${delimiter}Content-Type: application/json; charset=UTF-8\r\n\r\n${metadata}`;
-    const dataPart = `${delimiter}Content-Type: application/pdf\r\nContent-Transfer-Encoding: base64\r\n\r\n${pdfBase64}${closeDelimiter}`;
-    const multipartBody = metadataPart + dataPart;
+    formData.append('metadata', metadataBlob);
+    formData.append('file', fileBlob);
 
     const uploadRes = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': `multipart/related; boundary="${boundary}"`,
       },
-      body: multipartBody,
+      body: formData,
     });
 
     if (!uploadRes.ok) {
