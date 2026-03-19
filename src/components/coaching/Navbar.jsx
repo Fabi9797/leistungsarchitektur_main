@@ -35,7 +35,7 @@ export default function Navbar() {
                 <img
                   src="https://media.base44.com/images/public/69b064c89953b727c5202e21/a128f5dab_ChatGPTImage19Marz202616_44_51.png"
                   alt="Logo"
-                  className="w-9 h-9 object-contain rounded-2xl"
+                  className="w-9 h-9 object-contain rounded-lg"
                 />
               </div>
               <span className="hidden sm:block text-xs font-bold tracking-widest text-[#00416A] leading-tight uppercase">
