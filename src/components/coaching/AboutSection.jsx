@@ -63,7 +63,7 @@ function VoicePlayer() {
   );
 }
 
-export default function AboutSection({ heroImage }) {
+export default function AboutSection({ _heroImage }) {
   return (
     <section className="py-16 lg:py-32 bg-[#00416A] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
@@ -78,7 +78,7 @@ export default function AboutSection({ heroImage }) {
           >
             <div className="relative rounded-2xl overflow-hidden aspect-[4/5] max-w-xs sm:max-w-sm mx-auto lg:mx-0">
               <img
-                src={heroImage}
+                src={_heroImage}
                 alt="Coach"
                 className="w-full h-full object-cover"
               />
