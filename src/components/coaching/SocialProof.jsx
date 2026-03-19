@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 const VOICE_URLS = {
   Shayan: "https://industrial-maroon-afdxrnj55j.edgeone.app/Shayan.mp3",
   Alex: "",
-  Freddy: "",
+  Frederick: "",
 };
 
 function VoicePlayer({ name }) {
@@ -75,7 +75,7 @@ const transformations = [
     quote: "Keine extreme Diät, kein stundenlanges Training. Einfach ein klares System, das in meinen Alltag passt. Das hat den Unterschied gemacht.",
   },
   {
-    name: "Freddy",
+    name: "Frederick",
     tagline: "Endlich ein Plan, der meinen Kalender respektiert.",
     stats: "-11 kg Körperfatt · 14 Wochen",
     quote: "Als Unternehmer habe ich keine Zeit für Experimente. Hier wurde analysiert, was bei mir den größten Hebel hat – und genau das haben wir umgesetzt.",

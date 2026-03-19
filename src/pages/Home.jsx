@@ -12,9 +12,9 @@ import Footer from "../components/coaching/Footer";
 
 const HERO_IMAGE = "https://media.base44.com/images/public/69b064c89953b727c5202e21/a7caf5338_generated_bc51b5fd.png";
 const TRANSFORMATION_IMAGES = [
-  "https://media.base44.com/images/public/69b064c89953b727c5202e21/f50e0a380_generated_700bd329.png",
-  "https://media.base44.com/images/public/69b064c89953b727c5202e21/8efbcabb0_generated_4ee9203c.png",
-  "https://media.base44.com/images/public/69b064c89953b727c5202e21/4624958ce_generated_fd1cdad5.png",
+  "https://media.base44.com/images/public/69b064c89953b727c5202e21/c85ae91d9_IMG_7328.jpg",
+  "https://media.base44.com/images/public/69b064c89953b727c5202e21/d2728f7a6_IMG_7327.jpg",
+  "https://media.base44.com/images/public/69b064c89953b727c5202e21/5d00b3b37_PHOTO-2026-02-16-23-39-13.jpg",
 ];
 
 export default function Home() {
