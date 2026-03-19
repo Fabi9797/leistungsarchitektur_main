@@ -26,7 +26,6 @@ export default function Home() {
       <ProblemSection />
       <FrameworkSection />
       <QualificationSection />
-      <ProcessSection />
       <AboutSection heroImage={HERO_IMAGE} />
       <FAQSection />
       <FinalCTA />
