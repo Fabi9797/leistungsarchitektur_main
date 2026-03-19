@@ -55,7 +55,7 @@ export default function HeroSection({ heroImage }) {
             {/* Video */}
             <div className="mt-6 rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: "16/9" }}>
               <iframe
-                src="https://www.youtube.com/embed/yZqY3uymfk4"
+                src="https://www.youtube.com/embed/zo_YE1LY460"
                 title="Performance Architecture"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
