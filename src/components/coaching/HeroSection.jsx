@@ -27,6 +27,7 @@ export default function HeroSection({ heroImage }) {
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-16 pb-14 lg:pt-32 lg:pb-24 w-full">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -42,27 +43,15 @@ export default function HeroSection({ heroImage }) {
             </div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-black leading-[1.1]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-black leading-[1.1]">
               Dein Morgen beginnt Heute.{" "}
               <span className="text-[#00416A]">Fit in die Zukunft.</span>
             </h1>
 
             {/* Subheadline */}
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl text-black/60 leading-relaxed">
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-black/60 leading-relaxed">
               Wir bringen Training, Ernährung und Alltag in ein funktionierendes System – damit du in Form kommst und es langfristig bleibst.
             </p>
-
-            {/* Video */}
-            <div className="mt-6 rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: "16/9" }}>
-              <iframe
-                src="https://www.youtube.com/embed/zo_YE1LY460"
-                title="Performance Architecture"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-                style={{ border: 0 }}
-              />
-            </div>
 
             {/* Bullet Points */}
             <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
@@ -111,6 +100,36 @@ export default function HeroSection({ heroImage }) {
             </div>
           </motion.div>
 
+          {/* Right Content: Video (desktop only) */}
+          <motion.div
+            className="hidden lg:block"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: "16/9" }}>
+              <iframe
+                src="https://www.youtube.com/embed/zo_YE1LY460"
+                title="Performance Architecture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+                style={{ border: 0 }}
+              />
+            </div>
+          </motion.div>
+
+          {/* Video on mobile (below text) */}
+          <div className="lg:hidden rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: "16/9" }}>
+            <iframe
+              src="https://www.youtube.com/embed/zo_YE1LY460"
+              title="Performance Architecture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+              style={{ border: 0 }}
+            />
+          </div>
 
         </div>
       </div>
