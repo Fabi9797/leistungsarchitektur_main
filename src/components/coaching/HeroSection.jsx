@@ -131,18 +131,6 @@ export default function HeroSection({ heroImage }) {
             </div>
           </motion.div>
 
-          {/* Video on mobile (below text) */}
-          <div className="lg:hidden rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: "16/9" }}>
-            <iframe
-              src="https://www.youtube.com/embed/zo_YE1LY460"
-              title="Performance Architecture"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full"
-              style={{ border: 0 }}
-            />
-          </div>
-
         </div>
       </div>
     </section>
