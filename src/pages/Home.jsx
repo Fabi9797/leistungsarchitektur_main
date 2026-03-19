@@ -5,7 +5,6 @@ import SocialProof from "../components/coaching/SocialProof";
 import ProblemSection from "../components/coaching/ProblemSection";
 import FrameworkSection from "../components/coaching/FrameworkSection";
 import QualificationSection from "../components/coaching/QualificationSection";
-import ProcessSection from "../components/coaching/ProcessSection";
 import AboutSection from "../components/coaching/AboutSection";
 import FAQSection from "../components/coaching/FAQSection";
 import FinalCTA from "../components/coaching/FinalCTA";
