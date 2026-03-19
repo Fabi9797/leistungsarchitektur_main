@@ -31,24 +31,12 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
             <a href="#" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 bg-[#00416A] rounded-lg flex items-center justify-center flex-shrink-0">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  {/* Giebel-Dach (A-Form = das A aus FA) */}
-                  <path d="M12 2.5L22 9H2L12 2.5Z" fill="white" fillOpacity="0.9"/>
-                  <path d="M2 9H22" stroke="white" strokeWidth="1.2"/>
-                  {/* Horizontaler Querbalken im Giebel (A-Querbalken) */}
-                  <path d="M6 6.5H18" stroke="white" strokeWidth="0.8" opacity="0.5"/>
-                  {/* Linke Säulengruppe bildet das F: Vertikaler Strich + 2 Querstriche */}
-                  <rect x="4" y="9.5" width="2" height="10" rx="0.5" fill="white" fillOpacity="0.9"/>
-                  <rect x="6" y="10" width="4" height="1.2" rx="0.3" fill="white" fillOpacity="0.7"/>
-                  <rect x="6" y="13.5" width="3" height="1.2" rx="0.3" fill="white" fillOpacity="0.7"/>
-                  {/* Rechte Säulengruppe bildet das A: 2 schräge Säulen + Querbalken */}
-                  <rect x="14" y="9.5" width="2" height="10" rx="0.5" fill="white" fillOpacity="0.9" transform="rotate(-4 15 14.5)"/>
-                  <rect x="18" y="9.5" width="2" height="10" rx="0.5" fill="white" fillOpacity="0.9" transform="rotate(4 19 14.5)"/>
-                  <rect x="15" y="15" width="5" height="1.2" rx="0.3" fill="white" fillOpacity="0.7"/>
-                  {/* Basis */}
-                  <path d="M2 19.5H22" stroke="white" strokeWidth="1.2"/>
-                </svg>
+              <div className="w-9 h-9 flex items-center justify-center flex-shrink-0">
+                <img
+                  src="https://media.base44.com/images/public/69b064c89953b727c5202e21/a128f5dab_ChatGPTImage19Marz202616_44_51.png"
+                  alt="Logo"
+                  className="w-9 h-9 object-contain"
+                />
               </div>
               <span className="hidden sm:block text-xs font-bold tracking-widest text-[#00416A] leading-tight uppercase">
                 LEISTUNGS<br/>
