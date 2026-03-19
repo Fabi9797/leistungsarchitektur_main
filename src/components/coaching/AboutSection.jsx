@@ -78,9 +78,9 @@ export default function AboutSection({ _heroImage }) {
           >
             <div className="relative rounded-2xl overflow-hidden aspect-[4/5] max-w-xs sm:max-w-sm mx-auto lg:mx-0">
               <img
-                src={_heroImage}
+                src="https://media.base44.com/images/public/69b064c89953b727c5202e21/98cf67c2a_DesignohneTitel12.png"
                 alt="Coach"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#00416A]/30 to-transparent" />
             </div>
