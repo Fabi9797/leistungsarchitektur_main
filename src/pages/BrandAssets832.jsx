@@ -174,7 +174,7 @@ export default function BrandAssets832() {
                   <p className="text-sm text-gray-400">{logo.description}</p>
                 </div>
                 <button
-                  onClick={() => downloadFile(logo.downloadUrl, logo.filename)}
+                  onClick={() => logo.downloadUrl ? downloadFile(logo.downloadUrl, logo.filename) : downloadLogoWithText()}
                   className="flex items-center justify-center gap-2 w-full py-2.5 bg-[#00416A] text-white rounded-lg text-sm font-medium hover:bg-[#003356] transition-colors"
                 >
                   <Download className="w-4 h-4" />
