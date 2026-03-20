@@ -97,6 +97,57 @@ export default function BrandAssets832() {
     document.body.removeChild(a);
   };
 
+  const downloadLogoWithText = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 600;
+    canvas.height = 180;
+    const ctx = canvas.getContext("2d");
+
+    // Background white
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const img = new window.Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      // Draw logo icon with rounded rect
+      const iconSize = 120;
+      const iconX = 30;
+      const iconY = 30;
+      const radius = 20;
+      ctx.beginPath();
+      ctx.moveTo(iconX + radius, iconY);
+      ctx.lineTo(iconX + iconSize - radius, iconY);
+      ctx.quadraticCurveTo(iconX + iconSize, iconY, iconX + iconSize, iconY + radius);
+      ctx.lineTo(iconX + iconSize, iconY + iconSize - radius);
+      ctx.quadraticCurveTo(iconX + iconSize, iconY + iconSize, iconX + iconSize - radius, iconY + iconSize);
+      ctx.lineTo(iconX + radius, iconY + iconSize);
+      ctx.quadraticCurveTo(iconX, iconY + iconSize, iconX, iconY + iconSize - radius);
+      ctx.lineTo(iconX, iconY + radius);
+      ctx.quadraticCurveTo(iconX, iconY, iconX + radius, iconY);
+      ctx.closePath();
+      ctx.save();
+      ctx.clip();
+      ctx.drawImage(img, iconX, iconY, iconSize, iconSize);
+      ctx.restore();
+
+      // Draw text
+      ctx.fillStyle = "#00416A";
+      ctx.font = "bold 36px Inter, Arial, sans-serif";
+      ctx.letterSpacing = "8px";
+      ctx.fillText("LEISTUNGS", 180, 80);
+      ctx.font = "300 36px Inter, Arial, sans-serif";
+      ctx.fillText("ARCHITEKTUR", 180, 125);
+
+      // Download
+      const link = document.createElement("a");
+      link.download = "leistungsarchitektur-logo-mit-schriftzug.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    };
+    img.src = LOGO_URL;
+  };
+
   return (
     <div className="min-h-screen bg-[#F0EAD6]/30 px-4 py-12">
       <div className="max-w-4xl mx-auto">
