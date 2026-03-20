@@ -33,7 +33,7 @@ const LOGOS = [
         </div>
       </div>
     ),
-    downloadUrl: LOGO_URL,
+    downloadUrl: null, // handled by downloadLogoWithText
     filename: "leistungsarchitektur-logo-mit-schriftzug.png",
   },
   {
