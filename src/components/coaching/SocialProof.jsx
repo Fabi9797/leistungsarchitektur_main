@@ -98,6 +98,17 @@ export default function SocialProof({ images }) {
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [voiceUrls, setVoiceUrls] = useState(DEFAULT_VOICE_URLS);
+
+  useEffect(() => {
+    base44.entities.TestimonialAudio.list().then(records => {
+      if (records && records.length > 0) {
+        const urls = { ...DEFAULT_VOICE_URLS };
+        records.forEach(r => { if (r.name && r.audio_url) urls[r.name] = r.audio_url; });
+        setVoiceUrls(urls);
+      }
+    }).catch(() => {});
+  }, []);
 
   const checkScroll = () => {
     const el = scrollRef.current;
