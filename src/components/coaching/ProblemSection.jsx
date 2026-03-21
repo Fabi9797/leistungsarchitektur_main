@@ -3,12 +3,12 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 const problems = [
-  "Du trainierst, aber siehst keine sichtbaren Veränderungen.",
-  "Deine Ernährung ist mal streng, mal planlos – ein ständiges Hin und Her.",
-  "Dein Alltag lässt kaum Platz für konsequente Routinen.",
-  "Du startest motiviert, aber nach ein paar Wochen ist die Luft raus.",
-  "Du weißt nicht, welcher Faktor bei dir wirklich den Unterschied macht.",
-];
+"Du trainierst, aber siehst keine sichtbaren Veränderungen.",
+"Deine Ernährung ist mal streng, mal planlos – ein ständiges Hin und Her.",
+"Dein Alltag lässt kaum Platz für konsequente Routinen.",
+"Du startest motiviert, aber nach ein paar Wochen ist die Luft raus.",
+"Du weißt nicht, welcher Faktor bei dir wirklich den Unterschied macht."];
+
 
 export default function ProblemSection() {
   return (
@@ -26,8 +26,8 @@ export default function ProblemSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7 }}
-          >
+            transition={{ duration: 0.7 }}>
+            
             <span className="text-xs font-bold text-white/30 tracking-[0.2em] uppercase">
               Das Problem
             </span>
@@ -35,13 +35,13 @@ export default function ProblemSection() {
               Warum die meisten scheitern:{" "}
               <span className="text-[#F0EAD6]">Aktionismus ohne Hebelwirkung.</span>
             </h2>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-white/60 leading-relaxed">
-              Du hast keine Zeit für Experimente. Wer versucht, alles gleichzeitig zu ändern, verliert die Kontrolle. Wir finden den einen Hebel, der bei dir wirklich den Unterschied macht.
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-white/60 leading-relaxed">Du hast keine Zeit für Experimente. Wer versucht, alles gleichzeitig zu ändern, verliert die Kontrolle. Wir finden die Hebel, die bei dir wirklich den Unterschied machen.
+
             </p>
             <a
               href="#analyse"
-              className="mt-8 group inline-flex items-center gap-2 text-[#F0EAD6] font-semibold hover:text-white transition-colors"
-            >
+              className="mt-8 group inline-flex items-center gap-2 text-[#F0EAD6] font-semibold hover:text-white transition-colors">
+              
               Deinen Hebel finden
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
@@ -53,21 +53,21 @@ export default function ProblemSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="space-y-4"
-          >
-            {problems.map((p, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + i * 0.1 }}
-                className="flex items-start gap-4 p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10"
-              >
+            className="space-y-4">
+            
+            {problems.map((p, i) =>
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 + i * 0.1 }}
+              className="flex items-start gap-4 p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
+              
                 <span className="text-xs font-bold text-white/20 mt-0.5">0{i + 1}</span>
                 <p className="text-white/80 text-base">{p}</p>
               </motion.div>
-            ))}
+            )}
           </motion.div>
         </div>
 
@@ -90,6 +90,6 @@ export default function ProblemSection() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }
