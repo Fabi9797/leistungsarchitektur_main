@@ -75,22 +75,22 @@ function VoicePlayer({ name, url }) {
 
 const transformations = [
   {
-    name: "Shayan",
-    tagline: "Vom Chaos zur Systematik.",
-    stats: "-12 kg Körperfett · 16 Wochen",
-    quote: "Ich hatte vorher alles Mögliche probiert – ohne Plan und ohne Ergebnis. Mit dem System habe ich zum ersten Mal verstanden, woran es wirklich lag.",
+    name: "Frederick",
+    tagline: "Endlich ein Plan, der meinen Kalender respektiert.",
+    stats: "-14 kg · 10 Wochen",
+    quote: "Als Unternehmer habe ich keine Zeit für Experimente. Hier wurde analysiert, was bei mir den größten Hebel hat – und genau das haben wir umgesetzt.",
   },
   {
     name: "Alex",
     tagline: "Keine Diät, sondern Steuerung.",
-    stats: "-9 kg Körperfett · 12 Wochen",
+    stats: "-9 kg · 8 Wochen",
     quote: "Keine extreme Diät, kein stundenlanges Training. Einfach ein klares System, das in meinen Alltag passt. Das hat den Unterschied gemacht.",
   },
   {
-    name: "Frederick",
-    tagline: "Endlich ein Plan, der meinen Kalender respektiert.",
-    stats: "-11 kg Körperfatt · 14 Wochen",
-    quote: "Als Unternehmer habe ich keine Zeit für Experimente. Hier wurde analysiert, was bei mir den größten Hebel hat – und genau das haben wir umgesetzt.",
+    name: "Shayan",
+    tagline: "Vom Chaos zur Systematik.",
+    stats: "-18 kg · 16 Wochen",
+    quote: "Ich hatte vorher alles Mögliche probiert – ohne Plan und ohne Ergebnis. Mit dem System habe ich zum ersten Mal verstanden, woran es wirklich lag.",
   },
 ];
 
