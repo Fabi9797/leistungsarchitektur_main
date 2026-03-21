@@ -16,7 +16,7 @@ const systemIndicators = [
 ];
 
 export default function HeroSection({ heroImage }) {
-  const [showModal, setShowModal] = useState(false);
+  const { openAnalyse } = useAnalyse();
   return (
     <section className="relative min-h-screen flex items-center bg-white overflow-hidden">
       {/* Subtle grid background */}
