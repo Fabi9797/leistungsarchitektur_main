@@ -108,7 +108,7 @@ export default function AboutSection({ _heroImage }) {
             </h2>
             <div className="mt-8 space-y-5 text-white/70 text-base leading-relaxed">
               <p>
-                Ich habe über sechs Jahre lang ein eigenes Fitnessstudio geführt. In dieser Zeit habe ich Hunderte von Menschen begleitet – und verstanden, woran die meisten wirklich scheitern.
+                Ich führe seit über sechs Jahren ein eigenes Fitnessstudio, dass <a href="https://fitter.jetzt/badharzburg/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white transition-colors">FITTER in Bad Harzburg</a>. In dieser Zeit habe ich Hunderte von Menschen begleitet – und verstanden, woran die meisten wirklich scheitern.
               </p>
               <p>
                 Es ist fast nie das Training. Und selten die Ernährung allein. Es ist das Fehlen eines Systems, das alle Faktoren verbindet und auf den individuellen Alltag abgestimmt ist.
