@@ -36,9 +36,9 @@ export default function ClientOverview832() {
   );
 
   return (
-    <div className="bg-[#F0EAD6] print:bg-white p-6 overflow-x-auto">
+    <div className="bg-[#F0EAD6] print:bg-white min-h-screen">
       {/* Print Button */}
-      <div className="print:hidden flex justify-end mb-4 max-w-[1123px] mx-auto">
+      <div className="print:hidden flex justify-end p-4">
         <button
           onClick={() => window.print()}
           className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white rounded-xl text-sm font-semibold hover:bg-[#003356] transition"
@@ -47,10 +47,11 @@ export default function ClientOverview832() {
         </button>
       </div>
 
-      {/* A4 Landscape Sheet: 1123 × 794px */}
+      {/* A4 Landscape Sheet: 1123 × 794px — scaled to fit viewport */}
+      <div style={{ display: "flex", justifyContent: "center", padding: "0 24px 48px" }}>
       <div
-        className="mx-auto bg-white shadow-xl print:shadow-none"
-        style={{ width: "1123px", minHeight: "794px", maxHeight: "794px", padding: "36px", display: "flex", flexDirection: "column", overflow: "hidden" }}
+        className="bg-white shadow-xl print:shadow-none"
+        style={{ width: "1123px", height: "794px", padding: "36px", display: "flex", flexDirection: "column", flexShrink: 0, transformOrigin: "top center" }}
       >
         {/* Header */}
         <div className="flex items-start justify-between mb-5 pb-4 border-b-2 border-[#00416A]">
