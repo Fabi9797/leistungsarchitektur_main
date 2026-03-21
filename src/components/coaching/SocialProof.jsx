@@ -9,21 +9,32 @@ const DEFAULT_VOICE_URLS = {
   Frederick: "",
 };
 
-function VoicePlayer({ name }) {
+function VoicePlayer({ name, url }) {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  const url = VOICE_URLS[name];
+  const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+
+  if (!url) {
+    return (
+      <div className="mt-4 bg-[#F0EAD6] rounded-xl p-4 flex items-center gap-3 opacity-40">
+        <div className="w-10 h-10 rounded-full bg-[#00416A]/20 flex items-center justify-center flex-shrink-0">
+          <Mic className="w-4 h-4 text-[#00416A]" />
+        </div>
+        <div>
+          <p className="text-[#00416A] text-xs font-bold">🎙️ Nachricht von {name}</p>
+          <p className="text-[#00416A]/50 text-xs mt-0.5">Audio folgt</p>
+        </div>
+      </div>
+    );
+  }
 
   const toggle = () => {
     if (playing) { audioRef.current.pause(); } else { audioRef.current.play(); }
     setPlaying(!playing);
   };
-  const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
-
-  if (!url) return null;
 
   return (
     <div className="mt-4 bg-[#F0EAD6] rounded-xl p-4 flex items-center gap-3">
