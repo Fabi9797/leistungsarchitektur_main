@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 
-const VOICE_URLS = {
+const DEFAULT_VOICE_URLS = {
   Shayan: "https://industrial-maroon-afdxrnj55j.edgeone.app/Shayan.mp3",
   Alex: "",
   Frederick: "",
