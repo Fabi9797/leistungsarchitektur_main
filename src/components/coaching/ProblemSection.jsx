@@ -12,6 +12,7 @@ const problems = [
 
 
 export default function ProblemSection() {
+  const { openAnalyse } = useAnalyse();
   return (
     <section className="py-16 lg:py-32 bg-[#00416A] relative overflow-hidden">
       {/* Subtle pattern */}
