@@ -36,7 +36,7 @@ export default function ClientOverview832() {
   );
 
   return (
-    <div className="bg-[#F0EAD6] print:bg-white p-6">
+    <div className="bg-[#F0EAD6] print:bg-white p-6 overflow-x-auto">
       {/* Print Button */}
       <div className="print:hidden flex justify-end mb-4 max-w-[1123px] mx-auto">
         <button
