@@ -36,7 +36,7 @@ export default function ClientOverview832() {
   );
 
   return (
-    <div className="bg-[#F0EAD6] print:bg-white min-h-screen">
+    <div className="bg-[#F0EAD6] print:bg-white">
       {/* Print Button */}
       <div className="print:hidden flex justify-end p-4">
         <button
@@ -47,11 +47,12 @@ export default function ClientOverview832() {
         </button>
       </div>
 
-      {/* A4 Landscape Sheet: 1123 × 794px — scaled to fit viewport */}
-      <div style={{ display: "flex", justifyContent: "center", padding: "0 24px 48px" }}>
+      {/* Scale wrapper: makes the A4 landscape sheet fit the screen width */}
+      <div className="print:hidden flex justify-center pb-12 px-4">
+        <div style={{ transform: `scale(${Math.min(1, (window.innerWidth - 32) / 1123)})`, transformOrigin: "top center", width: "1123px", height: "794px", flexShrink: 0 }}>
       <div
-        className="bg-white shadow-xl print:shadow-none"
-        style={{ width: "1123px", height: "794px", padding: "36px", display: "flex", flexDirection: "column", flexShrink: 0, transformOrigin: "top center" }}
+        className="bg-white shadow-2xl"
+        style={{ width: "1123px", height: "794px", padding: "36px", display: "flex", flexDirection: "column", overflow: "hidden" }}
       >
         {/* Header */}
         <div className="flex items-start justify-between mb-5 pb-4 border-b-2 border-[#00416A]">
