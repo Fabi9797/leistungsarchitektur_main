@@ -165,6 +165,8 @@ export default function ClientOverview832() {
         </div>
       </div>
 
+      </div>{/* end centering wrapper */}
+
       <style>{`
         @media print {
           body { margin: 0; }
