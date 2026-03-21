@@ -47,10 +47,10 @@ export default function ClientOverview832() {
         </button>
       </div>
 
-      {/* A4 Sheet */}
+      {/* A4 Sheet – Landscape */}
       <div
         className="mx-auto bg-white shadow-xl print:shadow-none"
-        style={{ width: "794px", minHeight: "1123px", padding: "48px" }}
+        style={{ width: "1123px", minHeight: "794px", padding: "48px" }}
       >
         {/* Header */}
         <div className="flex items-start justify-between mb-8 pb-6 border-b-2 border-[#00416A]">
