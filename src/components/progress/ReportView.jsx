@@ -402,7 +402,7 @@ export default function ReportView({ report, onBack }) {
         </section>
 
       </div>
-      </div>{/* end printRef */}
+      </div>
     </div>
   );
 }
