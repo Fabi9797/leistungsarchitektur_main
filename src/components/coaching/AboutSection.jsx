@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Pause } from "lucide-react";
+import { useAnalyse } from "@/lib/AnalyseContext";
 
 // 🎙️ ERSETZE DIESE URL MIT DEINER ECHTEN AUDIO-DATEI
 const VOICE_URL = "https://media.base44.com/images/public/69b064c89953b727c5202e21/DEINE_AUDIO_DATEI.mp3";
@@ -64,6 +65,7 @@ function VoicePlayer() {
 }
 
 export default function AboutSection({ _heroImage }) {
+  const { openAnalyse } = useAnalyse();
   return (
     <section className="py-16 lg:py-32 bg-[#00416A] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
@@ -119,13 +121,12 @@ export default function AboutSection({ _heroImage }) {
               </p>
             </div>
             <VoicePlayer />
-            <a
-              href="#analyse"
+            <button
+              onClick={openAnalyse}
               className="mt-8 group inline-flex items-center gap-3 px-8 py-4 bg-[#F0EAD6] text-[#00416A] text-base font-semibold rounded-xl hover:bg-white transition-all duration-300">
-              
               Analyse starten
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </button>
           </motion.div>
         </div>
       </div>
