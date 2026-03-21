@@ -130,7 +130,7 @@ export default function ClientOverview832() {
       <style>{`
         @media print {
           body { margin: 0; }
-          @page { size: A4; margin: 0; }
+          @page { size: A4 landscape; margin: 0; }
         }
       `}</style>
     </div>
