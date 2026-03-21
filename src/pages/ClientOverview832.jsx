@@ -164,7 +164,7 @@ export default function ClientOverview832() {
           <p className="text-[9px] text-black/25">{new Date().toLocaleDateString("de-DE")}</p>
         </div>
       </div>
-
+      </div>{/* end sheet */}
       </div>{/* end centering wrapper */}
 
       <style>{`
