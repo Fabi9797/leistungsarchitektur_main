@@ -174,19 +174,10 @@ export default function ClientOverview832() {
         </div>
       </div>
 
-      {/* Print-only version (no scale wrapper needed) */}
-      <div className="hidden print:block">
-        <div
-          style={{ width: "297mm", height: "210mm", padding: "18mm", display: "flex", flexDirection: "column", overflow: "hidden", background: "white" }}
-        >
-        </div>
-      </div>
-
       <style>{`
         @media print {
           body { margin: 0; }
           @page { size: A4 landscape; margin: 0; }
-          .print\\:hidden { display: none !important; }
         }
       `}</style>
     </div>
