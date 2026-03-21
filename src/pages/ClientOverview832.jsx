@@ -50,7 +50,7 @@ export default function ClientOverview832() {
       {/* A4 Landscape Sheet: 1123 × 794px */}
       <div
         className="mx-auto bg-white shadow-xl print:shadow-none"
-        style={{ width: "1123px", height: "794px", padding: "36px", display: "flex", flexDirection: "column" }}
+        style={{ width: "1123px", minHeight: "794px", maxHeight: "794px", padding: "36px", display: "flex", flexDirection: "column", overflow: "hidden" }}
       >
         {/* Header */}
         <div className="flex items-start justify-between mb-5 pb-4 border-b-2 border-[#00416A]">
