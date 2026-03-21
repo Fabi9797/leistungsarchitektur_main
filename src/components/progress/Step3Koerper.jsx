@@ -55,6 +55,53 @@ function NumField({ label, value, onChange, unit }) {
   );
 }
 
+function VerlaufEditor({ label, jsonKey, data, update, unit }) {
+  const [punkte, setPunkte] = useState(() => {
+    try { return data[jsonKey] ? JSON.parse(data[jsonKey]) : []; } catch { return []; }
+  });
+
+  const addPunkt = () => {
+    const next = [...punkte, { woche: `W${punkte.length + 1}`, wert: "" }];
+    setPunkte(next);
+    update({ [jsonKey]: JSON.stringify(next) });
+  };
+
+  const updatePunkt = (i, field, val) => {
+    const next = punkte.map((p, idx) => idx === i ? { ...p, [field]: val } : p);
+    setPunkte(next);
+    update({ [jsonKey]: JSON.stringify(next) });
+  };
+
+  const removePunkt = (i) => {
+    const next = punkte.filter((_, idx) => idx !== i);
+    setPunkte(next);
+    update({ [jsonKey]: JSON.stringify(next) });
+  };
+
+  return (
+    <div className="bg-[#1a1a1a] rounded-xl p-4 border border-white/5">
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-white/60 text-xs">{label} Verlauf {unit && <span className="text-white/30">({unit})</span>}</p>
+        <button onClick={addPunkt} className="text-amber-400 text-xs hover:text-amber-300">+ Punkt</button>
+      </div>
+      {punkte.length === 0 && <p className="text-white/20 text-xs">Noch keine Datenpunkte</p>}
+      <div className="space-y-2">
+        {punkte.map((p, i) => (
+          <div key={i} className="flex gap-2 items-center">
+            <input value={p.woche} onChange={e => updatePunkt(i, "woche", e.target.value)}
+              className="w-16 bg-[#0f0f0f] border border-white/10 rounded-lg px-2 py-1.5 text-white text-xs outline-none focus:border-amber-400/50"
+              placeholder="W1" />
+            <input type="number" value={p.wert} onChange={e => updatePunkt(i, "wert", e.target.value)}
+              className="flex-1 bg-[#0f0f0f] border border-white/10 rounded-lg px-2 py-1.5 text-white text-xs outline-none focus:border-amber-400/50"
+              placeholder={unit || "Wert"} />
+            <button onClick={() => removePunkt(i)} className="text-white/20 hover:text-red-400 text-xs">✕</button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Step3Koerper({ data, update }) {
   const [umfaenge, setUmfaenge] = useState(() => {
     try { return data.umfaenge_json ? JSON.parse(data.umfaenge_json) : {}; } catch { return {}; }
