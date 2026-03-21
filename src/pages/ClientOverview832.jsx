@@ -47,12 +47,18 @@ export default function ClientOverview832() {
         </button>
       </div>
 
-      {/* Scale wrapper: makes the A4 landscape sheet fit the screen width */}
-      <div className="print:hidden flex justify-center pb-12 px-4">
-        <div style={{ transform: `scale(${Math.min(1, (window.innerWidth - 32) / 1123)})`, transformOrigin: "top center", width: "1123px", height: "794px", flexShrink: 0 }}>
+      {/* Outer container: centers and scales the sheet */}
+      <div style={{ display: "flex", justifyContent: "center", paddingBottom: 48, overflow: "hidden" }}>
+        <div style={{
+          width: 1123,
+          height: 794,
+          transformOrigin: "top center",
+          transform: `scale(${Math.min(1, (window.innerWidth - 32) / 1123)})`,
+          flexShrink: 0,
+        }}>
       <div
-        className="bg-white shadow-2xl"
-        style={{ width: "1123px", height: "794px", padding: "36px", display: "flex", flexDirection: "column", overflow: "hidden" }}
+        className="bg-white shadow-2xl print:shadow-none"
+        style={{ width: 1123, height: 794, padding: 36, display: "flex", flexDirection: "column", overflow: "hidden" }}
       >
         {/* Header */}
         <div className="flex items-start justify-between mb-5 pb-4 border-b-2 border-[#00416A]">
