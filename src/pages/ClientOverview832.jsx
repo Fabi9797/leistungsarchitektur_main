@@ -38,7 +38,7 @@ export default function ClientOverview832() {
   return (
     <div className="min-h-screen bg-[#F0EAD6] print:bg-white">
       {/* Print Button – hidden when printing */}
-      <div className="print:hidden flex justify-end p-4 max-w-[794px] mx-auto">
+      <div className="print:hidden flex justify-end p-4 max-w-[1123px] mx-auto">
         <button
           onClick={() => window.print()}
           className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white rounded-xl text-sm font-semibold hover:bg-[#003356] transition"
