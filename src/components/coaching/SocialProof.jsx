@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, Pause, Mic } from "lucide-react";
+import { base44 } from "@/api/base44Client";
 
 const DEFAULT_VOICE_URLS = {
   Shayan: "https://industrial-maroon-afdxrnj55j.edgeone.app/Shayan.mp3",
