@@ -288,25 +288,65 @@ export default function ReportView({ report, onBack }) {
         {(report.hrv_avg || report.ruhepuls_avg || report.schlafdauer_avg) && (
           <section>
             <SectionTitle>Vitalwerte</SectionTitle>
-            <div className="grid grid-cols-3 gap-4">
+
+            {/* Stat-Übersicht */}
+            <div className="grid grid-cols-3 gap-4 mb-6">
               {report.hrv_avg && (
                 <div className="bg-white rounded-xl p-5 border border-black/8 shadow-sm">
-                  <p className="text-black/40 text-xs mb-3">HRV Ø</p>
+                  <p className="text-black/40 text-xs mb-1">HRV Ø</p>
                   <p className="text-3xl font-bold text-[#00416A] mb-2">{report.hrv_avg}</p>
                   {report.hrv_trend && <TrendBadge trend={report.hrv_trend} />}
                 </div>
               )}
               {report.ruhepuls_avg && (
                 <div className="bg-white rounded-xl p-5 border border-black/8 shadow-sm">
-                  <p className="text-black/40 text-xs mb-3">Ruhepuls Ø</p>
+                  <p className="text-black/40 text-xs mb-1">Ruhepuls Ø</p>
                   <p className="text-3xl font-bold text-[#00416A] mb-2">{report.ruhepuls_avg} <span className="text-base text-black/30">bpm</span></p>
                   {report.ruhepuls_trend && <TrendBadge trend={report.ruhepuls_trend} lowerBetter />}
                 </div>
               )}
               {report.schlafdauer_avg && (
                 <div className="bg-white rounded-xl p-5 border border-black/8 shadow-sm">
-                  <p className="text-black/40 text-xs mb-3">Schlafdauer Ø</p>
+                  <p className="text-black/40 text-xs mb-1">Schlafdauer Ø</p>
                   <p className="text-3xl font-bold text-[#00416A]">{report.schlafdauer_avg} <span className="text-base text-black/30">h</span></p>
+                </div>
+              )}
+            </div>
+
+            {/* Verlaufsgraphen */}
+            <div className="grid grid-cols-2 gap-4">
+              {hrvVerlauf.length > 1 && (
+                <div className="bg-white rounded-xl p-5 border border-black/8 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="text-black/50 text-xs font-semibold uppercase tracking-wider">HRV Verlauf</p>
+                    {report.hrv_trend && <TrendBadge trend={report.hrv_trend} />}
+                  </div>
+                  <ResponsiveContainer width="100%" height={120}>
+                    <LineChart data={hrvVerlauf.map(p => ({ name: p.woche, wert: parseFloat(p.wert) }))}>
+                      <XAxis dataKey="name" tick={{ fontSize: 11, fill: "rgba(0,0,0,0.4)" }} axisLine={false} tickLine={false} />
+                      <YAxis hide domain={["auto", "auto"]} />
+                      <Tooltip contentStyle={{ background: "#fff", border: "1px solid rgba(0,0,0,0.1)", borderRadius: 8, fontSize: 12 }}
+                        formatter={(v) => [v, "HRV"]} />
+                      <Line type="monotone" dataKey="wert" stroke="#00416A" strokeWidth={2.5} dot={{ r: 4, fill: "#00416A", strokeWidth: 0 }} activeDot={{ r: 5 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
+              {ruhepulsVerlauf.length > 1 && (
+                <div className="bg-white rounded-xl p-5 border border-black/8 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="text-black/50 text-xs font-semibold uppercase tracking-wider">Ruhepuls Verlauf</p>
+                    {report.ruhepuls_trend && <TrendBadge trend={report.ruhepuls_trend} lowerBetter />}
+                  </div>
+                  <ResponsiveContainer width="100%" height={120}>
+                    <LineChart data={ruhepulsVerlauf.map(p => ({ name: p.woche, wert: parseFloat(p.wert) }))}>
+                      <XAxis dataKey="name" tick={{ fontSize: 11, fill: "rgba(0,0,0,0.4)" }} axisLine={false} tickLine={false} />
+                      <YAxis hide domain={["auto", "auto"]} />
+                      <Tooltip contentStyle={{ background: "#fff", border: "1px solid rgba(0,0,0,0.1)", borderRadius: 8, fontSize: 12 }}
+                        formatter={(v) => [v + " bpm", "Ruhepuls"]} />
+                      <Line type="monotone" dataKey="wert" stroke="#dc2626" strokeWidth={2.5} dot={{ r: 4, fill: "#dc2626", strokeWidth: 0 }} activeDot={{ r: 5 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
                 </div>
               )}
             </div>
