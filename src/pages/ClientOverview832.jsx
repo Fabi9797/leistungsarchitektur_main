@@ -165,7 +165,6 @@ export default function ClientOverview832() {
         </div>
       </div>
       </div>
-      </div>
 
       <style>{`
         @media print {
