@@ -111,7 +111,7 @@ export default function AboutSection({ _heroImage }) {
               <p>
                 Es ist fast nie das Training. Und selten die Ernährung allein. Es ist das Fehlen eines Systems, das alle Faktoren verbindet und auf den individuellen Alltag abgestimmt ist.
               </p>
-              <p>Genau deshalb habe ich die Leistungsarchitektur entwickelt: Ein Coaching, das über einen Trainingsplan hinaus geht,Denn bevor du etwas veränderst, musst du wissen, wo dein Hebel liegt. 
+              <p>Genau deshalb habe ich die Leistungsarchitektur entwickelt: Ein Coaching, das über einen Trainingsplan hinaus geht und die Gesamtheit betrachtet. Denn bevor du etwas veränderst, musst du wissen, wo deine größten Hebel liegen. 
 
               </p>
               <p>
