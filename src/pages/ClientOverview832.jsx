@@ -57,13 +57,16 @@ export default function ClientOverview832() {
       </div>
 
       {/* Scale wrapper */}
-      <div style={{ display: "flex", justifyContent: "center", paddingBottom: 48 }}>
-        <div style={{ width: 1123, height: 794 * scale, flexShrink: 0, overflow: "hidden" }}>
+      <div style={{ display: "flex", justifyContent: "center", paddingBottom: 48, overflowX: "hidden" }}>
+        <div style={{ width: 1123 * scale, height: 794 * scale, flexShrink: 0, position: "relative" }}>
           <div style={{
             width: 1123,
             height: 794,
             transform: `scale(${scale})`,
             transformOrigin: "top left",
+            position: "absolute",
+            top: 0,
+            left: 0,
             background: "white",
             boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
             padding: 36,
