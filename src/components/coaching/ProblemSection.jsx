@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useAnalyse } from "@/lib/AnalyseContext";
 
+
 const problems = [
 "Du trainierst, aber siehst keine sichtbaren Veränderungen.",
 "Deine Ernährung ist mal streng, mal planlos – ein ständiges Hin und Her.",
