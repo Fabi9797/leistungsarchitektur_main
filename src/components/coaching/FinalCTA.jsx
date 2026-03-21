@@ -36,15 +36,12 @@ export default function FinalCTA() {
 
           <div className="mt-10">
             <button
-              onClick={() => setShowModal(true)}
+              onClick={openAnalyse}
               className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#00416A] text-white text-base sm:text-lg font-semibold rounded-xl hover:bg-[#003356] transition-all duration-300 shadow-xl shadow-[#00416A]/20 min-h-[56px]"
             >
               Analyse starten
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
-            <AnimatePresence>
-              {showModal && <AnalyseModal onClose={() => setShowModal(false)} />}
-            </AnimatePresence>
             <p className="mt-4 text-sm text-black/40">
               2 Minuten · Finde heraus, ob mein Coaching für dich passt
             </p>
