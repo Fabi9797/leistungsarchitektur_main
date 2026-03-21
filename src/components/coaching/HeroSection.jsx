@@ -37,7 +37,7 @@ export default function HeroSection({ heroImage }) {
             {/* Proof Line */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-[#F0EAD6] rounded-full mb-6 sm:mb-8">
               <div className="w-2 h-2 bg-[#00416A] rounded-full flex-shrink-0" />
-              <span className="text-[10px] sm:text-xs font-semibold text-[#00416A] tracking-wider uppercase">
+              <span className="text-[10px] sm:text-xs font-semibold text-[#00416A] tracking-wider uppercase whitespace-nowrap">
                 6+ Jahre Erfahrung aus eigenem Fitnessstudio
               </span>
             </div>
