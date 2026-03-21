@@ -40,8 +40,8 @@ export default function ProblemSection() {
             <p className="mt-4 sm:mt-6 text-base sm:text-lg text-white/60 leading-relaxed">Du hast keine Zeit für Experimente. Wer versucht, alles gleichzeitig zu ändern, verliert die Kontrolle. Wir finden die Hebel, die bei dir wirklich den Unterschied machen.
 
             </p>
-            <a
-              href="#analyse"
+            <button
+              onClick={openAnalyse}
               className="mt-8 group inline-flex items-center gap-2 text-[#F0EAD6] font-semibold hover:text-white transition-colors">
               
               Deinen Hebel finden
