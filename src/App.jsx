@@ -13,6 +13,7 @@ import ContentPlanning832 from './pages/ContentPlanning832';
 import KundenPortal from './pages/KundenPortal';
 import BrandAssets832 from './pages/BrandAssets832';
 import Progress from './pages/Progress';
+import TestimonialAdmin832 from './pages/TestimonialAdmin832';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
