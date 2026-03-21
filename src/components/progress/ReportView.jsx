@@ -1,6 +1,8 @@
-import React from "react";
-import { ArrowLeft, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import React, { useRef, useState } from "react";
+import { ArrowLeft, TrendingUp, TrendingDown, Minus, Download } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 const LOGO_URL = "https://media.base44.com/images/public/69b064c89953b727c5202e21/a128f5dab_ChatGPTImage19Marz202616_44_51.png";
 
