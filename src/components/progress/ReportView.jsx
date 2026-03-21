@@ -215,13 +215,14 @@ export default function ReportView({ report, onBack }) {
                     {(parseFloat(report.gewicht_end) - parseFloat(report.gewicht_start)).toFixed(1)} kg
                   </div>
                 </div>
-                {gewichtVerlauf.length > 0 && (
-                  <ResponsiveContainer width="100%" height={80}>
+                {gewichtVerlauf.length > 1 && (
+                  <ResponsiveContainer width="100%" height={100}>
                     <LineChart data={gewichtVerlauf}>
-                      <Line type="monotone" dataKey="kg" stroke="#00416A" strokeWidth={2} dot={false} />
-                      <XAxis dataKey="week" hide />
-                      <YAxis hide domain={['auto', 'auto']} />
-                      <Tooltip contentStyle={{ background: "#fff", border: "1px solid rgba(0,0,0,0.1)", borderRadius: 8, fontSize: 12 }} />
+                      <XAxis dataKey="week" tick={{ fontSize: 11, fill: "rgba(0,0,0,0.4)" }} axisLine={false} tickLine={false} />
+                      <YAxis hide domain={["auto", "auto"]} />
+                      <Tooltip contentStyle={{ background: "#fff", border: "1px solid rgba(0,0,0,0.1)", borderRadius: 8, fontSize: 12 }}
+                        formatter={(v) => [v + " kg", "Gewicht"]} />
+                      <Line type="monotone" dataKey="kg" stroke="#00416A" strokeWidth={2.5} dot={{ r: 4, fill: "#00416A", strokeWidth: 0 }} activeDot={{ r: 5 }} />
                     </LineChart>
                   </ResponsiveContainer>
                 )}
