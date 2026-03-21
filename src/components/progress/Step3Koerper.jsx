@@ -168,6 +168,10 @@ export default function Step3Koerper({ data, update }) {
           <Select label="Ruhepuls Trend" value={data.ruhepuls_trend} onChange={v => update({ ruhepuls_trend: v })} options={TRENDS} />
           <NumField label="Schlafdauer Ø" value={data.schlafdauer_avg} onChange={v => update({ schlafdauer_avg: v })} unit="h" />
         </div>
+        <div className="grid grid-cols-1 gap-3 mt-3">
+          <VerlaufEditor label="HRV" jsonKey="hrv_verlauf_json" data={data} update={update} />
+          <VerlaufEditor label="Ruhepuls" jsonKey="ruhepuls_verlauf_json" data={data} update={update} unit="bpm" />
+        </div>
       </div>
     </div>
   );
