@@ -86,9 +86,13 @@ export default function ReportView({ report, onBack }) {
   let uebungen = [];
   let umfaenge = {};
   let gewichtVerlauf = [];
+  let hrvVerlauf = [];
+  let ruhepulsVerlauf = [];
   try { uebungen = report.uebungen_json ? JSON.parse(report.uebungen_json) : []; } catch {}
   try { umfaenge = report.umfaenge_json ? JSON.parse(report.umfaenge_json) : {}; } catch {}
   try { gewichtVerlauf = report.gewicht_verlauf_json ? JSON.parse(report.gewicht_verlauf_json) : []; } catch {}
+  try { hrvVerlauf = report.hrv_verlauf_json ? JSON.parse(report.hrv_verlauf_json) : []; } catch {}
+  try { ruhepulsVerlauf = report.ruhepuls_verlauf_json ? JSON.parse(report.ruhepuls_verlauf_json) : []; } catch {}
 
   const fokusItems = report.fokus_naechster_monat
     ? report.fokus_naechster_monat.split("\n").filter(Boolean) : [];
