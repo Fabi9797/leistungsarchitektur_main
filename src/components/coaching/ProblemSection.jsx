@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useAnalyse } from "@/lib/AnalyseContext";
 
 const problems = [
 "Du trainierst, aber siehst keine sichtbaren Veränderungen.",
