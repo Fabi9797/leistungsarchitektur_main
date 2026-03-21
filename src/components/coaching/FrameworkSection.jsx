@@ -17,7 +17,7 @@ const pillars = [
   {
     icon: Pill,
     label: "Nahrungsergänzung",
-    text: "Zielführende und bedarfsorientierte Supplements, um deinen Trainingsfleiß bestmöglich zu unterstützen.",
+    text: "Zielführende und bedarfsorientierte Supplements, um deine Entwicklung bestmöglich zu unterstützen.",
   },
   {
     icon: BarChart2,
