@@ -80,6 +80,9 @@ function CompBar({ label, value }) {
 }
 
 export default function ReportView({ report, onBack }) {
+  const printRef = useRef(null);
+  const [exporting, setExporting] = useState(false);
+
   let uebungen = [];
   let umfaenge = {};
   let gewichtVerlauf = [];
@@ -90,13 +93,48 @@ export default function ReportView({ report, onBack }) {
   const fokusItems = report.fokus_naechster_monat
     ? report.fokus_naechster_monat.split("\n").filter(Boolean) : [];
 
+  const handleExportPDF = async () => {
+    setExporting(true);
+    const el = printRef.current;
+    const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: "#f5f0e8" });
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+    const pdfW = pdf.internal.pageSize.getWidth();
+    const pdfH = (canvas.height * pdfW) / canvas.width;
+    const pageH = pdf.internal.pageSize.getHeight();
+    let yOffset = 0;
+    while (yOffset < pdfH) {
+      if (yOffset > 0) pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, -yOffset, pdfW, pdfH);
+      yOffset += pageH;
+    }
+    pdf.save(`Monatsreport_${report.client_name}_${report.report_month || report.report_label}.pdf`);
+    setExporting(false);
+  };
+
   return (
     <div className="min-h-screen bg-[#F0EAD6]/30">
-      {/* Header */}
+      {/* Header (not part of PDF) */}
+      <div className="bg-white border-b border-black/8 px-8 py-5 print:hidden">
+        <div className="flex items-center justify-between">
+          <button onClick={onBack} className="flex items-center gap-2 text-black/40 hover:text-[#00416A] text-sm transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Zurück zur Übersicht
+          </button>
+          <button
+            onClick={handleExportPDF}
+            disabled={exporting}
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#00416A] text-white font-semibold rounded-lg hover:bg-[#003356] transition-all text-sm disabled:opacity-50"
+          >
+            <Download className="w-4 h-4" />
+            {exporting ? "Exportiere..." : "PDF exportieren"}
+          </button>
+        </div>
+      </div>
+
+      {/* PDF Content */}
+      <div ref={printRef} className="bg-[#F0EAD6]/30">
+      {/* Report Header inside PDF area */}
       <div className="bg-white border-b border-black/8 px-8 py-5">
-        <button onClick={onBack} className="flex items-center gap-2 text-black/40 hover:text-[#00416A] text-sm mb-5 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Zurück zur Übersicht
-        </button>
         <div className="flex items-end justify-between">
           <div className="flex items-center gap-4">
             <img src={LOGO_URL} alt="Logo" className="w-10 h-10 rounded-lg object-contain" />
