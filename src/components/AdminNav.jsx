@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import { LayoutDashboard, Users, Pill, Utensils, CalendarDays, ChevronRight, X, TrendingUp } from "lucide-react";
+import { LayoutDashboard, Users, Pill, Utensils, CalendarDays, ChevronRight, X, TrendingUp, Mic } from "lucide-react";
 
 const TOOLS = [
   { label: "Clients", icon: Users, path: "/Clients832" },
@@ -10,6 +10,7 @@ const TOOLS = [
   { label: "Ernährung", icon: Utensils, path: "/NutritionAdmin832" },
   { label: "Dashboard", icon: LayoutDashboard, path: "/ClientOverview832" },
   { label: "Monatsreport", icon: TrendingUp, path: "/progress" },
+  { label: "Testimonial Audios", icon: Mic, path: "/TestimonialAdmin832" },
 ];
 
 export default function AdminNav() {
