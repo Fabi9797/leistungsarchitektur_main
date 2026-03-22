@@ -52,9 +52,9 @@ export default function TrainingSection({ sessions, exerciseProgressions }) {
                   {ex.progressPct >= 0 ? '+' : ''}{ex.progressPct.toFixed(1)}%
                 </span>
               </div>
-              <div className="flex gap-3 text-xs text-white/30 mb-3">
-                <span>Start: <span className="text-white/60 font-mono">{ex.dataPoints[0]?.e1rm?.toFixed(1)} kg</span></span>
-                <span>Aktuell: <span className="text-white/60 font-mono">{ex.dataPoints[ex.dataPoints.length - 1]?.e1rm?.toFixed(1)} kg</span></span>
+              <div className="flex gap-3 text-xs text-black/30 mb-3">
+                <span>Start: <span className="text-black/50 font-mono">{ex.dataPoints[0]?.e1rm?.toFixed(1)} kg</span></span>
+                <span>Aktuell: <span className="text-black/50 font-mono">{ex.dataPoints[ex.dataPoints.length - 1]?.e1rm?.toFixed(1)} kg</span></span>
               </div>
               <div className="h-[90px]">
                 <ResponsiveContainer width="100%" height="100%">
