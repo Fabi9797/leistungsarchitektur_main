@@ -140,14 +140,14 @@ export default function NutrilizeImport({ update, parsedData, setParsedData, dat
       {parsedData.length > 0 && (
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="text-white/40 text-xs block mb-1.5">Von</label>
+            <label className="text-black/40 text-xs block mb-1.5">Von</label>
             <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)}
-              className="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-[#3ecf8e]/50" />
+              className="w-full bg-white border border-black/10 rounded-lg px-3 py-2 text-black text-sm outline-none focus:border-[#00416A]/50" />
           </div>
           <div>
-            <label className="text-white/40 text-xs block mb-1.5">Bis</label>
+            <label className="text-black/40 text-xs block mb-1.5">Bis</label>
             <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)}
-              className="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-[#3ecf8e]/50" />
+              className="w-full bg-white border border-black/10 rounded-lg px-3 py-2 text-black text-sm outline-none focus:border-[#00416A]/50" />
           </div>
         </div>
       )}
