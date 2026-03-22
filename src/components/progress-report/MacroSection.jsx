@@ -51,18 +51,18 @@ export default function MacroSection({ data, proteinTarget, notes, onNoteChange 
     <ChartCard title="Nährwertverteilung" badge={proteinAvg ? `Ø ${proteinAvg.toFixed(0)}g Protein` : undefined}>
       <StatRow stats={stats} />
 
-      <p className="text-white/30 text-xs mb-2">Makros pro Tag (gestapelt)</p>
+      <p className="text-black/30 text-xs mb-2">Makros pro Tag (gestapelt)</p>
       <div className="h-[160px] mb-4">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={macroData} margin={{ top: 5, right: 8, left: 0, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff07" />
-            <XAxis dataKey="dateLabel" tick={{ fill: '#ffffff25', fontSize: 10 }} interval={interval} />
-            <YAxis tick={{ fill: '#ffffff25', fontSize: 10 }} width={36} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#00416A0d" />
+            <XAxis dataKey="dateLabel" tick={{ fill: '#00000040', fontSize: 10 }} interval={interval} />
+            <YAxis tick={{ fill: '#00000040', fontSize: 10 }} width={36} />
             <Tooltip content={<CustomTooltip />} />
-            <Legend wrapperStyle={{ fontSize: 10, color: '#ffffff50' }} />
-            <Bar dataKey="Kohlenhydrate" stackId="a" fill="#f39c12" />
-            <Bar dataKey="Protein" stackId="a" fill="#3ecf8e" />
-            <Bar dataKey="Fett" stackId="a" fill="#e74c5f" />
+            <Legend wrapperStyle={{ fontSize: 10, color: '#00000060' }} />
+            <Bar dataKey="Kohlenhydrate" stackId="a" fill="#C8973A" />
+            <Bar dataKey="Protein" stackId="a" fill="#007B7F" />
+            <Bar dataKey="Fett" stackId="a" fill="#C0616A" />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
