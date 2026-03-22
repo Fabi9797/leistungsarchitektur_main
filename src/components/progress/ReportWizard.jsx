@@ -55,10 +55,21 @@ export default function ReportWizard({ editReport, onSaved, onCancel }) {
 
   const handleSave = async () => {
     setSaving(true);
+    const numFields = ['gewicht_start','gewicht_end','kfa_start','kfa_end','hrv_avg','ruhepuls_avg','schlafdauer_avg','kalorien_avg','protein_avg','energie_vorher','energie_nachher','stress_vorher','stress_nachher','schlaf_vorher','schlaf_nachher','gesamtbewertung','training_compliance','ernaehrung_compliance','supplement_compliance'];
+    const cleaned = { ...data };
+    numFields.forEach(f => {
+      if (cleaned[f] === '' || cleaned[f] === null || cleaned[f] === undefined) {
+        delete cleaned[f];
+      } else {
+        const n = parseFloat(cleaned[f]);
+        cleaned[f] = isNaN(n) ? undefined : n;
+        if (cleaned[f] === undefined) delete cleaned[f];
+      }
+    });
     if (editReport?.id) {
-      await base44.entities.MonthlyReport.update(editReport.id, data);
+      await base44.entities.MonthlyReport.update(editReport.id, cleaned);
     } else {
-      await base44.entities.MonthlyReport.create(data);
+      await base44.entities.MonthlyReport.create(cleaned);
     }
     setSaving(false);
     onSaved();
