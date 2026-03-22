@@ -38,12 +38,12 @@ export default function MacroSection({ data, proteinTarget, notes, onNoteChange 
   const interval = Math.max(0, Math.floor(data.length / 10));
 
   const stats = [
-    { label: 'Ø Protein (bereinigt)', value: proteinAvg ? `${proteinAvg.toFixed(0)} g` : '–', color: '#3ecf8e' },
-    { label: 'Protein-Ziel', value: proteinTarget ? `${proteinTarget} g` : '–', color: '#ffffff60' },
+    { label: 'Ø Protein (bereinigt)', value: proteinAvg ? `${proteinAvg.toFixed(0)} g` : '–', color: '#007B7F' },
+    { label: 'Protein-Ziel', value: proteinTarget ? `${proteinTarget} g` : '–', color: '#00000050' },
     ...(proteinDaysHit !== null ? [{
       label: 'Ziel erreicht',
       value: `${proteinDaysHit} / ${cleanProteinDays} Tage`,
-      color: proteinDaysHit / cleanProteinDays > 0.7 ? '#3ecf8e' : '#e74c3c',
+      color: proteinDaysHit / cleanProteinDays > 0.7 ? '#007B7F' : '#C0616A',
     }] : []),
   ];
 
