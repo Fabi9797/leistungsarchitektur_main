@@ -82,10 +82,10 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
   };
   const deltaInfo = fmtDelta(weightDelta);
   const trendIcon = (t, lowerBetter = false) => {
-    if (t === 'Stabil') return { icon: '→', color: '#ffffff60' };
+    if (t === 'Stabil') return { icon: '→', color: '#00000050' };
     const up = t === 'Steigend';
     const good = lowerBetter ? !up : up;
-    return { icon: up ? '↑' : '↓', color: good ? '#3ecf8e' : '#e74c3c' };
+    return { icon: up ? '↑' : '↓', color: good ? '#007B7F' : '#C0616A' };
   };
 
   return (
