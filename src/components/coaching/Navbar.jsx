@@ -93,7 +93,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-2xl font-semibold text-[#00416A] tracking-tight"
+                  className="text-2xl font-semibold text-white tracking-tight"
                 >
                   {link.label}
                 </a>
