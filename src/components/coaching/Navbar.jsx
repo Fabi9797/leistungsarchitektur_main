@@ -61,7 +61,7 @@ export default function Navbar() {
             <div className="hidden lg:block">
               <a
                 href="#analyse"
-                className="inline-flex items-center px-6 py-2.5 bg-[#00416A] text-white text-sm font-medium rounded-lg hover:bg-[#003356] transition-all duration-300 tracking-wide"
+                className={`inline-flex items-center px-6 py-2.5 text-sm font-semibold rounded-lg transition-all duration-300 tracking-wide ${scrolled ? "bg-[#C8973A] text-white hover:bg-[#b07d2e]" : "bg-[#00416A] text-white hover:bg-[#003356]"}`}
               >
                 Analyse starten
               </a>
