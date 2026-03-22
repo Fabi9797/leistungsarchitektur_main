@@ -88,11 +88,11 @@ export default function FrameworkSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}>
               
-              <p className="text-base text-black/60 leading-relaxed">
-                Die meisten versuchen beim Abnehmen alles gleichzeitig zu verändern – Training, Ernährung, Schlaf, Stress. Das Ergebnis: kurze Motivation, dann Erschöpfung.
+              <p className="text-base text-[#0D1F2D]/60 leading-relaxed">
+                 Die meisten versuchen beim Abnehmen alles gleichzeitig zu verändern – Training, Ernährung, Schlaf, Stress. Das Ergebnis: kurze Motivation, dann Erschöpfung.
               </p>
-              <p className="mt-4 text-base text-black/60 leading-relaxed">
-                Wir machen das anders: Wir beginnen mit einer <strong className="text-black">Hebelanalyse</strong> – und setzen dann gezielt dort an, wo die 20 % Veränderung liegen, die 80 % des Ergebnisses bringen. Individuell für dich.
+              <p className="mt-4 text-base text-[#0D1F2D]/60 leading-relaxed">
+                 Wir machen das anders: Wir beginnen mit einer <strong className="text-[#0D1F2D]">Hebelanalyse</strong> – und setzen dann gezielt dort an, wo die 20 % Veränderung liegen, die 80 % des Ergebnisses bringen. Individuell für dich.
               </p>
             </motion.div>
             <motion.div
