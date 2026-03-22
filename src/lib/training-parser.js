@@ -83,8 +83,8 @@ export function parseTrainingFile(file) {
           }
         }
 
-        // Filter sessions that have at least some data
-        const validSessions = sessions.filter(s => s.date && Object.keys(s.exercises).length > 0);
+        // Filter sessions that have a date; LISS sessions may have no exercises
+        const validSessions = sessions.filter(s => s.date && (Object.keys(s.exercises).length > 0 || s.type.toUpperCase().includes('LISS')));
 
         resolve({ sessions: validSessions });
       } catch (err) {
