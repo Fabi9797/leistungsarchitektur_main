@@ -65,35 +65,35 @@ function DropZone({ label, onFile, fileName, loading, onClear }) {
       onDrop={e => { e.preventDefault(); setDrag(false); onFile(e.dataTransfer.files[0]); }}
       onClick={() => !fileName && inputRef.current?.click()}
       className={`border-2 border-dashed rounded-xl p-5 text-center transition-all ${
-        drag ? 'border-[#3ecf8e] bg-[#3ecf8e]/5' :
-        fileName ? 'border-white/15 bg-white/[0.03]' :
-        'border-white/8 bg-[#0f0f1a] hover:border-white/15 cursor-pointer'
+        drag ? 'border-[#00416A] bg-[#00416A]/5' :
+        fileName ? 'border-[#00416A]/20 bg-[#F0EAD6]/40' :
+        'border-black/10 bg-white hover:border-[#00416A]/30 cursor-pointer'
       }`}
     >
       <input ref={inputRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={e => onFile(e.target.files[0])} />
       {loading ? (
-        <div className="flex items-center justify-center gap-2 text-white/40">
-          <div className="w-4 h-4 border-2 border-[#3ecf8e] border-t-transparent rounded-full animate-spin" />
+        <div className="flex items-center justify-center gap-2 text-black/40">
+          <div className="w-4 h-4 border-2 border-[#00416A] border-t-transparent rounded-full animate-spin" />
           <span className="text-xs">Verarbeitung...</span>
         </div>
       ) : fileName ? (
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <FileSpreadsheet className="w-5 h-5 text-[#3ecf8e]" />
+            <FileSpreadsheet className="w-5 h-5 text-[#00416A]" />
             <div className="text-left">
-              <p className="text-white text-xs font-medium truncate max-w-[150px]">{fileName}</p>
-              <p className="text-[#3ecf8e] text-xs">✓ geladen</p>
+              <p className="text-black text-xs font-medium truncate max-w-[150px]">{fileName}</p>
+              <p className="text-[#00416A] text-xs font-semibold">✓ geladen</p>
             </div>
           </div>
-          <button onClick={e => { e.stopPropagation(); onClear(); }} className="text-white/20 hover:text-red-400 p-1">
+          <button onClick={e => { e.stopPropagation(); onClear(); }} className="text-black/20 hover:text-red-500 p-1">
             <X className="w-4 h-4" />
           </button>
         </div>
       ) : (
         <>
-          <Upload className="w-6 h-6 text-white/15 mx-auto mb-2" />
-          <p className="text-white/40 text-xs font-medium">{label}</p>
-          <p className="text-white/20 text-xs mt-0.5">drag & drop oder klicken</p>
+          <Upload className="w-6 h-6 text-black/20 mx-auto mb-2" />
+          <p className="text-black/50 text-xs font-medium">{label}</p>
+          <p className="text-black/30 text-xs mt-0.5">drag & drop oder klicken</p>
         </>
       )}
     </div>
