@@ -70,7 +70,7 @@ function DropZone({ label, onFile, fileName, loading, onClear }) {
         'border-white/8 bg-[#0f0f1a] hover:border-white/15 cursor-pointer'
       }`}
     >
-      <input id={dzId} type="file" accept=".xlsx,.xls" className="hidden" onChange={e => onFile(e.target.files[0])} />
+      <input ref={inputRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={e => onFile(e.target.files[0])} />
       {loading ? (
         <div className="flex items-center justify-center gap-2 text-white/40">
           <div className="w-4 h-4 border-2 border-[#3ecf8e] border-t-transparent rounded-full animate-spin" />
