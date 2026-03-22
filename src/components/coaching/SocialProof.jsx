@@ -125,7 +125,7 @@ export default function SocialProof({ images }) {
   };
 
   return (
-    <section id="ergebnisse" className="py-16 lg:py-32 bg-[#F0EAD6]">
+    <section id="ergebnisse" className="py-16 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
