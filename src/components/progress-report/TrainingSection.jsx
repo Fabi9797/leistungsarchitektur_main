@@ -37,7 +37,7 @@ export default function TrainingSection({ sessions, exerciseProgressions }) {
       </div>
 
       {topExercises.length === 0 && (
-        <p className="text-white/30 text-sm text-center py-8">Keine E1RM-Daten gefunden</p>
+        <p className="text-black/30 text-sm text-center py-8">Keine E1RM-Daten gefunden</p>
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
