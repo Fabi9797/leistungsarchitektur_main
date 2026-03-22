@@ -101,7 +101,7 @@ export default function FrameworkSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.15 }}>
               
-              <p className="text-base text-black/60 leading-relaxed">Darauf aufbauend entsteht dein persönliches Konstrukt – ein Baustein nach dem anderen. Nicht alles auf einmal, sondern so, wie es in deinen Alltag passt.
+              <p className="text-base text-[#0D1F2D]/60 leading-relaxed">Darauf aufbauend entsteht dein persönliches Konstrukt – ein Baustein nach dem anderen. Nicht alles auf einmal, sondern so, wie es in deinen Alltag passt.
 
               </p>
               <p className="mt-4 text-base text-black/60 leading-relaxed">
