@@ -105,11 +105,11 @@ function LevelSlider({ label, value, onChange }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-1.5">
-        <label className="text-white/50 text-xs">{label}</label>
-        <span className="font-mono text-[#3ecf8e] font-bold text-sm">{value}/10</span>
+        <label className="text-black/50 text-xs">{label}</label>
+        <span className="font-mono text-[#00416A] font-bold text-sm">{value}/10</span>
       </div>
       <input type="range" min={1} max={10} value={value} onChange={e => onChange(parseInt(e.target.value))}
-        className="w-full accent-[#3ecf8e]" />
+        className="w-full accent-[#00416A]" />
     </div>
   );
 }
