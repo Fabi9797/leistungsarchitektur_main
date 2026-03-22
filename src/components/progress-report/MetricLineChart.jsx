@@ -13,15 +13,15 @@ const CustomTooltip = ({ active, payload, isSleep }) => {
     return typeof v === 'number' ? v.toFixed(1) : v;
   };
   return (
-    <div className="bg-[#1a1a2e] border border-white/10 rounded-xl px-3 py-2 text-xs">
-      <p className="text-white/40 mb-1">{d.dateLabel || d.date}</p>
+    <div className="bg-white border border-black/10 rounded-xl px-3 py-2 text-xs shadow-md">
+      <p className="text-black/40 mb-1">{d.dateLabel || d.date}</p>
       {payload.map((p, i) => p.value !== null && p.value !== undefined && (
         <p key={i} className="font-mono" style={{ color: p.stroke || p.fill }}>
           {p.name}: {fmtVal(p.value)}
         </p>
       ))}
-      {d.isAnomaly && <p className="text-red-400 mt-1">⚠ Anomalie</p>}
-      {d.isDummy && <p className="text-orange-400 mt-1">⚠ Dummy-Wert</p>}
+      {d.isAnomaly && <p className="text-red-500 mt-1">⚠ Anomalie</p>}
+      {d.isDummy && <p className="text-amber-500 mt-1">⚠ Dummy-Wert</p>}
     </div>
   );
 };
