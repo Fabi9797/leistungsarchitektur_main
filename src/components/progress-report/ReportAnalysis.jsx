@@ -119,7 +119,7 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
             {calCompliance.hit} von {calCompliance.total} Tagen im Zielkorridor (±10%)
           </div>
         )}
-        <MetricLineChart {...chartProps('calories', 'Kalorien')} color="#3ecf8e" unit="kcal" target={calTarget} />
+        <MetricLineChart {...chartProps('calories', 'Kalorien')} color="#C8973A" unit="kcal" target={calTarget} />
       </ChartCard>
 
       {/* 3: Makros */}
