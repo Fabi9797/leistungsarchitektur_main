@@ -18,9 +18,9 @@ const systemIndicators = [
 export default function HeroSection({ heroImage }) {
   const { openAnalyse } = useAnalyse();
   return (
-    <section className="relative min-h-screen flex items-center bg-[#F7F4ED] overflow-hidden">
+    <section className="relative min-h-screen flex items-center bg-white overflow-hidden">
       {/* Subtle grid background */}
-      <div className="absolute inset-0 opacity-[0.06]" style={{
+      <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: `linear-gradient(#00416A 1px, transparent 1px), linear-gradient(90deg, #00416A 1px, transparent 1px)`,
         backgroundSize: '60px 60px'
       }} />
@@ -35,21 +35,21 @@ export default function HeroSection({ heroImage }) {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* Proof Line */}
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-4 sm:py-2 bg-[#C8973A]/15 border border-[#C8973A]/30 rounded-full mb-6 sm:mb-8">
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#C8973A] rounded-full flex-shrink-0" />
-              <span className="text-[9px] sm:text-xs font-semibold text-[#C8973A] tracking-wider uppercase whitespace-nowrap">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-4 sm:py-2 bg-[#F0EAD6] rounded-full mb-6 sm:mb-8">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#00416A] rounded-full flex-shrink-0" />
+              <span className="text-[9px] sm:text-xs font-semibold text-[#00416A] tracking-wider uppercase whitespace-nowrap">
                 6+ Jahre Erfahrung aus eigenem Fitnessstudio
               </span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0D1F2D] leading-[1.1]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-black leading-[1.1]">
               Dein Morgen beginnt Heute.{" "}
               <span className="text-[#00416A]">Fit in die Zukunft.</span>
             </h1>
 
             {/* Subheadline */}
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-[#0D1F2D]/60 leading-relaxed">
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-black/60 leading-relaxed">
               Wir bringen Training, Ernährung und Alltag in ein funktionierendes System – damit du in Form kommst und es langfristig bleibst.
             </p>
 
@@ -75,8 +75,8 @@ export default function HeroSection({ heroImage }) {
                   transition={{ delay: 0.4 + i * 0.15, duration: 0.5 }}
                   className="flex items-start gap-3"
                 >
-                  <CheckCircle2 className="w-5 h-5 text-[#C8973A] mt-0.5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base text-[#0D1F2D]/70">{b}</span>
+                  <CheckCircle2 className="w-5 h-5 text-[#00416A] mt-0.5 flex-shrink-0" />
+                  <span className="text-sm sm:text-base text-black/70">{b}</span>
                 </motion.div>
               ))}
             </div>
@@ -90,7 +90,7 @@ export default function HeroSection({ heroImage }) {
                 Analyse starten
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <p className="mt-3 text-sm text-[#0D1F2D]/40 text-center sm:text-left">
+              <p className="mt-3 text-sm text-black/40 text-center sm:text-left">
                 2 Minuten · Finde heraus, ob mein Coaching für dich passt
               </p>
             </div>
@@ -99,10 +99,10 @@ export default function HeroSection({ heroImage }) {
             <div className="mt-8 sm:mt-12 grid grid-cols-3 gap-3 sm:flex sm:gap-8">
               {systemIndicators.map((s) => (
                 <div key={s.num} className="flex flex-col sm:flex-row items-start gap-1 sm:gap-2">
-                  <span className="text-xs font-bold text-[#C8973A]/50">{s.num}</span>
+                  <span className="text-xs font-bold text-[#00416A]/30">{s.num}</span>
                   <div>
                     <span className="text-[10px] sm:text-xs font-bold text-[#00416A] tracking-wider block">{s.label}</span>
-                    <p className="text-[10px] sm:text-xs text-[#0D1F2D]/40 mt-0.5 hidden sm:block">{s.desc}</p>
+                    <p className="text-[10px] sm:text-xs text-black/40 mt-0.5 hidden sm:block">{s.desc}</p>
                   </div>
                 </div>
               ))}

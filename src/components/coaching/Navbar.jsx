@@ -23,7 +23,7 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-[#00416A] backdrop-blur-xl shadow-lg"
+            ? "bg-white/80 backdrop-blur-xl shadow-sm border-b border-black/5"
             : "bg-transparent"
         }`}
       >
@@ -38,7 +38,7 @@ export default function Navbar() {
                   className="w-9 h-9 object-contain rounded-lg"
                 />
               </div>
-              <span className={`text-xs font-bold tracking-widest leading-tight uppercase transition-colors duration-500 ${scrolled ? "text-white" : "text-[#00416A]"}`}>
+              <span className="text-xs font-bold tracking-widest text-[#00416A] leading-tight uppercase">
                 LEISTUNGS<br/>
                 <span className="font-light tracking-widest">ARCHITEKTUR</span>
               </span>
@@ -50,7 +50,7 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors duration-300 tracking-wide uppercase ${scrolled ? "text-white/70 hover:text-white" : "text-[#0D1F2D]/60 hover:text-[#00416A]"}`}
+                  className="text-sm font-medium text-black/60 hover:text-[#00416A] transition-colors duration-300 tracking-wide uppercase"
                 >
                   {link.label}
                 </a>
@@ -61,7 +61,7 @@ export default function Navbar() {
             <div className="hidden lg:block">
               <a
                 href="#analyse"
-                className={`inline-flex items-center px-6 py-2.5 text-sm font-semibold rounded-lg transition-all duration-300 tracking-wide ${scrolled ? "bg-[#C8973A] text-white hover:bg-[#b07d2e]" : "bg-[#00416A] text-white hover:bg-[#003356]"}`}
+                className="inline-flex items-center px-6 py-2.5 bg-[#00416A] text-white text-sm font-medium rounded-lg hover:bg-[#003356] transition-all duration-300 tracking-wide"
               >
                 Analyse starten
               </a>
@@ -85,7 +85,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-[#00416A] pt-20 px-6"
+            className="fixed inset-0 z-40 bg-white pt-20 px-6"
           >
             <div className="flex flex-col gap-6 mt-8">
               {navLinks.map((link) => (
@@ -93,7 +93,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-2xl font-semibold text-white tracking-tight"
+                  className="text-2xl font-semibold text-[#00416A] tracking-tight"
                 >
                   {link.label}
                 </a>
@@ -101,7 +101,7 @@ export default function Navbar() {
               <a
                 href="#analyse"
                 onClick={() => setMobileOpen(false)}
-                className="mt-4 inline-flex items-center justify-center px-8 py-4 bg-[#C8973A] text-white text-base font-semibold rounded-lg"
+                className="mt-4 inline-flex items-center justify-center px-8 py-4 bg-[#00416A] text-white text-base font-medium rounded-lg"
               >
                 Analyse starten
               </a>

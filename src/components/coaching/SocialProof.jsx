@@ -125,7 +125,7 @@ export default function SocialProof({ images }) {
   };
 
   return (
-    <section id="ergebnisse" className="py-16 lg:py-32 bg-white">
+    <section id="ergebnisse" className="py-16 lg:py-32 bg-[#F0EAD6]">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -135,13 +135,13 @@ export default function SocialProof({ images }) {
           transition={{ duration: 0.6 }}
           className="text-center mb-10 sm:mb-16"
         >
-          <span className="text-xs font-bold text-[#C8973A] tracking-[0.2em] uppercase">
+          <span className="text-xs font-bold text-[#00416A]/50 tracking-[0.2em] uppercase">
             Echte Ergebnisse
           </span>
-          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-[#0D1F2D] tracking-tight">
+          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-black tracking-tight">
             Ergebnisse meiner Kunden
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#0D1F2D]/55 max-w-2xl mx-auto">
+          <p className="mt-3 text-base sm:text-lg text-black/50 max-w-2xl mx-auto">
             Keine Stockfotos. Keine leeren Versprechen. Reale Menschen, die mit einem klaren System nachhaltig in Form gekommen sind.
           </p>
         </motion.div>
@@ -190,7 +190,7 @@ export default function SocialProof({ images }) {
                 </div>
                 {/* Quote */}
                 <div className="p-6">
-                  <p className="text-sm text-[#0D1F2D]/65 leading-relaxed italic">„{t.quote}"</p>
+                  <p className="text-sm text-black/60 leading-relaxed italic">„{t.quote}"</p>
                   <VoicePlayer name={t.name} url={voiceUrls[t.name]} />
                 </div>
               </div>
