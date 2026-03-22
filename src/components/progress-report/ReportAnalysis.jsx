@@ -133,7 +133,7 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
           { label: 'Min', value: steps.min ? Math.round(steps.min).toLocaleString() : '–' },
           { label: 'Max', value: steps.max ? Math.round(steps.max).toLocaleString() : '–' },
         ]} />
-        <MetricLineChart {...chartProps('steps', 'Schritte')} color="#f39c12" target={stepsTarget} />
+        <MetricLineChart {...chartProps('steps', 'Schritte')} color="#007B7F" target={stepsTarget} />
       </ChartCard>
 
       {/* 5: HRV */}
