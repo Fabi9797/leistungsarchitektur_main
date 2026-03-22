@@ -50,7 +50,7 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium text-black/60 hover:text-[#00416A] transition-colors duration-300 tracking-wide uppercase"
+                  className={`text-sm font-medium transition-colors duration-300 tracking-wide uppercase ${scrolled ? "text-white/70 hover:text-white" : "text-[#0D1F2D]/60 hover:text-[#00416A]"}`}
                 >
                   {link.label}
                 </a>
