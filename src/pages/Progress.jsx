@@ -129,6 +129,7 @@ export default function Progress() {
   const [formData, setFormData] = useState({});
   const [nutriData, setNutriData] = useState([]);
   const [trainingSessions, setTrainingSessions] = useState([]);
+  const [exerciseProgressions, setExerciseProgressions] = useState([]);
   const [nutriFile, setNutriFile] = useState('');
   const [trainFile, setTrainFile] = useState('');
   const [nutriLoading, setNutriLoading] = useState(false);
