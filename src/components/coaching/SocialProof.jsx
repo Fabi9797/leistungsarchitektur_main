@@ -190,7 +190,7 @@ export default function SocialProof({ images }) {
                 </div>
                 {/* Quote */}
                 <div className="p-6">
-                  <p className="text-sm text-black/60 leading-relaxed italic">„{t.quote}"</p>
+                  <p className="text-sm text-[#0D1F2D]/65 leading-relaxed italic">„{t.quote}"</p>
                   <VoicePlayer name={t.name} url={voiceUrls[t.name]} />
                 </div>
               </div>
