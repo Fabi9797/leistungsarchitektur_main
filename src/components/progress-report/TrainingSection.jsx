@@ -2,7 +2,7 @@ import React from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import ChartCard from './ChartCard';
 
-const EXERCISE_COLORS = ['#3ecf8e','#a29bfe','#74b9ff','#f39c12','#fd79a8','#00cec9','#e17055','#fdcb6e'];
+const EXERCISE_COLORS = ['#00416A','#C8973A','#007B7F','#5B6DAE','#C0616A','#4A90B8','#7A5C8A','#2D7A5F'];
 
 const ExTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
