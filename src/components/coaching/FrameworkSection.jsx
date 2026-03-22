@@ -28,7 +28,7 @@ const pillars = [
 
 export default function FrameworkSection() {
   return (
-    <section id="methode" className="py-16 lg:py-32 bg-white relative overflow-hidden">
+    <section id="methode" className="py-16 lg:py-32 bg-[#F7F4ED] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
