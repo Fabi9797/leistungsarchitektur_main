@@ -101,7 +101,7 @@ export default function Navbar() {
               <a
                 href="#analyse"
                 onClick={() => setMobileOpen(false)}
-                className="mt-4 inline-flex items-center justify-center px-8 py-4 bg-[#00416A] text-white text-base font-medium rounded-lg"
+                className="mt-4 inline-flex items-center justify-center px-8 py-4 bg-[#C8973A] text-white text-base font-semibold rounded-lg"
               >
                 Analyse starten
               </a>
