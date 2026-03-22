@@ -150,7 +150,7 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
       {/* 6: Ruhepuls */}
       <ChartCard title="Ruhepuls-Trend" badge={(() => { const ti = trendIcon(rhrTrend, true); return `${ti.icon} ${rhrTrend}`; })()}>
         <StatRow stats={[
-          { label: 'Ø Ruhepuls (bereinigt)', value: rhr.avg ? `${rhr.avg.toFixed(0)} bpm` : '–', color: '#fd79a8' },
+          { label: 'Ø Ruhepuls (bereinigt)', value: rhr.avg ? `${rhr.avg.toFixed(0)} bpm` : '–', color: '#C0616A' },
           { label: 'Trend', value: rhrTrend, color: trendIcon(rhrTrend, true).color },
           { label: 'Min', value: rhr.min ? `${rhr.min.toFixed(0)} bpm` : '–' },
           { label: 'Max', value: rhr.max ? `${rhr.max.toFixed(0)} bpm` : '–' },
