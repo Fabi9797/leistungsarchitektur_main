@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { base44 } from "@/api/base44Client";
 import { Plus, FileText, ChevronRight, Trash2, Upload, FileSpreadsheet, X, Save, ArrowLeft, BarChart2 } from "lucide-react";
 import { parseNutrilizeFile, detectAnomalies, cleanAverage, formatSleep } from "@/lib/nutrilize-parser";
