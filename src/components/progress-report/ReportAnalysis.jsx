@@ -128,8 +128,8 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
       {/* 4: Schritte */}
       <ChartCard title="Schritte / Alltagsbewegung" badge={stepsCompliance ? `${stepsCompliance.hit}/${stepsCompliance.total} Tage Ziel erreicht` : undefined}>
         <StatRow stats={[
-          { label: 'Ø Schritte (bereinigt)', value: steps.avg ? `${Math.round(steps.avg).toLocaleString()}` : '–', color: '#f39c12' },
-          { label: 'Schritte-Ziel', value: stepsTarget ? stepsTarget.toLocaleString() : '–', color: '#ffffff50' },
+          { label: 'Ø Schritte (bereinigt)', value: steps.avg ? `${Math.round(steps.avg).toLocaleString()}` : '–', color: '#007B7F' },
+          { label: 'Schritte-Ziel', value: stepsTarget ? stepsTarget.toLocaleString() : '–', color: '#00000050' },
           { label: 'Min', value: steps.min ? Math.round(steps.min).toLocaleString() : '–' },
           { label: 'Max', value: steps.max ? Math.round(steps.max).toLocaleString() : '–' },
         ]} />
