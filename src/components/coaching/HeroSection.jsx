@@ -18,9 +18,9 @@ const systemIndicators = [
 export default function HeroSection({ heroImage }) {
   const { openAnalyse } = useAnalyse();
   return (
-    <section className="relative min-h-screen flex items-center bg-white overflow-hidden">
+    <section className="relative min-h-screen flex items-center bg-[#F7F4ED] overflow-hidden">
       {/* Subtle grid background */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{
+      <div className="absolute inset-0 opacity-[0.06]" style={{
         backgroundImage: `linear-gradient(#00416A 1px, transparent 1px), linear-gradient(90deg, #00416A 1px, transparent 1px)`,
         backgroundSize: '60px 60px'
       }} />
