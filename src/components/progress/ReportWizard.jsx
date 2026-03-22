@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { base44 } from "@/api/base44Client";
-import { ChevronRight, ChevronLeft, Check } from "lucide-react";
+import { ChevronRight, ChevronLeft, Check, BarChart2 } from "lucide-react";
 import Step1ClientMonth from "./Step1ClientMonth";
 import Step2Subjektiv from "./Step2Subjektiv";
 import Step3Koerper from "./Step3Koerper";
 import Step4Training from "./Step4Training";
 import Step5Coach from "./Step5Coach";
+import NutrilizeImport from "./NutrilizeImport";
+import NutrilizeAnalyse from "./NutrilizeAnalyse";
 
 const LOGO_URL = "https://media.base44.com/images/public/69b064c89953b727c5202e21/a128f5dab_ChatGPTImage19Marz202616_44_51.png";
 const STEPS = ["Klient & Monat", "Wahrnehmung", "Körper & Vital", "Training & Ernährung", "Coach-Bewertung"];
@@ -29,10 +31,25 @@ export default function ReportWizard({ editReport, onSaved, onCancel }) {
   const [step, setStep] = useState(0);
   const [data, setData] = useState(editReport || empty);
   const [saving, setSaving] = useState(false);
+  const [showAnalyse, setShowAnalyse] = useState(false);
+
+  // Nutrilize state
+  const [parsedData, setParsedData] = useState([]);
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
+  const [clientProfile, setClientProfile] = useState(null);
 
   useEffect(() => {
     if (editReport) setData(editReport);
   }, [editReport]);
+
+  // Load client profile when client_id is set
+  useEffect(() => {
+    if (!data.client_id) return;
+    base44.entities.ClientProfile.filter({ id: data.client_id }).then(results => {
+      if (results?.length) setClientProfile(results[0]);
+    }).catch(() => {});
+  }, [data.client_id]);
 
   const update = (fields) => setData(prev => ({ ...prev, ...fields }));
 
@@ -47,16 +64,74 @@ export default function ReportWizard({ editReport, onSaved, onCancel }) {
     onSaved();
   };
 
+  const filteredData = useMemo(() => {
+    if (!parsedData.length) return [];
+    return parsedData.filter(d => {
+      if (dateFrom && d.date < dateFrom) return false;
+      if (dateTo && d.date > dateTo) return false;
+      return true;
+    });
+  }, [parsedData, dateFrom, dateTo]);
+
   const stepProps = { data, update };
+
+  // ── Nutrilize Analyse sidebar/panel ──
+  if (showAnalyse && filteredData.length > 0) {
+    return (
+      <div className="min-h-screen bg-[#07070f]">
+        <div className="bg-[#0f0f1a] border-b border-white/8 px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img src={LOGO_URL} alt="Logo" className="w-8 h-8 rounded-lg object-contain" />
+            <div>
+              <p className="text-white/30 text-xs">Nutrilize Analyse</p>
+              <h1 className="text-white font-bold">{data.client_name} · {data.report_label || data.report_month}</h1>
+            </div>
+          </div>
+          <button onClick={() => setShowAnalyse(false)}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 text-white/50 hover:text-white text-sm transition-colors">
+            <ChevronLeft className="w-4 h-4" /> Zurück zum Wizard
+          </button>
+        </div>
+        <div className="max-w-5xl mx-auto px-6 py-8">
+          <NutrilizeAnalyse data={filteredData} clientProfile={clientProfile} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#F0EAD6]/30">
       {/* Header */}
-      <div className="bg-white border-b border-black/8 px-8 py-5 flex items-center gap-3">
-        <img src={LOGO_URL} alt="Logo" className="w-9 h-9 rounded-lg object-contain" />
-        <div>
-          <p className="text-[10px] font-bold tracking-widest text-[#00416A]/50 uppercase">Leistungsarchitektur</p>
-          <h1 className="text-xl font-bold text-[#00416A]">Monatsreport {editReport ? "bearbeiten" : "erstellen"}</h1>
+      <div className="bg-white border-b border-black/8 px-8 py-5 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <img src={LOGO_URL} alt="Logo" className="w-9 h-9 rounded-lg object-contain" />
+          <div>
+            <p className="text-[10px] font-bold tracking-widest text-[#00416A]/50 uppercase">Leistungsarchitektur</p>
+            <h1 className="text-xl font-bold text-[#00416A]">Monatsreport {editReport ? "bearbeiten" : "erstellen"}</h1>
+          </div>
+        </div>
+        {filteredData.length > 0 && (
+          <button onClick={() => setShowAnalyse(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-[#07070f] text-[#3ecf8e] border border-[#3ecf8e]/30 rounded-lg text-sm font-semibold hover:bg-[#3ecf8e]/10 transition-all">
+            <BarChart2 className="w-4 h-4" />
+            Nutrilize Analyse
+          </button>
+        )}
+      </div>
+
+      {/* Nutrilize Import Banner */}
+      <div className="bg-[#07070f] border-b border-white/5 px-8 py-4">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-white/40 text-xs font-bold uppercase tracking-widest mb-3">Nutrilize Daten importieren</p>
+          <NutrilizeImport
+            update={update}
+            parsedData={parsedData}
+            setParsedData={setParsedData}
+            dateFrom={dateFrom}
+            setDateFrom={setDateFrom}
+            dateTo={dateTo}
+            setDateTo={setDateTo}
+          />
         </div>
       </div>
 
