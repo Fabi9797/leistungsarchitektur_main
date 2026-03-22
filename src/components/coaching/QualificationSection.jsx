@@ -28,10 +28,10 @@ export default function QualificationSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-10 sm:mb-16"
         >
-          <span className="text-xs font-bold text-[#00416A]/40 tracking-[0.2em] uppercase">
+          <span className="text-xs font-bold text-[#C8973A] tracking-[0.2em] uppercase">
             Passt es?
           </span>
-          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-black tracking-tight">
+          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-white tracking-tight">
             Für wen ist das System?
           </h2>
         </motion.div>
