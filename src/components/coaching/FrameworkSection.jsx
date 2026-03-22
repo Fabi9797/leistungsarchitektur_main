@@ -38,13 +38,13 @@ export default function FrameworkSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12 sm:mb-20">
           
-          <span className="text-xs font-bold text-[#00416A]/40 tracking-[0.2em] uppercase">
+          <span className="text-xs font-bold text-[#C8973A] tracking-[0.2em] uppercase">
           Methodik
           </span>
-          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-black tracking-tight">
+          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-[#0D1F2D] tracking-tight">
             Die Leistungsarchitektur
           </h2>
-          <p className="mt-4 sm:mt-6 text-base sm:text-lg text-black/50 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-4 sm:mt-6 text-base sm:text-lg text-[#0D1F2D]/55 max-w-2xl mx-auto leading-relaxed">
           Kein Raten. Kein Perfektionismus. Ein auf dich zugeschnittenes System, das Schritt für Schritt aufgebaut wird – und das hält.
           </p>
         </motion.div>
