@@ -153,9 +153,9 @@ export default function NutrilizeImport({ update, parsedData, setParsedData, dat
       )}
 
       {parsedData.length > 0 && (
-        <div className="bg-[#3ecf8e]/10 border border-[#3ecf8e]/20 rounded-xl px-4 py-3">
-          <p className="text-[#3ecf8e] text-xs font-semibold">✓ Felder automatisch befüllt</p>
-          <p className="text-white/40 text-xs mt-0.5">Körper-, Vital- und Ernährungsdaten wurden aus dem Import übernommen. Bitte im nächsten Tab prüfen.</p>
+        <div className="bg-[#00416A]/5 border border-[#00416A]/15 rounded-xl px-4 py-3">
+          <p className="text-[#00416A] text-xs font-semibold">✓ Felder automatisch befüllt</p>
+          <p className="text-black/40 text-xs mt-0.5">Körper-, Vital- und Ernährungsdaten wurden aus dem Import übernommen. Bitte im nächsten Tab prüfen.</p>
         </div>
       )}
     </div>
