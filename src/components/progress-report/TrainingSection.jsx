@@ -25,12 +25,12 @@ export default function TrainingSection({ sessions, exerciseProgressions }) {
     <ChartCard title="Trainingsprogression" badge={`${sessions.length} Einheiten`}>
       <div className="grid grid-cols-3 gap-3 mb-5">
         {[
-          { label: 'Gesamt Einheiten', value: sessions.length, color: '#3ecf8e' },
-          { label: 'GK-Einheiten', value: gkCount, color: '#a29bfe' },
-          { label: 'LISS-Einheiten', value: lissCount, color: '#74b9ff' },
+          { label: 'Gesamt Einheiten', value: sessions.length, color: '#00416A' },
+          { label: 'GK-Einheiten', value: gkCount, color: '#5B6DAE' },
+          { label: 'LISS-Einheiten', value: lissCount, color: '#4A90B8' },
         ].map((s, i) => (
-          <div key={i} className="bg-white/[0.03] rounded-xl p-3 border border-white/5">
-            <p className="text-white/35 text-xs mb-1">{s.label}</p>
+          <div key={i} className="bg-[#F0EAD6]/50 rounded-xl p-3 border border-[#00416A]/8">
+            <p className="text-black/40 text-xs mb-1">{s.label}</p>
             <p className="font-mono font-bold text-xl" style={{ color: s.color }}>{s.value}</p>
           </div>
         ))}
