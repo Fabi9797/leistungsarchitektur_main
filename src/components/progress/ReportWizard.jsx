@@ -131,9 +131,9 @@ export default function ReportWizard({ editReport, onSaved, onCancel }) {
       </div>
 
       {/* Nutrilize Import Banner */}
-      <div className="bg-[#07070f] border-b border-white/5 px-8 py-4">
+      <div className="bg-[#F0EAD6]/60 border-b border-black/8 px-8 py-4">
         <div className="max-w-3xl mx-auto">
-          <p className="text-white/40 text-xs font-bold uppercase tracking-widest mb-3">Nutrilize Daten importieren</p>
+          <p className="text-[#00416A]/50 text-xs font-bold uppercase tracking-widest mb-3">Nutrilize Daten importieren</p>
           <NutrilizeImport
             update={update}
             parsedData={parsedData}
