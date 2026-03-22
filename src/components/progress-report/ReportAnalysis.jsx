@@ -93,13 +93,13 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
       {/* 1: Gewicht */}
       <ChartCard title="Gewicht-Trend" badge={weight.avg ? `Ø ${weight.avg.toFixed(1)} kg` : undefined}>
         <StatRow stats={[
-          { label: 'Start', value: weightFirst ? `${weightFirst.toFixed(1)} kg` : '–', color: '#6c5ce7' },
-          { label: 'Aktuell', value: weightLast ? `${weightLast.toFixed(1)} kg` : '–', color: '#6c5ce7' },
+          { label: 'Start', value: weightFirst ? `${weightFirst.toFixed(1)} kg` : '–', color: '#00416A' },
+          { label: 'Aktuell', value: weightLast ? `${weightLast.toFixed(1)} kg` : '–', color: '#00416A' },
           { label: 'Delta', value: deltaInfo?.value || '–', subColor: deltaInfo?.subColor },
-          { label: 'Ø bereinigt', value: weight.avg ? `${weight.avg.toFixed(1)} kg` : '–', color: '#6c5ce7' },
+          { label: 'Ø bereinigt', value: weight.avg ? `${weight.avg.toFixed(1)} kg` : '–', color: '#00416A' },
         ]} />
-        <MetricLineChart {...chartProps('weight', 'Gewicht')} color="#6c5ce7" unit="kg"
-          secondaryKey="bodyFat" secondaryColor="#e17055" secondaryLabel="KFA %" />
+        <MetricLineChart {...chartProps('weight', 'Gewicht')} color="#00416A" unit="kg"
+          secondaryKey="bodyFat" secondaryColor="#C8973A" secondaryLabel="KFA %" />
       </ChartCard>
 
       {/* 2: Kalorien */}
