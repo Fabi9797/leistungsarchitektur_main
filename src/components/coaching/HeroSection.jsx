@@ -75,8 +75,8 @@ export default function HeroSection({ heroImage }) {
                   transition={{ delay: 0.4 + i * 0.15, duration: 0.5 }}
                   className="flex items-start gap-3"
                 >
-                  <CheckCircle2 className="w-5 h-5 text-[#00416A] mt-0.5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base text-black/70">{b}</span>
+                  <CheckCircle2 className="w-5 h-5 text-[#C8973A] mt-0.5 flex-shrink-0" />
+                  <span className="text-sm sm:text-base text-[#0D1F2D]/70">{b}</span>
                 </motion.div>
               ))}
             </div>
