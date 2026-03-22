@@ -166,7 +166,7 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
           { label: 'Min', value: sleep.min ? formatSleep(Math.round(sleep.min)) : '–' },
           { label: 'Max', value: sleep.max ? formatSleep(Math.round(sleep.max)) : '–' },
         ]} />
-        <MetricLineChart {...chartProps('sleepMinutes', 'Schlaf')} color="#74b9ff" unit="h:mm" isSleep target={sleepTargetMin} />
+        <MetricLineChart {...chartProps('sleepMinutes', 'Schlaf')} color="#4A90B8" unit="h:mm" isSleep target={sleepTargetMin} />
       </ChartCard>
 
       {/* 8: Training */}
