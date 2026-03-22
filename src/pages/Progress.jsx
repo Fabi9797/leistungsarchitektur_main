@@ -57,13 +57,13 @@ function autoFillFromData(data) {
 // ── DropZone ──────────────────────────────────────────────────────────────────
 function DropZone({ label, onFile, fileName, loading, onClear }) {
   const [drag, setDrag] = useState(false);
-  const dzId = `dz-${label.replace(/\s/g, '')}`;
+  const inputRef = React.useRef(null);
   return (
     <div
       onDragOver={e => { e.preventDefault(); setDrag(true); }}
       onDragLeave={() => setDrag(false)}
       onDrop={e => { e.preventDefault(); setDrag(false); onFile(e.dataTransfer.files[0]); }}
-      onClick={() => !fileName && document.getElementById(dzId).click()}
+      onClick={() => !fileName && inputRef.current?.click()}
       className={`border-2 border-dashed rounded-xl p-5 text-center transition-all ${
         drag ? 'border-[#3ecf8e] bg-[#3ecf8e]/5' :
         fileName ? 'border-white/15 bg-white/[0.03]' :
