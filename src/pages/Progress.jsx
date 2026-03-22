@@ -63,7 +63,7 @@ function DropZone({ label, onFile, fileName, loading, onClear }) {
       onDragOver={e => { e.preventDefault(); setDrag(true); }}
       onDragLeave={() => setDrag(false)}
       onDrop={e => { e.preventDefault(); setDrag(false); onFile(e.dataTransfer.files[0]); }}
-      onClick={() => !fileName && document.getElementById(id).click()}
+      onClick={() => !fileName && document.getElementById(dzId).click()}
       className={`border-2 border-dashed rounded-xl p-5 text-center transition-all ${
         drag ? 'border-[#3ecf8e] bg-[#3ecf8e]/5' :
         fileName ? 'border-white/15 bg-white/[0.03]' :
