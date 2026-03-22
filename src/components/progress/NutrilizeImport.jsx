@@ -110,28 +110,28 @@ export default function NutrilizeImport({ update, parsedData, setParsedData, dat
           onChange={e => handleFile(e.target.files[0])} />
 
         {loading ? (
-          <div className="flex items-center justify-center gap-3 text-white/50">
-            <div className="w-5 h-5 border-2 border-[#3ecf8e] border-t-transparent rounded-full animate-spin" />
+          <div className="flex items-center justify-center gap-3 text-black/40">
+            <div className="w-5 h-5 border-2 border-[#00416A] border-t-transparent rounded-full animate-spin" />
             <span className="text-sm">Datei wird verarbeitet...</span>
           </div>
         ) : fileName ? (
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <FileSpreadsheet className="w-6 h-6 text-[#3ecf8e]" />
+              <FileSpreadsheet className="w-6 h-6 text-[#00416A]" />
               <div className="text-left">
-                <p className="text-white text-sm font-medium">{fileName}</p>
-                <p className="text-white/40 text-xs">{parsedData.length} Tage geladen</p>
+                <p className="text-black text-sm font-medium">{fileName}</p>
+                <p className="text-[#00416A] text-xs font-semibold">{parsedData.length} Tage geladen</p>
               </div>
             </div>
             <button onClick={(e) => { e.stopPropagation(); clear(); }}
-              className="text-white/30 hover:text-red-400 transition-colors p-1">
+              className="text-black/20 hover:text-red-500 transition-colors p-1">
               <X className="w-4 h-4" />
             </button>
           </div>
         ) : (
           <>
-            <Upload className="w-7 h-7 text-white/20 mx-auto mb-2" />
-            <p className="text-white/50 text-sm">Nutrilize Export (.xlsx) ablegen oder klicken</p>
+            <Upload className="w-7 h-7 text-black/20 mx-auto mb-2" />
+            <p className="text-black/50 text-sm">Nutrilize Export (.xlsx) ablegen oder klicken</p>
           </>
         )}
       </div>
