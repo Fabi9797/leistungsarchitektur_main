@@ -139,7 +139,7 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
       {/* 5: HRV */}
       <ChartCard title="HRV-Trend" badge={(() => { const ti = trendIcon(hrvTrend); return `${ti.icon} ${hrvTrend}`; })()}>
         <StatRow stats={[
-          { label: 'Ø HRV (bereinigt)', value: hrv.avg ? `${hrv.avg.toFixed(0)} ms` : '–', color: '#a29bfe' },
+          { label: 'Ø HRV (bereinigt)', value: hrv.avg ? `${hrv.avg.toFixed(0)} ms` : '–', color: '#5B6DAE' },
           { label: 'Trend', value: hrvTrend, color: trendIcon(hrvTrend).color },
           { label: 'Min', value: hrv.min ? `${hrv.min.toFixed(0)} ms` : '–' },
           { label: 'Max', value: hrv.max ? `${hrv.max.toFixed(0)} ms` : '–' },
