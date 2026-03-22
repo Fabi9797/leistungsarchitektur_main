@@ -11,6 +11,7 @@ const TOOLS = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/ClientOverview832" },
   { label: "Monatsreport", icon: TrendingUp, path: "/progress" },
   { label: "Testimonial Audios", icon: Mic, path: "/TestimonialAdmin832" },
+  { label: "Progress Report", icon: TrendingUp, path: "/progress-report" },
 ];
 
 export default function AdminNav() {
