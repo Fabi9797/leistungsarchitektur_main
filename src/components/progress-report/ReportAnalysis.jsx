@@ -161,8 +161,8 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
       {/* 7: Schlaf */}
       <ChartCard title="Schlafdauer" badge={sleepCompliance ? `${sleepCompliance.hit}/${sleepCompliance.total} Tage ≥8h` : undefined}>
         <StatRow stats={[
-          { label: 'Ø Schlaf (bereinigt)', value: sleep.avg ? formatSleep(Math.round(sleep.avg)) : '–', color: '#74b9ff' },
-          { label: 'Schlafziel', value: '8:00 h', color: '#ffffff50' },
+          { label: 'Ø Schlaf (bereinigt)', value: sleep.avg ? formatSleep(Math.round(sleep.avg)) : '–', color: '#4A90B8' },
+          { label: 'Schlafziel', value: '8:00 h', color: '#00000050' },
           { label: 'Min', value: sleep.min ? formatSleep(Math.round(sleep.min)) : '–' },
           { label: 'Max', value: sleep.max ? formatSleep(Math.round(sleep.max)) : '–' },
         ]} />
