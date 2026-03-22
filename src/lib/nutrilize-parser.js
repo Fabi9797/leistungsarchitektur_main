@@ -95,11 +95,11 @@ export function parseNutrilizeFile(file) {
 function parseDatum(str) {
   if (!str) return null;
   // Format: "19.02." or "19.02.2026"
-  const match = str.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})?$/);
+  const match = str.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})?/);
   if (match) {
     const day = match[1].padStart(2, '0');
     const month = match[2].padStart(2, '0');
-    const year = match[3] || new Date().getFullYear();
+    const year = match[3] || 2026;
     return `${year}-${month}-${day}`;
   }
   return null;
