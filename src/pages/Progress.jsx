@@ -4,6 +4,7 @@ import { Plus, FileText, ChevronRight, Trash2, Upload, FileSpreadsheet, X, Save,
 import { parseNutrilizeFile, detectAnomalies, cleanAverage, formatSleep } from "@/lib/nutrilize-parser";
 import { parseTrainingFile } from "@/lib/training-parser";
 import ReportAnalysis from "@/components/progress-report/ReportAnalysis";
+import PdfExportButton from "@/components/progress-report/PdfExport";
 
 const LOGO_URL = "https://media.base44.com/images/public/69b064c89953b727c5202e21/a128f5dab_ChatGPTImage19Marz202616_44_51.png";
 const MONTHS = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
