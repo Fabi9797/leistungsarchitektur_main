@@ -236,10 +236,10 @@ export default function Progress() {
     if (!file) return;
     setTrainLoading(true);
     try {
-      const { sessions, exerciseProgressions: exProgs } = await parseTrainingFile(file);
+      const { sessions } = await parseTrainingFile(file);
       setTrainFile(file.name);
       setTrainingSessions(sessions);
-      setExerciseProgressions(exProgs || []);
+      setExerciseProgressions(buildExerciseProgression(sessions));
     } catch (err) { alert('Fehler: ' + err.message); }
     setTrainLoading(false);
   };
