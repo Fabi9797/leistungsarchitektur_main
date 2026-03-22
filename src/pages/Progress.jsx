@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from "react"
 import { base44 } from "@/api/base44Client";
 import { Plus, FileText, ChevronRight, Trash2, Upload, FileSpreadsheet, X, Save, ArrowLeft, BarChart2 } from "lucide-react";
 import { parseNutrilizeFile, detectAnomalies, cleanAverage, formatSleep } from "@/lib/nutrilize-parser";
-import { parseTrainingFile } from "@/lib/training-parser";
+import { parseTrainingFile, buildExerciseProgression } from "@/lib/training-parser";
 import ReportAnalysis from "@/components/progress-report/ReportAnalysis";
 import PdfExportButton from "@/components/progress-report/PdfExport";
 
