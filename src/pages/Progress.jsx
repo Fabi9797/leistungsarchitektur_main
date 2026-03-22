@@ -383,7 +383,7 @@ export default function Progress() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <PdfExportButton formData={formData} />
+            <PdfExportButton formData={formData} nutriData={filteredNutri} trainingSessions={trainingSessions} exerciseProgressions={exerciseProgressions} />
             <button onClick={handleSave} disabled={saving}
               className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white font-semibold rounded-lg text-sm disabled:opacity-50 hover:bg-[#003356] transition-colors">
               <Save className="w-4 h-4" /> {saving ? 'Speichern...' : 'Speichern'}
