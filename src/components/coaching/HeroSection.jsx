@@ -35,21 +35,21 @@ export default function HeroSection({ heroImage }) {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* Proof Line */}
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-4 sm:py-2 bg-[#F0EAD6] rounded-full mb-6 sm:mb-8">
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#00416A] rounded-full flex-shrink-0" />
-              <span className="text-[9px] sm:text-xs font-semibold text-[#00416A] tracking-wider uppercase whitespace-nowrap">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-4 sm:py-2 bg-[#C8973A]/15 border border-[#C8973A]/30 rounded-full mb-6 sm:mb-8">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#C8973A] rounded-full flex-shrink-0" />
+              <span className="text-[9px] sm:text-xs font-semibold text-[#C8973A] tracking-wider uppercase whitespace-nowrap">
                 6+ Jahre Erfahrung aus eigenem Fitnessstudio
               </span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-black leading-[1.1]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0D1F2D] leading-[1.1]">
               Dein Morgen beginnt Heute.{" "}
               <span className="text-[#00416A]">Fit in die Zukunft.</span>
             </h1>
 
             {/* Subheadline */}
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-black/60 leading-relaxed">
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-[#0D1F2D]/60 leading-relaxed">
               Wir bringen Training, Ernährung und Alltag in ein funktionierendes System – damit du in Form kommst und es langfristig bleibst.
             </p>
 
