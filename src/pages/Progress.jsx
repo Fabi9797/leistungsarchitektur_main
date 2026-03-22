@@ -235,9 +235,10 @@ export default function Progress() {
     if (!file) return;
     setTrainLoading(true);
     try {
-      const { sessions } = await parseTrainingFile(file);
+      const { sessions, exerciseProgressions: exProgs } = await parseTrainingFile(file);
       setTrainFile(file.name);
       setTrainingSessions(sessions);
+      setExerciseProgressions(exProgs || []);
     } catch (err) { alert('Fehler: ' + err.message); }
     setTrainLoading(false);
   };
