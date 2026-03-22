@@ -57,7 +57,7 @@ function autoFillFromData(data) {
 // ── DropZone ──────────────────────────────────────────────────────────────────
 function DropZone({ label, onFile, fileName, loading, onClear }) {
   const [drag, setDrag] = useState(false);
-  const id = `dz-${label.replace(/\s/g, '')}`;
+  const dzId = `dz-${label.replace(/\s/g, '')}`;
   return (
     <div
       onDragOver={e => { e.preventDefault(); setDrag(true); }}
