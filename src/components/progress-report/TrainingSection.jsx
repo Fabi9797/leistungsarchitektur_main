@@ -59,9 +59,9 @@ export default function TrainingSection({ sessions, exerciseProgressions }) {
               <div className="h-[90px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={ex.dataPoints} margin={{ top: 2, right: 4, left: 0, bottom: 2 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#ffffff07" />
-                    <XAxis dataKey="date" tick={{ fill: '#ffffff20', fontSize: 9 }} interval={Math.max(0, Math.floor(ex.dataPoints.length / 4))} />
-                    <YAxis tick={{ fill: '#ffffff20', fontSize: 9 }} width={30} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#00416A0d" />
+                    <XAxis dataKey="date" tick={{ fill: '#00000035', fontSize: 9 }} interval={Math.max(0, Math.floor(ex.dataPoints.length / 4))} />
+                    <YAxis tick={{ fill: '#00000035', fontSize: 9 }} width={30} />
                     <Tooltip content={<ExTooltip />} />
                     <Line type="monotone" dataKey="e1rm" stroke={color} strokeWidth={2} dot={{ r: 3, fill: color }} />
                   </LineChart>
