@@ -43,11 +43,11 @@ export default function TrainingSection({ sessions, exerciseProgressions }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {topExercises.map((ex, i) => {
           const color = EXERCISE_COLORS[i % EXERCISE_COLORS.length];
-          const pctColor = ex.progressPct >= 0 ? '#3ecf8e' : '#e74c3c';
-          return (
-            <div key={ex.name} className="bg-white/[0.02] border border-white/5 rounded-xl p-4">
+          const pctColor = ex.progressPct >= 0 ? '#007B7F' : '#C0616A';
+            return (
+            <div key={ex.name} className="bg-[#F0EAD6]/30 border border-[#00416A]/8 rounded-xl p-4">
               <div className="flex items-start justify-between mb-2">
-                <p className="text-white text-xs font-semibold truncate max-w-[140px]" title={ex.name}>{ex.name}</p>
+                <p className="text-[#00416A] text-xs font-semibold truncate max-w-[140px]" title={ex.name}>{ex.name}</p>
                 <span className="font-mono text-xs font-bold ml-2 flex-shrink-0" style={{ color: pctColor }}>
                   {ex.progressPct >= 0 ? '+' : ''}{ex.progressPct.toFixed(1)}%
                 </span>
