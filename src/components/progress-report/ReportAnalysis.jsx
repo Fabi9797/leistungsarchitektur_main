@@ -78,7 +78,7 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
 
   const fmtDelta = (d) => {
     if (d === null) return null;
-    return { value: `${d > 0 ? '+' : ''}${d.toFixed(1)} kg`, subColor: d < 0 ? 'text-[#3ecf8e]' : 'text-red-400' };
+    return { value: `${d > 0 ? '+' : ''}${d.toFixed(1)} kg`, subColor: d < 0 ? 'text-[#007B7F]' : 'text-[#C0616A]' };
   };
   const deltaInfo = fmtDelta(weightDelta);
   const trendIcon = (t, lowerBetter = false) => {
