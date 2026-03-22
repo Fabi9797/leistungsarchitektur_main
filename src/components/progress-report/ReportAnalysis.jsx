@@ -155,7 +155,7 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
           { label: 'Min', value: rhr.min ? `${rhr.min.toFixed(0)} bpm` : '–' },
           { label: 'Max', value: rhr.max ? `${rhr.max.toFixed(0)} bpm` : '–' },
         ]} />
-        <MetricLineChart {...chartProps('restingHR', 'Ruhepuls')} color="#fd79a8" unit="bpm" />
+        <MetricLineChart {...chartProps('restingHR', 'Ruhepuls')} color="#C0616A" unit="bpm" />
       </ChartCard>
 
       {/* 7: Schlaf */}
