@@ -101,9 +101,9 @@ export default function NutrilizeImport({ update, parsedData, setParsedData, dat
         onDrop={onDrop}
         onClick={() => !fileName && document.getElementById('nutrilize-xlsx').click()}
         className={`border-2 border-dashed rounded-xl p-6 text-center transition-all ${
-          isDragging ? 'border-[#3ecf8e] bg-[#3ecf8e]/5' :
-          fileName ? 'border-white/20 bg-white/5' :
-          'border-white/10 bg-[#0f0f0f] hover:border-white/20 cursor-pointer'
+          isDragging ? 'border-[#00416A] bg-[#00416A]/5' :
+          fileName ? 'border-[#00416A]/20 bg-white' :
+          'border-black/10 bg-white hover:border-[#00416A]/30 cursor-pointer'
         }`}
       >
         <input id="nutrilize-xlsx" type="file" accept=".xlsx,.xls" className="hidden"
