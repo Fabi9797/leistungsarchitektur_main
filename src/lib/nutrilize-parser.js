@@ -39,9 +39,7 @@ export function parseNutrilizeFile(file) {
           const datum = String(row[0] || '').trim();
           if (!datum) continue;
           // Skip week summary rows
-          if (datum.startsWith('KW:') || datum.startsWith('∅:') || datum.startsWith('Σ:')) continue;
-          // Skip rows where datum looks like a prefix
-          if (datum.startsWith('∅') || datum.startsWith('Σ')) continue;
+          if (datum.startsWith('KW') || datum.startsWith('∅') || datum.startsWith('Σ')) continue;
 
           const obj = {};
           headers.forEach((h, idx) => {
