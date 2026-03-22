@@ -66,13 +66,13 @@ export default function FrameworkSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="bg-[#F0EAD6]/50 border border-black/8 rounded-2xl p-5 sm:p-6 flex-shrink-0 w-[72vw] sm:w-64 snap-start">
+                  className="bg-white border border-[#00416A]/10 rounded-2xl p-5 sm:p-6 flex-shrink-0 w-[72vw] sm:w-64 snap-start shadow-sm">
                   
                   <div className="w-10 h-10 bg-[#00416A] rounded-xl flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-white" />
+                    <Icon className="w-5 h-5 text-[#C8973A]" />
                   </div>
-                  <p className="text-xs font-bold text-[#00416A] tracking-widest uppercase mb-2">{p.label}</p>
-                  <p className="text-sm text-black/60 leading-relaxed">{p.text}</p>
+                  <p className="text-xs font-bold text-[#C8973A] tracking-widest uppercase mb-2">{p.label}</p>
+                  <p className="text-sm text-[#0D1F2D]/65 leading-relaxed">{p.text}</p>
                 </motion.div>);
 
             })}
