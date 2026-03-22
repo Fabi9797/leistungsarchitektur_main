@@ -8,8 +8,8 @@ import DayButtons from './DayButtons';
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-[#1a1a2e] border border-white/10 rounded-xl px-3 py-2 text-xs">
-      <p className="text-white/40 mb-1">{label}</p>
+    <div className="bg-white border border-black/10 rounded-xl px-3 py-2 text-xs shadow-md">
+      <p className="text-black/40 mb-1">{label}</p>
       {payload.map((p, i) => p.value > 0 && (
         <p key={i} className="font-mono" style={{ color: p.fill || p.color }}>{p.name}: {p.value?.toFixed(0)} g</p>
       ))}
