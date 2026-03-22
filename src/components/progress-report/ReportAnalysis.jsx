@@ -105,8 +105,8 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
       {/* 2: Kalorien */}
       <ChartCard title="Kalorienaufnahme" badge={calCompliance ? `${calCompliance.hit}/${calCompliance.total} Tage im Ziel` : undefined}>
         <StatRow stats={[
-          { label: 'Ø Kalorien (bereinigt)', value: calories.avg ? `${Math.round(calories.avg)} kcal` : '–', color: '#3ecf8e' },
-          { label: 'Kalorienziel', value: calTarget ? `${calTarget} kcal` : '–', color: '#ffffff50' },
+          { label: 'Ø Kalorien (bereinigt)', value: calories.avg ? `${Math.round(calories.avg)} kcal` : '–', color: '#C8973A' },
+          { label: 'Kalorienziel', value: calTarget ? `${calTarget} kcal` : '–', color: '#00000050' },
           { label: 'Min', value: calories.min ? `${Math.round(calories.min)} kcal` : '–' },
           { label: 'Max', value: calories.max ? `${Math.round(calories.max)} kcal` : '–' },
         ]} />
