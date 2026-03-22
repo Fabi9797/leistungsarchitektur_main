@@ -8,10 +8,10 @@ const ExTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
   const d = payload[0]?.payload;
   return (
-    <div className="bg-[#1a1a2e] border border-white/10 rounded-xl px-3 py-2 text-xs">
-      <p className="text-white/40 mb-1">{d?.date}</p>
+    <div className="bg-white border border-black/10 rounded-xl px-3 py-2 text-xs shadow-md">
+      <p className="text-black/40 mb-1">{d?.date}</p>
       <p className="font-mono" style={{ color: payload[0].stroke }}>{payload[0].value?.toFixed(1)} kg E1RM</p>
-      <p className="text-white/30">{d?.sessionType}</p>
+      <p className="text-black/30">{d?.sessionType}</p>
     </div>
   );
 };
