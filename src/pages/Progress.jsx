@@ -380,10 +380,13 @@ export default function Progress() {
               <h1 className="text-[#00416A] font-bold">{formData.client_name} · {formData.report_label}</h1>
             </div>
           </div>
-          <button onClick={handleSave} disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white font-semibold rounded-lg text-sm disabled:opacity-50 hover:bg-[#003356] transition-colors">
-            <Save className="w-4 h-4" /> {saving ? 'Speichern...' : 'Speichern'}
-          </button>
+          <div className="flex items-center gap-2">
+            <PdfExportButton formData={formData} />
+            <button onClick={handleSave} disabled={saving}
+              className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white font-semibold rounded-lg text-sm disabled:opacity-50 hover:bg-[#003356] transition-colors">
+              <Save className="w-4 h-4" /> {saving ? 'Speichern...' : 'Speichern'}
+            </button>
+          </div>
         </div>
         <div className="max-w-5xl mx-auto px-6 py-8">
           <ReportAnalysis
