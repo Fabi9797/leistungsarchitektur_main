@@ -108,10 +108,17 @@ function parseDatum(str) {
 }
 
 function parseNum(val) {
-  if (val === '' || val === null || val === undefined) return null;
-  const str = String(val).replace(',', '.').replace(/[^\d.-]/g, '');
-  const n = parseFloat(str);
-  return isNaN(n) ? null : n;
+  if (val == null || val === '' || val === 'NaN') return null;
+  if (typeof val === 'string') {
+    const str = val.trim();
+    if (str.startsWith('∅:') || str.startsWith('Σ:') || str.startsWith('∅') || str.startsWith('Σ')) return null;
+    const num = parseFloat(str.replace(',', '.'));
+    return isNaN(num) ? null : num;
+  }
+  if (typeof val === 'number') {
+    return isNaN(val) ? null : val;
+  }
+  return null;
 }
 
 function parseSleep(val) {
