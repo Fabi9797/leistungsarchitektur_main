@@ -67,12 +67,12 @@ export default function MetricLineChart({ data, metricKey, label, color, unit, t
       <div className="h-[180px]">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={chartData} margin={{ top: 5, right: 8, left: 0, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff07" />
-            <XAxis dataKey="dateLabel" tick={{ fill: '#ffffff25', fontSize: 10 }} interval={interval} />
-            <YAxis tick={{ fill: '#ffffff25', fontSize: 10 }} width={36} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#00416A0d" />
+            <XAxis dataKey="dateLabel" tick={{ fill: '#00000040', fontSize: 10 }} interval={interval} />
+            <YAxis tick={{ fill: '#00000040', fontSize: 10 }} width={36} />
             <Tooltip content={<CustomTooltip isSleep={isSleep} />} />
-            {avg !== null && <ReferenceLine y={avg} stroke={color} strokeDasharray="3 3" strokeOpacity={0.25} />}
-            {target && <ReferenceLine y={target} stroke="#ffffff25" strokeDasharray="4 4" label={{ value: 'Ziel', fill: '#ffffff30', fontSize: 10 }} />}
+            {avg !== null && <ReferenceLine y={avg} stroke={color} strokeDasharray="3 3" strokeOpacity={0.35} />}
+            {target && <ReferenceLine y={target} stroke="#00416A40" strokeDasharray="4 4" label={{ value: 'Ziel', fill: '#00416A60', fontSize: 10 }} />}
             <Line type="monotone" dataKey="value" name={label} stroke={color} strokeWidth={2}
               dot={<AnomalyDot />} activeDot={{ r: 4 }} connectNulls={false} />
             <Line type="monotone" dataKey="ma" name="Ø 7T" stroke={color} strokeWidth={1.5}
