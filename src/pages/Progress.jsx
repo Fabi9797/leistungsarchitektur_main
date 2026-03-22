@@ -421,6 +421,7 @@ export default function Progress() {
               <BarChart2 className="w-4 h-4" /> Analyse öffnen
             </button>
           )}
+          <PdfExportButton formData={formData} />
           <button onClick={handleSave} disabled={saving}
             className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white font-semibold rounded-lg text-sm disabled:opacity-50 hover:bg-[#003356] transition-colors">
             <Save className="w-4 h-4" /> {saving ? '...' : 'Speichern'}
