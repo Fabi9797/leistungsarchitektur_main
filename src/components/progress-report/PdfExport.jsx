@@ -1,13 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { createRoot } from 'react-dom/client';
 import { Download, Loader2 } from 'lucide-react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import {
-  LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, ReferenceLine, ComposedChart, Area
-} from 'recharts';
-import { movingAverage, detectAnomalies, formatSleep } from '@/lib/nutrilize-parser';
+import { movingAverage, formatSleep } from '@/lib/nutrilize-parser';
 
 // ─── Brand palette ────────────────────────────────────────────────────────────
 const C = {
