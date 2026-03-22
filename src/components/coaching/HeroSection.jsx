@@ -90,7 +90,7 @@ export default function HeroSection({ heroImage }) {
                 Analyse starten
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <p className="mt-3 text-sm text-black/40 text-center sm:text-left">
+              <p className="mt-3 text-sm text-[#0D1F2D]/40 text-center sm:text-left">
                 2 Minuten · Finde heraus, ob mein Coaching für dich passt
               </p>
             </div>
