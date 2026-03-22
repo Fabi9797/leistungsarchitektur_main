@@ -38,7 +38,7 @@ export default function Navbar() {
                   className="w-9 h-9 object-contain rounded-lg"
                 />
               </div>
-              <span className="text-xs font-bold tracking-widest text-[#00416A] leading-tight uppercase">
+              <span className={`text-xs font-bold tracking-widest leading-tight uppercase transition-colors duration-500 ${scrolled ? "text-white" : "text-[#00416A]"}`}>
                 LEISTUNGS<br/>
                 <span className="font-light tracking-widest">ARCHITEKTUR</span>
               </span>
