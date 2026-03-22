@@ -99,10 +99,10 @@ export default function HeroSection({ heroImage }) {
             <div className="mt-8 sm:mt-12 grid grid-cols-3 gap-3 sm:flex sm:gap-8">
               {systemIndicators.map((s) => (
                 <div key={s.num} className="flex flex-col sm:flex-row items-start gap-1 sm:gap-2">
-                  <span className="text-xs font-bold text-[#00416A]/30">{s.num}</span>
+                  <span className="text-xs font-bold text-[#C8973A]/50">{s.num}</span>
                   <div>
                     <span className="text-[10px] sm:text-xs font-bold text-[#00416A] tracking-wider block">{s.label}</span>
-                    <p className="text-[10px] sm:text-xs text-black/40 mt-0.5 hidden sm:block">{s.desc}</p>
+                    <p className="text-[10px] sm:text-xs text-[#0D1F2D]/40 mt-0.5 hidden sm:block">{s.desc}</p>
                   </div>
                 </div>
               ))}
