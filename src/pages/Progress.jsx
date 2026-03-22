@@ -267,17 +267,17 @@ export default function Progress() {
   // ── LIST VIEW ────────────────────────────────────────────────────────────────
   if (view === 'list') {
     return (
-      <div className="min-h-screen bg-[#07070f]">
-        <div className="bg-[#0f0f1a] border-b border-white/8 px-6 py-4 flex items-center justify-between">
+      <div className="min-h-screen bg-[#F0EAD6]/30">
+        <div className="bg-white border-b border-black/8 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src={LOGO_URL} alt="" className="w-8 h-8 rounded-lg object-contain" />
             <div>
-              <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest">Leistungsarchitektur</p>
-              <h1 className="text-white font-bold text-lg">Monatsreports</h1>
+              <p className="text-[#00416A]/40 text-[10px] font-bold uppercase tracking-widest">Leistungsarchitektur</p>
+              <h1 className="text-[#00416A] font-bold text-lg">Monatsreports</h1>
             </div>
           </div>
           <button onClick={() => setShowNewForm(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[#3ecf8e] text-black font-semibold rounded-lg hover:bg-[#2ebd7e] transition-all text-sm">
+            className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white font-semibold rounded-lg hover:bg-[#003356] transition-all text-sm">
             <Plus className="w-4 h-4" /> Neuer Bericht
           </button>
         </div>
@@ -285,30 +285,30 @@ export default function Progress() {
         <div className="max-w-3xl mx-auto px-6 py-8">
           {/* New report form */}
           {showNewForm && (
-            <div className="bg-[#0f0f1a] border border-white/8 rounded-2xl p-5 mb-6">
-              <h3 className="text-white font-semibold text-sm mb-4">Neuen Bericht erstellen</h3>
+            <div className="bg-white border border-black/8 rounded-2xl p-5 mb-6 shadow-sm">
+              <h3 className="text-[#00416A] font-semibold text-sm mb-4">Neuen Bericht erstellen</h3>
               <div className="grid grid-cols-2 gap-3 mb-4">
                 <div>
-                  <label className="text-white/40 text-xs block mb-1.5">Klient</label>
+                  <label className="text-black/40 text-xs block mb-1.5">Klient</label>
                   <select value={newClientId} onChange={e => setNewClientId(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-[#3ecf8e]/50">
+                    className="w-full bg-white border border-black/10 rounded-lg px-3 py-2 text-black text-sm outline-none focus:border-[#00416A]/50">
                     <option value="">— wählen —</option>
                     {clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="text-white/40 text-xs block mb-1.5">Monat</label>
+                  <label className="text-black/40 text-xs block mb-1.5">Monat</label>
                   <input type="month" value={newMonth} onChange={e => setNewMonth(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-[#3ecf8e]/50" />
+                    className="w-full bg-white border border-black/10 rounded-lg px-3 py-2 text-black text-sm outline-none focus:border-[#00416A]/50" />
                 </div>
               </div>
               <div className="flex gap-2">
                 <button onClick={() => setShowNewForm(false)}
-                  className="px-4 py-2 rounded-lg border border-white/10 text-white/40 hover:text-white text-sm transition-colors">
+                  className="px-4 py-2 rounded-lg border border-black/10 text-black/40 hover:text-black text-sm transition-colors">
                   Abbrechen
                 </button>
                 <button onClick={createNew} disabled={!newClientId || !newMonth}
-                  className="flex-1 py-2 rounded-lg bg-[#3ecf8e] text-black font-semibold text-sm hover:bg-[#2ebd7e] transition-colors disabled:opacity-40">
+                  className="flex-1 py-2 rounded-lg bg-[#00416A] text-white font-semibold text-sm hover:bg-[#003356] transition-colors disabled:opacity-40">
                   Erstellen
                 </button>
               </div>
@@ -317,29 +317,29 @@ export default function Progress() {
 
           {loading ? (
             <div className="flex items-center justify-center h-48">
-              <div className="w-8 h-8 border-2 border-white/10 border-t-[#3ecf8e] rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 border-black/10 border-t-[#00416A] rounded-full animate-spin" />
             </div>
           ) : reports.length === 0 ? (
             <div className="text-center py-20">
-              <FileText className="w-12 h-12 text-white/10 mx-auto mb-4" />
-              <p className="text-white/30 text-sm">Noch keine Berichte. Erstelle deinen ersten!</p>
+              <FileText className="w-12 h-12 text-black/10 mx-auto mb-4" />
+              <p className="text-black/30 text-sm">Noch keine Berichte. Erstelle deinen ersten!</p>
             </div>
           ) : (
             <div className="space-y-8">
               {Object.entries(grouped).map(([clientName, clientReports]) => (
                 <div key={clientName}>
-                  <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest mb-3">{clientName}</p>
+                  <p className="text-[#00416A]/40 text-[10px] font-bold uppercase tracking-widest mb-3">{clientName}</p>
                   <div className="space-y-2">
                     {clientReports.map(r => (
                       <div key={r.id} onClick={() => openReport(r)}
-                        className="flex items-center justify-between bg-[#0f0f1a] border border-white/8 rounded-xl px-5 py-4 hover:border-white/15 cursor-pointer transition-all group">
+                        className="flex items-center justify-between bg-white border border-black/8 rounded-xl px-5 py-4 hover:border-[#00416A]/20 hover:shadow-sm cursor-pointer transition-all group">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-xl bg-[#3ecf8e]/10 flex items-center justify-center">
-                            <span className="text-[#3ecf8e] font-bold text-sm font-mono">{r.gesamtbewertung || '–'}</span>
+                          <div className="w-10 h-10 rounded-xl bg-[#00416A]/8 flex items-center justify-center">
+                            <span className="text-[#00416A] font-bold text-sm font-mono">{r.gesamtbewertung || '–'}</span>
                           </div>
                           <div>
-                            <p className="text-white font-semibold text-sm">{r.report_label || r.report_month}</p>
-                            <p className="text-white/30 text-xs mt-0.5">
+                            <p className="text-black font-semibold text-sm">{r.report_label || r.report_month}</p>
+                            <p className="text-black/30 text-xs mt-0.5">
                               {r.gewicht_start && r.gewicht_end
                                 ? `${r.gewicht_start} → ${r.gewicht_end} kg`
                                 : r.kalorien_avg ? `Ø ${r.kalorien_avg} kcal` : 'Keine Daten'}
@@ -347,10 +347,10 @@ export default function Progress() {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <button onClick={e => handleDelete(r.id, e)} className="text-white/15 hover:text-red-400 transition-colors p-1.5">
+                          <button onClick={e => handleDelete(r.id, e)} className="text-black/15 hover:text-red-500 transition-colors p-1.5">
                             <Trash2 className="w-4 h-4" />
                           </button>
-                          <ChevronRight className="w-4 h-4 text-white/20 group-hover:text-white/60 transition-colors" />
+                          <ChevronRight className="w-4 h-4 text-black/20 group-hover:text-[#00416A] transition-colors" />
                         </div>
                       </div>
                     ))}
