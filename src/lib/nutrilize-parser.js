@@ -12,75 +12,70 @@ export function parseNutrilizeFile(file) {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+        // Use object mode so SheetJS gives us the exact column names as keys
+        const jsonRows = XLSX.utils.sheet_to_json(sheet, { defval: null });
 
-        // Find header row
-        let headerIdx = -1;
-        for (let i = 0; i < rows.length; i++) {
-          const row = rows[i];
-          if (row.some(cell => String(cell).includes('Datum') || String(cell).includes('Körpergewicht'))) {
-            headerIdx = i;
-            break;
-          }
-        }
-
-        if (headerIdx === -1) {
-          // Try first row as header
-          headerIdx = 0;
-        }
-
-        const headers = rows[headerIdx].map(h => String(h).trim());
         const parsed = [];
 
-        for (let i = headerIdx + 1; i < rows.length; i++) {
-          const row = rows[i];
-          if (!row || row.length === 0) continue;
+        for (const row of jsonRows) {
+          // Resolve a column value by trying exact key first, then substring fallback
+          const getVal = (exactKey, ...fallbackSubstrings) => {
+            if (row[exactKey] !== undefined) return row[exactKey];
+            for (const sub of fallbackSubstrings) {
+              const found = Object.keys(row).find(k => k.includes(sub));
+              if (found !== undefined) return row[found];
+            }
+            return null;
+          };
 
-          const datum = String(row[0] || '').trim();
-          if (!datum) continue;
-          // Skip week summary rows
-          if (datum.startsWith('KW') || datum.startsWith('∅') || datum.startsWith('Σ')) continue;
+          // --- Datum ---
+          const datumRaw = getVal('Datum', 'datum');
+          const datumStr = String(datumRaw ?? '').trim();
 
-          const obj = {};
-          headers.forEach((h, idx) => {
-            obj[h] = row[idx] !== undefined ? row[idx] : '';
-          });
+          // Skip week summary rows and empty rows
+          if (!datumStr || datumStr === 'null' || datumStr.startsWith('KW')) continue;
 
-          // Parse date: "19.02." format — add current year
-          const dateStr = String(obj['Datum'] || '').trim();
-          if (!dateStr || dateStr.startsWith('KW') || dateStr.startsWith('∅') || dateStr.startsWith('Σ')) continue;
-
-          const parsedDate = parseDatum(dateStr);
+          // Parse date: "19.02." or "19.02.2026"
+          const dateMatch = datumStr.match(/(\d{1,2})\.(\d{1,2})\./);
+          if (!dateMatch) continue;
+          const parsedDate = parseDatum(datumStr);
           if (!parsedDate) continue;
+
+          // Safe numeric getter — handles real numbers, NaN, and ∅:/Σ: strings
+          const getNum = (exactKey, ...fallbacks) => {
+            return parseNum(getVal(exactKey, ...fallbacks));
+          };
+
+          // Sleep: "H:MM" string or Excel decimal fraction
+          const sleepRawVal = getVal('Schlafdauer', 'Schlafdauer');
 
           const entry = {
             date: parsedDate,
-            dateLabel: dateStr,
-            weight: parseNum(obj['Körpergewicht']),
-            calories: parseNum(obj['Kalorien']),
-            carbs: parseNum(obj['Kohlenhydrate']),
-            protein: parseNum(obj['Eiweiß']),
-            fat: parseNum(obj['Fett']),
-            sugar: parseNum(obj['Zucker']),
-            saturatedFat: parseNum(obj['Gesättigte Fetts.']),
-            fiber: parseNum(obj['Ballaststoffe']),
-            salt: parseNum(obj['Salz']),
-            activityDuration: parseNum(obj['Aktivitätsdauer']),
-            burnedCalories: parseNum(obj['Verbrannte Kalorien']),
-            bmi: parseNum(obj['BMI']),
-            water: parseNum(obj['Wasserzufuhr']),
-            bodyFat: parseNum(obj['Körperfettanteil']),
-            hrv: parseNum(obj['Herzfrequenz-Variabilität (HRV)']),
-            restingHR: parseNum(obj['Ruhepuls']),
-            sleepRaw: String(obj['Schlafdauer'] || '').trim(),
-            sleepMinutes: parseSleep(obj['Schlafdauer']),
-            steps: parseNum(obj['Schrittanzahl']),
+            dateLabel: datumStr,
+            weight:        getNum('Körpergewicht (kg)', 'rpergewicht'),
+            calories:      getNum('Kalorien (kcal)', 'Kalorien'),
+            carbs:         getNum('Kohlenhydrate (g)', 'Kohlenhydrate'),
+            protein:       getNum('Eiweiß (kcal)', 'wei'),
+            fat:           getNum('Fett (g)', 'Fett (g)'),
+            sugar:         getNum('Zucker (g)', 'Zucker'),
+            saturatedFat:  getNum('Gesättigte Fetts. (g)', 'ttigte'),
+            fiber:         getNum('Ballaststoffe (g)', 'Ballaststoffe'),
+            salt:          getNum('Salz (g)', 'Salz'),
+            activityDuration: getNum('Aktivitätsdauer (min)', 'Aktivit'),
+            burnedCalories:   getNum('Verbrannte Kalorien (kcal)', 'Verbrannte'),
+            bmi:           getNum('BMI', 'BMI'),
+            water:         getNum('Wasserzufuhr (l)', 'Wasserzufuhr'),
+            bodyFat:       getNum('Körperfettanteil (%)', 'rfettanteil'),
+            hrv:           getNum('Herzfrequenz-Variabilität (HRV) (ms)', 'HRV'),
+            restingHR:     getNum('Ruhepuls (bpm)', 'Ruhepuls'),
+            sleepMinutes:  parseSleep(sleepRawVal),
+            steps:         getNum('Schrittanzahl (Schritte)', 'Schrittanzahl'),
           };
 
           parsed.push(entry);
         }
 
-        // Sort by date
+        // Sort by date ascending
         parsed.sort((a, b) => new Date(a.date) - new Date(b.date));
         resolve(parsed);
       } catch (err) {
