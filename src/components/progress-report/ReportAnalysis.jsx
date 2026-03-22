@@ -113,8 +113,8 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
         {calCompliance && (
           <div className={`text-sm font-mono mb-3 px-3 py-2 rounded-xl border ${
             calCompliance.hit / calCompliance.total > 0.7
-              ? 'bg-[#3ecf8e]/10 border-[#3ecf8e]/20 text-[#3ecf8e]'
-              : 'bg-red-500/10 border-red-500/20 text-red-400'
+              ? 'bg-[#007B7F]/10 border-[#007B7F]/20 text-[#007B7F]'
+              : 'bg-[#C0616A]/10 border-[#C0616A]/20 text-[#C0616A]'
           }`}>
             {calCompliance.hit} von {calCompliance.total} Tagen im Zielkorridor (±10%)
           </div>
