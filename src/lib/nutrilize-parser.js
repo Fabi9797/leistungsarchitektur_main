@@ -115,16 +115,18 @@ function parseNum(val) {
 }
 
 function parseSleep(val) {
-  if (!val && val !== 0) return null;
+  if (val === null || val === undefined) return null;
   const str = String(val).trim();
+  if (!str || str.includes('∅') || str.includes('Σ')) return null;
   // Format "7:21"
-  const match = str.match(/^(\d+):(\d{2})$/);
+  const match = str.match(/(\d+):(\d{2})/);
   if (match) {
     return parseInt(match[1]) * 60 + parseInt(match[2]);
   }
-  // Maybe it's a decimal hours value from Excel
+  // Excel stores time as decimal fraction of a day (e.g. 0.307 = ~7h22m)
   const n = parseFloat(str.replace(',', '.'));
-  if (!isNaN(n) && n > 0) return Math.round(n * 60);
+  if (!isNaN(n) && n > 0 && n < 1) return Math.round(n * 24 * 60); // fraction of day
+  if (!isNaN(n) && n >= 1) return Math.round(n * 60); // treat as hours
   return null;
 }
 
