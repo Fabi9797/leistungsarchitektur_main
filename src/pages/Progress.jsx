@@ -364,23 +364,23 @@ export default function Progress() {
     );
   }
 
-  // ── EDITOR VIEW ────────────────────────────────────────────────────────────
+  // ── EDITOR VIEW (Analysis) ──────────────────────────────────────────────────
   if (view === 'editor' && showAnalysis && filteredNutri.length > 0) {
     return (
-      <div className="min-h-screen bg-[#07070f]">
-        <div className="bg-[#0f0f1a] border-b border-white/8 px-6 py-4 flex items-center justify-between">
+      <div className="min-h-screen bg-[#F0EAD6]/30">
+        <div className="bg-white border-b border-black/8 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button onClick={() => setShowAnalysis(false)}
-              className="text-white/40 hover:text-white transition-colors p-1">
+              className="text-black/40 hover:text-[#00416A] transition-colors p-1">
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div>
-              <p className="text-white/30 text-xs">Analyse</p>
-              <h1 className="text-white font-bold">{formData.client_name} · {formData.report_label}</h1>
+              <p className="text-[#00416A]/40 text-xs">Analyse</p>
+              <h1 className="text-[#00416A] font-bold">{formData.client_name} · {formData.report_label}</h1>
             </div>
           </div>
           <button onClick={handleSave} disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 bg-[#3ecf8e] text-black font-semibold rounded-lg text-sm disabled:opacity-50">
+            className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white font-semibold rounded-lg text-sm disabled:opacity-50 hover:bg-[#003356] transition-colors">
             <Save className="w-4 h-4" /> {saving ? 'Speichern...' : 'Speichern'}
           </button>
         </div>
@@ -398,27 +398,27 @@ export default function Progress() {
   }
 
   return (
-    <div className="min-h-screen bg-[#07070f]">
+    <div className="min-h-screen bg-[#F0EAD6]/30">
       {/* Header */}
-      <div className="bg-[#0f0f1a] border-b border-white/8 px-6 py-4 flex items-center justify-between">
+      <div className="bg-white border-b border-black/8 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <button onClick={() => setView('list')} className="text-white/40 hover:text-white transition-colors p-1">
+          <button onClick={() => setView('list')} className="text-black/40 hover:text-[#00416A] transition-colors p-1">
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <p className="text-white/30 text-xs">Monatsreport bearbeiten</p>
-            <h1 className="text-white font-bold">{formData.client_name} · {formData.report_label}</h1>
+            <p className="text-[#00416A]/40 text-xs">Monatsreport bearbeiten</p>
+            <h1 className="text-[#00416A] font-bold">{formData.client_name} · {formData.report_label}</h1>
           </div>
         </div>
         <div className="flex items-center gap-2">
           {filteredNutri.length > 0 && (
             <button onClick={() => setShowAnalysis(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 text-[#3ecf8e] rounded-lg text-sm font-semibold hover:bg-[#3ecf8e]/10 transition-all">
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-[#00416A]/20 text-[#00416A] rounded-lg text-sm font-semibold hover:bg-[#00416A]/5 transition-all">
               <BarChart2 className="w-4 h-4" /> Analyse öffnen
             </button>
           )}
           <button onClick={handleSave} disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 bg-[#3ecf8e] text-black font-semibold rounded-lg text-sm disabled:opacity-50 hover:bg-[#2ebd7e] transition-colors">
+            className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white font-semibold rounded-lg text-sm disabled:opacity-50 hover:bg-[#003356] transition-colors">
             <Save className="w-4 h-4" /> {saving ? '...' : 'Speichern'}
           </button>
         </div>
@@ -426,8 +426,8 @@ export default function Progress() {
 
       <div className="max-w-3xl mx-auto px-6 py-8 space-y-6">
         {/* File uploads */}
-        <div className="bg-[#0f0f1a] border border-white/8 rounded-2xl p-5">
-          <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-4">Nutrilize Exporte</p>
+        <div className="bg-white border border-black/8 rounded-2xl p-5 shadow-sm">
+          <p className="text-[#00416A]/40 text-xs font-bold uppercase tracking-widest mb-4">Nutrilize Exporte</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
             <DropZone
               label="Ernährungs-Export (.xlsx)"
@@ -449,24 +449,24 @@ export default function Progress() {
           {nutriData.length > 0 && (
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-white/30 text-xs block mb-1.5">Analysezeitraum Von</label>
+                <label className="text-black/40 text-xs block mb-1.5">Analysezeitraum Von</label>
                 <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-[#3ecf8e]/50" />
+                  className="w-full bg-white border border-black/10 rounded-lg px-3 py-2 text-black text-sm outline-none focus:border-[#00416A]/50" />
               </div>
               <div>
-                <label className="text-white/30 text-xs block mb-1.5">Bis</label>
+                <label className="text-black/40 text-xs block mb-1.5">Bis</label>
                 <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-[#3ecf8e]/50" />
+                  className="w-full bg-white border border-black/10 rounded-lg px-3 py-2 text-black text-sm outline-none focus:border-[#00416A]/50" />
               </div>
             </div>
           )}
 
           {nutriData.length > 0 && (
-            <div className="mt-3 flex items-center justify-between bg-[#3ecf8e]/8 border border-[#3ecf8e]/15 rounded-xl px-4 py-2.5">
-              <p className="text-[#3ecf8e] text-xs">{filteredNutri.length} Tage im Zeitraum · Felder automatisch befüllt</p>
+            <div className="mt-3 flex items-center justify-between bg-[#00416A]/5 border border-[#00416A]/15 rounded-xl px-4 py-2.5">
+              <p className="text-[#00416A] text-xs">{filteredNutri.length} Tage im Zeitraum · Felder automatisch befüllt</p>
               {filteredNutri.length > 0 && (
                 <button onClick={() => setShowAnalysis(true)}
-                  className="text-[#3ecf8e] text-xs font-semibold hover:underline">
+                  className="text-[#00416A] text-xs font-semibold hover:underline">
                   Analyse öffnen →
                 </button>
               )}
@@ -475,8 +475,8 @@ export default function Progress() {
         </div>
 
         {/* Manual inputs */}
-        <div className="bg-[#0f0f1a] border border-white/8 rounded-2xl p-5">
-          <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-4">Wahrnehmung & Bewertung</p>
+        <div className="bg-white border border-black/8 rounded-2xl p-5 shadow-sm">
+          <p className="text-[#00416A]/40 text-xs font-bold uppercase tracking-widest mb-4">Wahrnehmung & Bewertung</p>
           <div className="space-y-4">
             <LevelSlider label="Energielevel vorher" value={formData.energie_vorher || 5}
               onChange={v => update({ energie_vorher: v })} />
@@ -486,35 +486,35 @@ export default function Progress() {
         </div>
 
         {/* Coach inputs */}
-        <div className="bg-[#0f0f1a] border border-white/8 rounded-2xl p-5 space-y-4">
-          <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-1">Coach-Eingaben</p>
+        <div className="bg-white border border-black/8 rounded-2xl p-5 shadow-sm space-y-4">
+          <p className="text-[#00416A]/40 text-xs font-bold uppercase tracking-widest mb-1">Coach-Eingaben</p>
           <div>
-            <label className="text-white/40 text-xs block mb-1.5">Highlight des Monats</label>
+            <label className="text-black/40 text-xs block mb-1.5">Highlight des Monats</label>
             <input value={formData.highlight_des_monats || ''} onChange={e => update({ highlight_des_monats: e.target.value })}
               placeholder="Größtes Ergebnis oder Erfolgsmoment..."
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-[#3ecf8e]/50" />
+              className="w-full bg-white border border-black/10 rounded-lg px-3 py-2 text-black text-sm outline-none focus:border-[#00416A]/50" />
           </div>
           <div>
-            <label className="text-white/40 text-xs block mb-1.5">Coach-Kommentar</label>
+            <label className="text-black/40 text-xs block mb-1.5">Coach-Kommentar</label>
             <textarea value={formData.coach_kommentar || ''} onChange={e => update({ coach_kommentar: e.target.value })}
               rows={4} placeholder="Qualitative Gesamteinschätzung..."
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm outline-none focus:border-[#3ecf8e]/50 resize-none" />
+              className="w-full bg-white border border-black/10 rounded-xl px-3 py-2.5 text-black text-sm outline-none focus:border-[#00416A]/50 resize-none" />
           </div>
           <div>
-            <label className="text-white/40 text-xs block mb-1.5">Fokus nächster Monat</label>
+            <label className="text-black/40 text-xs block mb-1.5">Fokus nächster Monat</label>
             <textarea value={formData.fokus_naechster_monat || ''} onChange={e => update({ fokus_naechster_monat: e.target.value })}
               rows={3} placeholder="2-3 Prioritäten für den nächsten Monat..."
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm outline-none focus:border-[#3ecf8e]/50 resize-none" />
+              className="w-full bg-white border border-black/10 rounded-xl px-3 py-2.5 text-black text-sm outline-none focus:border-[#00416A]/50 resize-none" />
           </div>
 
           {/* Rating */}
           <div>
-            <label className="text-white/40 text-xs block mb-2">Gesamtbewertung (1–10)</label>
+            <label className="text-black/40 text-xs block mb-2">Gesamtbewertung (1–10)</label>
             <div className="flex gap-1.5">
               {[1,2,3,4,5,6,7,8,9,10].map(n => (
                 <button key={n} onClick={() => update({ gesamtbewertung: n })}
                   className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
-                    n <= (formData.gesamtbewertung || 0) ? 'bg-[#3ecf8e] text-black' : 'bg-white/5 text-white/25 hover:bg-white/10'
+                    n <= (formData.gesamtbewertung || 0) ? 'bg-[#00416A] text-white' : 'bg-black/5 text-black/25 hover:bg-[#00416A]/10'
                   }`}>{n}</button>
               ))}
             </div>
@@ -523,8 +523,8 @@ export default function Progress() {
 
         {/* Auto-filled fields preview */}
         {(formData.kalorien_avg || formData.gewicht_start) && (
-          <div className="bg-[#0f0f1a] border border-white/8 rounded-2xl p-5">
-            <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-3">Auto-befüllte Daten (aus Import)</p>
+          <div className="bg-white border border-black/8 rounded-2xl p-5 shadow-sm">
+            <p className="text-[#00416A]/40 text-xs font-bold uppercase tracking-widest mb-3">Auto-befüllte Daten (aus Import)</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
                 { l: 'Gewicht Start', v: formData.gewicht_start, u: 'kg' },
@@ -536,9 +536,9 @@ export default function Progress() {
                 { l: 'Ø Schlaf', v: formData.schlafdauer_avg, u: 'h' },
                 { l: 'KFA Start', v: formData.kfa_start, u: '%' },
               ].filter(x => x.v !== undefined && x.v !== null && x.v !== '').map((x, i) => (
-                <div key={i} className="bg-white/[0.03] rounded-xl p-3 border border-white/5">
-                  <p className="text-white/30 text-xs">{x.l}</p>
-                  <p className="text-white font-mono font-bold text-sm mt-0.5">{x.v} <span className="text-white/30 text-xs">{x.u}</span></p>
+                <div key={i} className="bg-[#F0EAD6]/50 rounded-xl p-3 border border-[#00416A]/8">
+                  <p className="text-black/40 text-xs">{x.l}</p>
+                  <p className="text-[#00416A] font-mono font-bold text-sm mt-0.5">{x.v} <span className="text-black/30 text-xs">{x.u}</span></p>
                 </div>
               ))}
             </div>
