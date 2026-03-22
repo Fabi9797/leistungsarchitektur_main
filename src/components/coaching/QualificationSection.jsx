@@ -19,7 +19,7 @@ const noFits = [
 
 export default function QualificationSection() {
   return (
-    <section className="py-16 lg:py-32 bg-[#00416A]">
+    <section className="py-16 lg:py-32 bg-[#F0EAD6]">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -28,10 +28,10 @@ export default function QualificationSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-10 sm:mb-16"
         >
-          <span className="text-xs font-bold text-[#C8973A] tracking-[0.2em] uppercase">
+          <span className="text-xs font-bold text-[#00416A]/40 tracking-[0.2em] uppercase">
             Passt es?
           </span>
-          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-white tracking-tight">
+          <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-black tracking-tight">
             Für wen ist das System?
           </h2>
         </motion.div>
@@ -43,19 +43,19 @@ export default function QualificationSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-white/8 border border-white/10 rounded-2xl p-6 sm:p-8 lg:p-10"
+            className="bg-white rounded-2xl p-6 sm:p-8 lg:p-10 shadow-sm"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#C8973A]/15 border border-[#C8973A]/30 rounded-full mb-6">
-              <Check className="w-4 h-4 text-[#C8973A]" />
-              <span className="text-xs font-semibold text-[#C8973A] tracking-wider uppercase">Das passt</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-full mb-6">
+              <Check className="w-4 h-4 text-green-600" />
+              <span className="text-xs font-semibold text-green-700 tracking-wider uppercase">Das passt</span>
             </div>
             <div className="space-y-5">
               {fits.map((f, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-[#C8973A]/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-[#C8973A]" />
+                  <div className="w-6 h-6 bg-[#00416A]/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-3.5 h-3.5 text-[#00416A]" />
                   </div>
-                  <p className="text-base text-white/80">{f}</p>
+                  <p className="text-base text-black/70">{f}</p>
                 </div>
               ))}
             </div>
