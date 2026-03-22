@@ -144,7 +144,7 @@ export default function ReportAnalysis({ nutriData, trainingSessions, clientProf
           { label: 'Min', value: hrv.min ? `${hrv.min.toFixed(0)} ms` : '–' },
           { label: 'Max', value: hrv.max ? `${hrv.max.toFixed(0)} ms` : '–' },
         ]} />
-        <MetricLineChart {...chartProps('hrv', 'HRV')} color="#a29bfe" unit="ms" />
+        <MetricLineChart {...chartProps('hrv', 'HRV')} color="#5B6DAE" unit="ms" />
       </ChartCard>
 
       {/* 6: Ruhepuls */}
