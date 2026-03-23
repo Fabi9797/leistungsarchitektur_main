@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Navbar from "../components/coaching/Navbar";
 import HeroSection from "../components/coaching/HeroSection";
 import SocialProof from "../components/coaching/SocialProof";
@@ -8,6 +8,7 @@ import QualificationSection from "../components/coaching/QualificationSection";
 import AboutSection from "../components/coaching/AboutSection";
 import FinalCTA from "../components/coaching/FinalCTA";
 import Footer from "../components/coaching/Footer";
+import StickyAnalyseButton from "../components/coaching/StickyAnalyseButton";
 
 const HERO_IMAGE = "https://media.base44.com/images/public/69b064c89953b727c5202e21/a7caf5338_generated_bc51b5fd.png";
 const TRANSFORMATION_IMAGES = [
