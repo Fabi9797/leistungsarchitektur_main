@@ -5,7 +5,7 @@ import { useAnalyse } from "@/lib/AnalyseContext";
 
 
 const problems = [
-"Du trainierst, aber siehst keine sichtbaren Veränderungen.",
+"Du trainierst, aber nimmst keine Veränderung wahr.",
 "Deine Ernährung ist mal streng, mal planlos – ein ständiges Hin und Her.",
 "Dein Alltag lässt kaum Platz für konsequente Routinen.",
 "Du startest motiviert, aber nach ein paar Wochen ist die Luft raus.",
