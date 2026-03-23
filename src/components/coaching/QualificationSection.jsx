@@ -7,7 +7,7 @@ const fits = [
   "Du hast wenig Zeit, aber bist bereit, diese effizient zu nutzen.",
   "Du suchst ein System, nicht die nächste kurzfristige Diät.",
   "Du bist offen für eine fundierte Analyse und datengestützte Steuerung.",
-  "Du willst nachhaltige Ergebnisse, die auch in 12 Monaten noch Bestand haben.",
+  "Du willst nachhaltige Ergebnisse erzielen, die auch in 12 Monaten noch Bestand haben.",
 ];
 
 const noFits = [
