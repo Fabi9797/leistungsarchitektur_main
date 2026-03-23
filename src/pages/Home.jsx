@@ -6,7 +6,6 @@ import ProblemSection from "../components/coaching/ProblemSection";
 import FrameworkSection from "../components/coaching/FrameworkSection";
 import QualificationSection from "../components/coaching/QualificationSection";
 import AboutSection from "../components/coaching/AboutSection";
-import FAQSection from "../components/coaching/FAQSection";
 import FinalCTA from "../components/coaching/FinalCTA";
 import Footer from "../components/coaching/Footer";
 
