@@ -17,6 +17,7 @@ import Progress from './pages/Progress';
 import TestimonialAdmin832 from './pages/TestimonialAdmin832';
 import ProgressReport from './pages/ProgressReport';
 import Impressum from './pages/Impressum';
+import Datenschutz from './pages/Datenschutz';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
