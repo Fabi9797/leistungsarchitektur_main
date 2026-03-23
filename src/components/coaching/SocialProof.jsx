@@ -136,10 +136,10 @@ export default function SocialProof({ images }) {
           className="text-center mb-10 sm:mb-16"
         >
           <span className="text-xs font-bold text-[#00416A]/50 tracking-[0.2em] uppercase">
-            Echte Ergebnisse
+            Athletenstimmen
           </span>
           <h2 className="mt-3 text-2xl sm:text-3xl lg:text-5xl font-bold text-black tracking-tight">
-            Ergebnisse meiner Kunden
+            Ergebnisse meiner Athleten
           </h2>
           <p className="mt-3 text-base sm:text-lg text-black/50 max-w-2xl mx-auto">
             Keine Stockfotos. Keine leeren Versprechen. Reale Menschen, die mit einem klaren System nachhaltig in Form gekommen sind.
