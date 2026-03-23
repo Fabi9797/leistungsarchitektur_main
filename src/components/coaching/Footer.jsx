@@ -21,9 +21,7 @@ export default function Footer() {
             <a href="/datenschutz" className="text-sm text-white/30 hover:text-white/60 transition-colors">
               Datenschutz
             </a>
-            <a href="#analyse" className="text-sm text-white/30 hover:text-white/60 transition-colors">
-              Strategiegespräch
-            </a>
+
           </div>
         </div>
 
