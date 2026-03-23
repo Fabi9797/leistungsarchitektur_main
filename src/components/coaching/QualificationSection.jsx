@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 
 const fits = [
-  "Du willst sichtbar in Form kommen – ohne dein Leben umzukrempeln.",
+  "Du willst sichtbar in Form kommen – ohne dein Leben komplett umzukrempeln.",
   "Du hast wenig Zeit, aber bist bereit, das Richtige konsequent zu tun.",
   "Du suchst ein System, nicht die nächste kurzfristige Diät.",
   "Du bist offen für Analyse und datengestützte Steuerung.",
