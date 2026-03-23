@@ -31,7 +31,7 @@ export default function FinalCTA({ finalCtaRef }) {
           </h2>
 
           <p className="mt-6 text-lg text-black/50 max-w-2xl mx-auto leading-relaxed">
-            Keine leeren Versprechen. Kein aggressives Verkaufsgespräch. Nur eine kurze Analyse, um herauszufinden, wo dein größter Hebel liegt – und ob mein System zu dir passt.
+            Keine leeren Versprechen. Kein aggressives Verkaufsgespräch. Nur eine kurze Analyse, um herauszufinden, ob mein System zu dir passt.
           </p>
 
           <div className="mt-10">
