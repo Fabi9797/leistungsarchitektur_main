@@ -15,10 +15,10 @@ export default function Footer() {
 
           {/* Links */}
           <div className="flex items-center gap-8">
-            <a href="#" className="text-sm text-white/30 hover:text-white/60 transition-colors">
+            <a href="/impressum" className="text-sm text-white/30 hover:text-white/60 transition-colors">
               Impressum
             </a>
-            <a href="#" className="text-sm text-white/30 hover:text-white/60 transition-colors">
+            <a href="/datenschutz" className="text-sm text-white/30 hover:text-white/60 transition-colors">
               Datenschutz
             </a>
             <a href="#analyse" className="text-sm text-white/30 hover:text-white/60 transition-colors">
