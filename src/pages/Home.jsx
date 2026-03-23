@@ -26,7 +26,6 @@ export default function Home() {
       <FrameworkSection />
       <QualificationSection />
       <AboutSection heroImage={HERO_IMAGE} />
-      <FAQSection />
       <FinalCTA />
       <Footer />
     </div>
