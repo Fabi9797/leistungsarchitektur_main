@@ -45,7 +45,7 @@ export default function FrameworkSection() {
             Die Leistungsarchitektur
           </h2>
           <p className="mt-4 sm:mt-6 text-base sm:text-lg text-black/50 max-w-2xl mx-auto leading-relaxed">
-          Kein Raten. Kein Perfektionismus. Ein auf dich zugeschnittenes System, das Schritt für Schritt aufgebaut wird – und das hält.
+          Kein Raten. Kein Perfektionismus. Ein auf dich zugeschnittenes System, das Schritt für Schritt aufgebaut wird und hält.
           </p>
         </motion.div>
 
