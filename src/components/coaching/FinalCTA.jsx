@@ -6,7 +6,7 @@ import { useAnalyse } from "@/lib/AnalyseContext";
 export default function FinalCTA({ finalCtaRef }) {
   const { openAnalyse } = useAnalyse();
   return (
-    <section id="analyse" className="py-16 lg:py-32 bg-[#F0EAD6] relative overflow-hidden">
+    <section id="analyse" ref={finalCtaRef} className="py-16 lg:py-32 bg-[#F0EAD6] relative overflow-hidden">
       {/* Subtle decorative line */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-transparent to-[#00416A]/15" />
 

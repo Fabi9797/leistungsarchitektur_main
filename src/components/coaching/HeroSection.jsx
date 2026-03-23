@@ -85,7 +85,8 @@ export default function HeroSection({ heroImage, heroButtonRef }) {
             <div className="mt-8 sm:mt-10">
               <button
                 onClick={openAnalyse}
-                className="group w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-3 px-8 py-4 bg-[#00416A] text-white text-base font-semibold rounded-xl hover:bg-[#003356] transition-all duration-300 shadow-lg shadow-[#00416A]/20 min-h-[52px]"
+                ref={heroButtonRef}
+              className="group w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-3 px-8 py-4 bg-[#00416A] text-white text-base font-semibold rounded-xl hover:bg-[#003356] transition-all duration-300 shadow-lg shadow-[#00416A]/20 min-h-[52px]"
               >
                 Analyse starten
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
