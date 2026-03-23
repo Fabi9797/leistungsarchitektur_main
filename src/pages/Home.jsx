@@ -18,17 +18,21 @@ const TRANSFORMATION_IMAGES = [
 ];
 
 export default function Home() {
+  const heroButtonRef = useRef(null);
+  const finalCtaRef = useRef(null);
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <HeroSection heroImage={HERO_IMAGE} />
+      <HeroSection heroImage={HERO_IMAGE} heroButtonRef={heroButtonRef} />
       <SocialProof images={TRANSFORMATION_IMAGES} />
       <ProblemSection />
       <FrameworkSection />
       <QualificationSection />
       <AboutSection heroImage={HERO_IMAGE} />
-      <FinalCTA />
+      <FinalCTA finalCtaRef={finalCtaRef} />
       <Footer />
+      <StickyAnalyseButton heroButtonRef={heroButtonRef} finalCtaRef={finalCtaRef} />
     </div>
   );
 }
