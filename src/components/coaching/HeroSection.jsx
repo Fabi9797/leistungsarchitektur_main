@@ -4,8 +4,8 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useAnalyse } from "@/lib/AnalyseContext";
 
 const bullets = [
-  "Verstehe, welche Faktoren bei dir wirklich über Abnehmen oder Stillstand entscheiden.",
-  "Lerne, wie du Training, Ernährung und Alltag effizient kombinierst – auch mit wenig Zeit.",
+  "Erkenne, welche Faktoren bei dir wirklich über Abnehmen oder Stillstand entscheiden.",
+  "Entdecke, wie du Training, Ernährung und Alltag effizient kombinierst – auch mit wenig Zeit.",
   "Etabliere Gewohnheiten, die dafür sorgen, dass du dauerhaft in Form bleibst.",
 ];
 
