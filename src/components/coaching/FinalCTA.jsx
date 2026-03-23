@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Shield } from "lucide-react";
 import { useAnalyse } from "@/lib/AnalyseContext";
 
-export default function FinalCTA() {
+export default function FinalCTA({ finalCtaRef }) {
   const { openAnalyse } = useAnalyse();
   return (
     <section id="analyse" className="py-16 lg:py-32 bg-[#F0EAD6] relative overflow-hidden">

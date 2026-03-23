@@ -121,12 +121,6 @@ export default function AboutSection({ _heroImage }) {
               </p>
             </div>
             <VoicePlayer />
-            <button
-              onClick={openAnalyse}
-              className="mt-8 group inline-flex items-center gap-3 px-8 py-4 bg-[#F0EAD6] text-[#00416A] text-base font-semibold rounded-xl hover:bg-white transition-all duration-300">
-              Analyse starten
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
           </motion.div>
         </div>
       </div>

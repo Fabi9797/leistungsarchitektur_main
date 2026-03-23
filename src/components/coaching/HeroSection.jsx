@@ -15,7 +15,7 @@ const systemIndicators = [
   { num: "03", label: "STEUERUNG", desc: "Datengestützte Anpassung" },
 ];
 
-export default function HeroSection({ heroImage }) {
+export default function HeroSection({ heroImage, heroButtonRef }) {
   const { openAnalyse } = useAnalyse();
   return (
     <section className="relative min-h-screen flex items-center bg-white overflow-hidden">
