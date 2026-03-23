@@ -111,7 +111,7 @@ export default function AboutSection({ _heroImage }) {
                 Ich führe seit über sechs Jahren ein eigenes Fitnessstudio, das <a href="https://fitter.jetzt/badharzburg/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white transition-colors">FITTER in Bad Harzburg</a>. In dieser Zeit habe ich Hunderte von Menschen begleitet – und verstanden, woran die meisten wirklich scheitern.
               </p>
               <p>
-                Es ist fast nie das Training. Und selten die Ernährung allein. Es ist das Fehlen eines Systems, das alle Faktoren verbindet und auf den individuellen Alltag abgestimmt ist.
+                Es ist fast nie das Training und selten die Ernährung allein. Es ist das Fehlen eines Systems, das alle Faktoren verbindet und auf den individuellen Alltag abgestimmt ist.
               </p>
               <p>Genau deshalb habe ich die Leistungsarchitektur entwickelt: Ein Coaching, das über einen Trainingsplan hinaus geht und die Gesamtheit betrachtet. Denn bevor du etwas veränderst, musst du wissen, wo deine größten Hebel liegen. 
 
