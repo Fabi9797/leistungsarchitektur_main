@@ -6,7 +6,7 @@ const fits = [
   "Du willst sichtbar in Form kommen – ohne dein Leben komplett umzukrempeln.",
   "Du hast wenig Zeit, aber bist bereit, diese effizient zu nutzen.",
   "Du suchst ein System, nicht die nächste kurzfristige Diät.",
-  "Du bist offen für Analyse und datengestützte Steuerung.",
+  "Du bist offen für eine fundierte Analyse und datengestützte Steuerung.",
   "Du willst nachhaltige Ergebnisse, die auch in 12 Monaten noch Bestand haben.",
 ];
 
