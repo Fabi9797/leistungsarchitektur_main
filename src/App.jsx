@@ -18,6 +18,8 @@ import TestimonialAdmin832 from './pages/TestimonialAdmin832';
 import ProgressReport from './pages/ProgressReport';
 import Impressum from './pages/Impressum';
 import Datenschutz from './pages/Datenschutz';
+import SalesCockpit from './pages/SalesCockpit';
+import SalesWizard from './pages/SalesWizard';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -80,6 +82,8 @@ const AuthenticatedApp = () => {
       <Route path="/progress-report" element={<ProgressReport />} />
       <Route path="/impressum" element={<Impressum />} />
       <Route path="/datenschutz" element={<Datenschutz />} />
+      <Route path="/sales-cockpit" element={<LayoutWrapper currentPageName="SalesCockpit"><SalesCockpit /></LayoutWrapper>} />
+      <Route path="/sales-wizard/:callId" element={<SalesWizard />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     <AdminNav />
