@@ -215,17 +215,8 @@ export default function SocialProof({ images }) {
                           <p className="text-white/80 text-sm font-medium mt-1">{t.tagline}</p>
                         </div>
                         <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
-                          {/* Desktop: Text */}
-                          <motion.div 
-                            animate={{ opacity: [0.3, 0.8, 0.3] }}
-                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                            className="hidden sm:block text-white text-xs font-semibold tracking-widest uppercase"
-                          >
-                            Drücken für Details
-                          </motion.div>
-                          
-                          {/* Mobile: Pulsing circles */}
-                          <div className="sm:hidden relative w-10 h-10 flex items-center justify-center">
+                          {/* Pulsing circles - all devices */}
+                          <div className="relative w-10 h-10 flex items-center justify-center">
                             {/* Outer pulsing circle */}
                             <motion.div
                               animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.15, 0.5] }}
