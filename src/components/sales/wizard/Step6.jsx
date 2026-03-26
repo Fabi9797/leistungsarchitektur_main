@@ -31,6 +31,13 @@ export default function Step6({ call, stepGoal, onDataChange }) {
     <div className="space-y-6">
       <StepGoalCard goal={stepGoal} />
 
+      <Card className="p-4" style={{ borderLeft: '4px solid #C9A84C', backgroundColor: '#FFFBF0' }}>
+        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">Kernfrage</p>
+        <p className="text-lg font-bold" style={{ color: '#1B365D' }}>
+          „Welcher der genannten Punkte ist dir besonders wichtig?"
+        </p>
+      </Card>
+
       <Card className="p-6">
         <h3 className="font-bold text-lg mb-4" style={{ color: '#1B365D' }}>Kaufmotive</h3>
 
