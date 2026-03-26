@@ -146,7 +146,7 @@ export default function TestimonialCards832() {
       )}
       {showForm && (
         <TestimonialForm
-          key={editItem?.id || "new"}
+          key="form"
           testimonial={editItem}
           onClose={() => setShowForm(false)}
           onSaved={() => { setShowForm(false); load(); }}

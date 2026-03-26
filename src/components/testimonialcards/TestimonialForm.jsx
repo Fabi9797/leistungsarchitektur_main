@@ -65,6 +65,11 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
     try { return JSON.parse(testimonial?.sichtbare_metriken || '["gewicht","hrv","ruhepuls","schritte"]'); }
     catch { return ["gewicht","hrv","ruhepuls","schritte"]; }
   });
+  
+  useEffect(() => {
+    try { setSichtbar(JSON.parse(testimonial?.sichtbare_metriken || '["gewicht","hrv","ruhepuls","schritte"]')); }
+    catch { setSichtbar(["gewicht","hrv","ruhepuls","schritte"]); }
+  }, [testimonial?.id || 'new']);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
