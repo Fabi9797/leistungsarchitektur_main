@@ -21,8 +21,8 @@ const steps = [
   { num: 4, title: 'Bedürfnisse konkretisieren', component: Step4, goal: 'Bedürfnisse konkretisieren' },
   { num: 5, title: 'Zusammenfassung', component: Step5, goal: 'Situation zusammenfassen' },
   { num: 6, title: 'Entscheidende Kaufmotive', component: Step6, goal: 'Entscheidendes Kaufmotiv finden' },
-  { num: 7, title: 'Provisorischer Vorabschluss', component: Step7, goal: 'Provisorischen Vorabschluss einholen' },
-  { num: 8, title: 'Kaufmotive bedienen (PÜK-Ketten)', component: Step8, goal: 'PÜK-Ketten präsentieren' },
+  { num: 7, title: 'Kaufmotive bedienen (PÜK-Ketten)', component: Step8, goal: 'PÜK-Ketten präsentieren' },
+  { num: 8, title: 'Provisorischer Vorabschluss', component: Step7, goal: 'Provisorischen Vorabschluss einholen' },
   { num: 9, title: 'Verkaufsabschluss', component: Step9, goal: 'Preis nennen & abschließen' },
 ];
 
