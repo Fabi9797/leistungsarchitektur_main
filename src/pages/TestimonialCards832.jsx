@@ -24,15 +24,18 @@ export default function TestimonialCards832() {
     setLoading(true);
     const data = await base44.entities.Testimonial.list("-created_date");
     setTestimonials(data);
-    // Wenn ein Testimonial gerade angezeigt wird, aktualisiere es auch in der Card
-    if (viewCard) {
-      const updated = data.find(t => t.id === viewCard.id);
-      if (updated) setViewCard(updated);
-    }
     setLoading(false);
-  }, [viewCard]);
+  }, []);
 
   useEffect(() => { load(); }, [load]);
+
+  // Aktualisiere viewCard wenn sich testimonials ändern
+  useEffect(() => {
+    if (viewCard) {
+      const updated = testimonials.find(t => t.id === viewCard.id);
+      if (updated) setViewCard(updated);
+    }
+  }, [testimonials]);
 
   const del = async (id) => {
     if (!confirm("Testimonial löschen?")) return;
