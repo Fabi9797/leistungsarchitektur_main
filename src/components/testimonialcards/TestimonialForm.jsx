@@ -142,8 +142,8 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
       {children}
     </div>
   );
-  const Input = ({ k, ...props }) => (
-    <input value={form[k] ?? ""} onChange={e => set(k, e.target.value)}
+  const Input = ({ k, placeholder, ...props }) => (
+    <input type="text" placeholder={placeholder} value={form[k] ?? ""} onChange={e => set(k, e.target.value)}
       className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
       {...props} />
   );
