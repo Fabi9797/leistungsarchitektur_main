@@ -215,9 +215,13 @@ export default function SocialProof({ images }) {
                           <p className="text-white/80 text-sm font-medium mt-1">{t.tagline}</p>
                         </div>
                         <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
-                          <div className="text-white/40 text-xs font-semibold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <motion.div 
+                            animate={{ opacity: [0.3, 0.8, 0.3] }}
+                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                            className="sm:opacity-0 sm:group-hover:opacity-100 sm:transition-opacity sm:duration-300 text-white text-xs font-semibold tracking-widest uppercase"
+                          >
                             Drücken für Details
-                          </div>
+                          </motion.div>
                         </div>
                       </div>
                       <div className="p-6">
