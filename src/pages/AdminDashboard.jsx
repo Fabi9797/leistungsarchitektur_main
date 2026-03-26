@@ -7,20 +7,35 @@ import {
   CheckCircle2, Clock, AlertCircle, Calendar, FileText
 } from "lucide-react";
 
-// ── Tool-Kacheln ──────────────────────────────────────────────────────────────
+// ── Tool-Gruppen ──────────────────────────────────────────────────────────────
 
-const TOOLS = [
-  { label: "Clients", icon: Users, path: "/Clients832", color: "bg-[#00416A]", desc: "Kundenverwaltung & Profile" },
-  { label: "Content Planer", icon: CalendarDays, path: "/ContentPlanning832", color: "bg-violet-600", desc: "Instagram Content & Stories" },
-  { label: "Ad Studio", icon: Megaphone, path: "/AdStudio832", color: "bg-orange-500", desc: "Ad-Skripte generieren" },
-  { label: "Testimonial Cards", icon: CreditCard, path: "/TestimonialCards832", color: "bg-teal-600", desc: "Social-Proof Karten" },
-  { label: "Supplements", icon: Pill, path: "/SupplementAdmin832", color: "bg-emerald-600", desc: "Supplement-Pläne" },
-  { label: "Ernährung", icon: Utensils, path: "/NutritionAdmin832", color: "bg-amber-500", desc: "Ernährungsstrategien" },
-  { label: "Monatsreport", icon: TrendingUp, path: "/progress", color: "bg-blue-600", desc: "Progress Berichte" },
-  { label: "Testimonial Audios", icon: Mic, path: "/TestimonialAdmin832", color: "bg-pink-600", desc: "Audio-Testimonials" },
-  { label: "Progress Report", icon: TrendingUp, path: "/progress-report", color: "bg-cyan-600", desc: "Fortschritts-Reports" },
-  { label: "Sales Cockpit", icon: Phone, path: "/sales-cockpit", color: "bg-rose-600", desc: "Sales Calls & Leads" },
-  { label: "Kundenprofil", icon: FileText, path: "/ClientOverview832", color: "bg-slate-600", desc: "Profil-Übersicht drucken" },
+const TOOL_GROUPS = [
+  {
+    name: "Klientenmanagement",
+    tools: [
+      { label: "Clients", icon: Users, path: "/Clients832", color: "bg-[#00416A]", desc: "Kundenverwaltung & Profile" },
+      { label: "Supplements", icon: Pill, path: "/SupplementAdmin832", color: "bg-emerald-600", desc: "Supplement-Pläne" },
+      { label: "Ernährung", icon: Utensils, path: "/NutritionAdmin832", color: "bg-amber-500", desc: "Ernährungsstrategien" },
+      { label: "Testimonial Cards", icon: CreditCard, path: "/TestimonialCards832", color: "bg-teal-600", desc: "Social-Proof Karten" },
+      { label: "Monatsreport", icon: TrendingUp, path: "/progress", color: "bg-blue-600", desc: "Progress Berichte" },
+      { label: "Testimonial Audios", icon: Mic, path: "/TestimonialAdmin832", color: "bg-pink-600", desc: "Audio-Testimonials" },
+      { label: "Progress Report", icon: TrendingUp, path: "/progress-report", color: "bg-cyan-600", desc: "Fortschritts-Reports" },
+      { label: "Kundenprofil", icon: FileText, path: "/ClientOverview832", color: "bg-slate-600", desc: "Profil-Übersicht drucken" },
+    ]
+  },
+  {
+    name: "Content & Marketing",
+    tools: [
+      { label: "Content Planer", icon: CalendarDays, path: "/ContentPlanning832", color: "bg-violet-600", desc: "Instagram Content & Stories" },
+      { label: "Ad Studio", icon: Megaphone, path: "/AdStudio832", color: "bg-orange-500", desc: "Ad-Skripte generieren" },
+    ]
+  },
+  {
+    name: "Vertrieb",
+    tools: [
+      { label: "Sales Cockpit", icon: Phone, path: "/sales-cockpit", color: "bg-rose-600", desc: "Sales Calls & Leads" },
+    ]
+  },
 ];
 
 // ── Timeline helpers ──────────────────────────────────────────────────────────
@@ -227,24 +242,28 @@ export default function AdminDashboard() {
 
       <div className="max-w-6xl mx-auto px-4 lg:px-8 py-8 space-y-10">
 
-        {/* ── Tool Grid ── */}
-        <section>
-          <h2 className="text-[10px] font-black text-black/30 uppercase tracking-[0.18em] mb-4">Tools & Module</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-            {TOOLS.map(({ label, icon: Icon, path, color, desc }) => (
-              <Link key={path} to={path}
-                className="group bg-white rounded-2xl border border-black/5 p-4 hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col gap-3">
-                <div className={`w-9 h-9 rounded-xl ${color} flex items-center justify-center flex-shrink-0`}>
-                  <Icon className="w-4.5 h-4.5 text-white w-[18px] h-[18px]" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-black/80 leading-tight">{label}</p>
-                  <p className="text-[10px] text-black/35 mt-0.5 leading-snug">{desc}</p>
-                </div>
-                <ChevronRight className="w-3.5 h-3.5 text-black/15 group-hover:text-black/30 mt-auto transition" />
-              </Link>
-            ))}
-          </div>
+        {/* ── Tool Groups ── */}
+        <section className="space-y-8">
+          {TOOL_GROUPS.map(group => (
+            <div key={group.name}>
+              <h3 className="text-[10px] font-bold text-black/25 uppercase tracking-[0.15em] mb-3">{group.name}</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                {group.tools.map(({ label, icon: Icon, path, color, desc }) => (
+                  <Link key={path} to={path}
+                    className="group bg-white rounded-2xl border border-black/5 p-4 hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col gap-3">
+                    <div className={`w-9 h-9 rounded-xl ${color} flex items-center justify-center flex-shrink-0`}>
+                      <Icon className="w-4.5 h-4.5 text-white w-[18px] h-[18px]" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-black/80 leading-tight">{label}</p>
+                      <p className="text-[10px] text-black/35 mt-0.5 leading-snug">{desc}</p>
+                    </div>
+                    <ChevronRight className="w-3.5 h-3.5 text-black/15 group-hover:text-black/30 mt-auto transition" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
         </section>
 
         {/* ── Timeline ── */}
