@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { X, Upload, Check } from "lucide-react";
 
@@ -6,78 +6,108 @@ const PILLARS = ["Ernährung", "Training", "Nahrungsergänzung", "Umweltanpassun
 const ALL_METRICS = ["gewicht", "hrv", "ruhepuls", "schritte"];
 const METRIC_LABELS = { gewicht: "Gewicht", hrv: "HRV", ruhepuls: "Ruhepuls", schritte: "Schritte" };
 
-const EMPTY = {
-  client_name: "", problem: "", ergebnis: "", zitat: "", zielgruppe_typ: "",
-  pillar: "", is_active: true, instagram_handle: "", zeitraum: "", avatar_url: "",
-  gewicht_start: "", gewicht_end: "", gewicht_verlauf_json: "",
-  hrv_start: "", hrv_end: "", hrv_verlauf_json: "",
-  ruhepuls_start: "", ruhepuls_end: "", ruhepuls_verlauf_json: "",
-  schritte_start: "", schritte_end: "", schritte_verlauf_json: "",
-  sichtbare_metriken: '["gewicht","hrv","ruhepuls","schritte"]',
-};
-
-const InputField = ({ k, value, onChange, placeholder, type = "text", ...props }) => (
-  <input 
-    type={type} 
-    placeholder={placeholder} 
-    value={value ?? ""} 
-    onChange={onChange}
-    className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
-    {...props} 
-  />
-);
-
-function parseCSVData(text) {
-  const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
-  // Find header line
-  const headerIdx = lines.findIndex(l => {
-    const lower = l.toLowerCase();
-    return lower.includes("gewicht") || lower.includes("hrv") || lower.includes("ruhepuls") || lower.includes("schritt");
+export default function TestimonialForm({ testimonial, onClose, onSaved }) {
+  const [form, setForm] = useState(() => {
+    if (!testimonial) {
+      return {
+        client_name: "", problem: "", ergebnis: "", zitat: "", zielgruppe_typ: "",
+        pillar: "", is_active: true, instagram_handle: "", zeitraum: "", avatar_url: "",
+        gewicht_start: "", gewicht_end: "", gewicht_verlauf_json: "",
+        hrv_start: "", hrv_end: "", hrv_verlauf_json: "",
+        ruhepuls_start: "", ruhepuls_end: "", ruhepuls_verlauf_json: "",
+        schritte_start: "", schritte_end: "", schritte_verlauf_json: "",
+        sichtbare_metriken: '["gewicht","hrv","ruhepuls","schritte"]',
+      };
+    }
+    return {
+      client_name: testimonial.client_name || "",
+      problem: testimonial.problem || "",
+      ergebnis: testimonial.ergebnis || "",
+      zitat: testimonial.zitat || "",
+      zielgruppe_typ: testimonial.zielgruppe_typ || "",
+      pillar: testimonial.pillar || "",
+      is_active: testimonial.is_active ?? true,
+      instagram_handle: testimonial.instagram_handle || "",
+      zeitraum: testimonial.zeitraum || "",
+      avatar_url: testimonial.avatar_url || "",
+      gewicht_start: testimonial.gewicht_start || "",
+      gewicht_end: testimonial.gewicht_end || "",
+      gewicht_verlauf_json: testimonial.gewicht_verlauf_json || "",
+      hrv_start: testimonial.hrv_start || "",
+      hrv_end: testimonial.hrv_end || "",
+      hrv_verlauf_json: testimonial.hrv_verlauf_json || "",
+      ruhepuls_start: testimonial.ruhepuls_start || "",
+      ruhepuls_end: testimonial.ruhepuls_end || "",
+      ruhepuls_verlauf_json: testimonial.ruhepuls_verlauf_json || "",
+      schritte_start: testimonial.schritte_start || "",
+      schritte_end: testimonial.schritte_end || "",
+      schritte_verlauf_json: testimonial.schritte_verlauf_json || "",
+      sichtbare_metriken: testimonial.sichtbare_metriken || '["gewicht","hrv","ruhepuls","schritte"]',
+    };
   });
-  if (headerIdx === -1) return null;
 
-  const headers = lines[headerIdx].split(/[;\t,]/).map(h => h.trim().toLowerCase());
-  const colIdx = {
-    gewicht: headers.findIndex(h => h.includes("gewicht") || h.includes("weight") || h.includes("körpergewicht")),
-    hrv: headers.findIndex(h => h.includes("hrv") || h.includes("herzfrequenz")),
-    ruhepuls: headers.findIndex(h => h.includes("ruhepuls") || h.includes("resting") || h.includes("puls")),
-    schritte: headers.findIndex(h => h.includes("schritt") || h.includes("step")),
-  };
-
-  const result = { gewicht: [], hrv: [], ruhepuls: [], schritte: [] };
-
-  for (let i = headerIdx + 1; i < lines.length; i++) {
-    const line = lines[i];
-    // Skip KW summaries
-    if (/^kw[:\s]/i.test(line) || line.includes("∅:") || line.includes("Ø:")) continue;
-    const cols = line.split(/[;\t,]/);
-
-    Object.entries(colIdx).forEach(([key, idx]) => {
-      if (idx >= 0 && cols[idx]) {
-        const val = parseFloat(cols[idx].replace(",", ".").replace(/[^\d.-]/g, ""));
-        if (!isNaN(val) && val > 0) result[key].push(val);
-      }
-    });
+  const [csvText, setCsvText] = useState("");
+  const [saving, setSaving] = useState(false);
+  
+  let sichtbar = [];
+  try {
+    sichtbar = JSON.parse(form.sichtbare_metriken);
+  } catch {
+    sichtbar = ["gewicht", "hrv", "ruhepuls", "schritte"];
   }
 
-  return result;
-}
+  const updateForm = (key, value) => {
+    setForm(prev => ({ ...prev, [key]: value }));
+  };
 
-export default function TestimonialForm({ testimonial, onClose, onSaved }) {
-  const [form, setForm] = useState(() => ({ ...EMPTY, ...(testimonial || {}) }));
-  const [saving, setSaving] = useState(false);
-  const [csvText, setCsvText] = useState("");
-  const [csvParsed, setCsvParsed] = useState(false);
-  const [sichtbar, setSichtbar] = useState(() => {
-    try { return JSON.parse(testimonial?.sichtbare_metriken || '["gewicht","hrv","ruhepuls","schritte"]'); }
-    catch { return ["gewicht","hrv","ruhepuls","schritte"]; }
-  });
+  const toggleMetric = (metric) => {
+    const updated = sichtbar.includes(metric)
+      ? sichtbar.filter(m => m !== metric)
+      : [...sichtbar, metric];
+    updateForm("sichtbare_metriken", JSON.stringify(updated));
+  };
 
-  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const parseCSVData = (text) => {
+    const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+    const headerIdx = lines.findIndex(l => {
+      const lower = l.toLowerCase();
+      return lower.includes("gewicht") || lower.includes("hrv") || lower.includes("ruhepuls") || lower.includes("schritt");
+    });
+    if (headerIdx === -1) return null;
+
+    const headers = lines[headerIdx].split(/[;\t,]/).map(h => h.trim().toLowerCase());
+    const colIdx = {
+      gewicht: headers.findIndex(h => h.includes("gewicht") || h.includes("weight") || h.includes("körpergewicht")),
+      hrv: headers.findIndex(h => h.includes("hrv") || h.includes("herzfrequenz")),
+      ruhepuls: headers.findIndex(h => h.includes("ruhepuls") || h.includes("resting") || h.includes("puls")),
+      schritte: headers.findIndex(h => h.includes("schritt") || h.includes("step")),
+    };
+
+    const result = { gewicht: [], hrv: [], ruhepuls: [], schritte: [] };
+
+    for (let i = headerIdx + 1; i < lines.length; i++) {
+      const line = lines[i];
+      if (/^kw[:\s]/i.test(line) || line.includes("∅:") || line.includes("Ø:")) continue;
+      const cols = line.split(/[;\t,]/);
+
+      Object.entries(colIdx).forEach(([key, idx]) => {
+        if (idx >= 0 && cols[idx]) {
+          const val = parseFloat(cols[idx].replace(",", ".").replace(/[^\d.-]/g, ""));
+          if (!isNaN(val) && val > 0) result[key].push(val);
+        }
+      });
+    }
+
+    return result;
+  };
 
   const handleCSVImport = () => {
     const parsed = parseCSVData(csvText);
-    if (!parsed) { alert("Keine verwertbaren Daten gefunden. Bitte prüfe das Format."); return; }
+    if (!parsed) {
+      alert("Keine verwertbaren Daten gefunden.");
+      return;
+    }
+
     const updates = {};
     Object.entries(parsed).forEach(([key, arr]) => {
       if (arr.length === 0) return;
@@ -100,10 +130,8 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
         updates.schritte_end = arr[arr.length - 1];
       }
     });
-    setForm(f => ({ ...f, ...updates }));
-    setCsvParsed(true);
-    const counts = Object.entries(parsed).map(([k,v]) => `${METRIC_LABELS[k]}: ${v.length} Einträge`).filter((_,i) => Object.values(parsed)[i].length > 0);
-    alert("Import erfolgreich!\n" + counts.join("\n"));
+    setForm(prev => ({ ...prev, ...updates }));
+    alert("Import erfolgreich!");
   };
 
   const handleFileUpload = (e) => {
@@ -114,16 +142,12 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
     reader.readAsText(file, "UTF-8");
   };
 
-  const toggleMetric = (m) => {
-    setSichtbar(prev => prev.includes(m) ? prev.filter(x => x !== m) : [...prev, m]);
-  };
-
   const save = async () => {
     if (!form.client_name) return;
     setSaving(true);
+
     const data = {
       ...form,
-      sichtbare_metriken: JSON.stringify(sichtbar),
       gewicht_start: form.gewicht_start ? parseFloat(form.gewicht_start) : undefined,
       gewicht_end: form.gewicht_end ? parseFloat(form.gewicht_end) : undefined,
       hrv_start: form.hrv_start ? parseFloat(form.hrv_start) : undefined,
@@ -133,22 +157,21 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
       schritte_start: form.schritte_start ? parseFloat(form.schritte_start) : undefined,
       schritte_end: form.schritte_end ? parseFloat(form.schritte_end) : undefined,
     };
-    if (testimonial?.id) {
-      await base44.entities.Testimonial.update(testimonial.id, data);
-    } else {
-      await base44.entities.Testimonial.create(data);
-    }
-    setSaving(false);
-    onSaved && onSaved();
-    onClose && onClose();
-  };
 
-  const Field = ({ label, children }) => (
-    <div>
-      <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">{label}</label>
-      {children}
-    </div>
-  );
+    try {
+      if (testimonial?.id) {
+        await base44.entities.Testimonial.update(testimonial.id, data);
+      } else {
+        await base44.entities.Testimonial.create(data);
+      }
+      setSaving(false);
+      onSaved?.();
+      onClose?.();
+    } catch (err) {
+      setSaving(false);
+      alert("Fehler beim Speichern");
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 overflow-y-auto">
@@ -165,41 +188,59 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
           <div>
             <p className="text-[10px] font-black text-black/30 uppercase tracking-widest mb-3">Basis-Infos</p>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Name *"><InputField value={form.client_name} onChange={e => set("client_name", e.target.value)} placeholder="z.B. Frederick" /></Field>
-              <Field label="Instagram Handle"><InputField value={form.instagram_handle} onChange={e => set("instagram_handle", e.target.value)} placeholder="@name" /></Field>
-              <Field label="Zeitraum"><InputField value={form.zeitraum} onChange={e => set("zeitraum", e.target.value)} placeholder="z.B. 12 Wochen" /></Field>
-              <Field label="Zielgruppen-Typ"><InputField value={form.zielgruppe_typ} onChange={e => set("zielgruppe_typ", e.target.value)} placeholder="Unternehmer, Läufer..." /></Field>
-              <Field label="Pillar">
-                <select value={form.pillar} onChange={e => set("pillar", e.target.value)}
+              <div>
+                <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Name *</label>
+                <input type="text" placeholder="z.B. Frederick" value={form.client_name} onChange={e => updateForm("client_name", e.target.value)}
+                  className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white" />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Instagram Handle</label>
+                <input type="text" placeholder="@name" value={form.instagram_handle} onChange={e => updateForm("instagram_handle", e.target.value)}
+                  className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white" />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Zeitraum</label>
+                <input type="text" placeholder="z.B. 12 Wochen" value={form.zeitraum} onChange={e => updateForm("zeitraum", e.target.value)}
+                  className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white" />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Zielgruppen-Typ</label>
+                <input type="text" placeholder="Unternehmer, Läufer..." value={form.zielgruppe_typ} onChange={e => updateForm("zielgruppe_typ", e.target.value)}
+                  className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white" />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Pillar</label>
+                <select value={form.pillar} onChange={e => updateForm("pillar", e.target.value)}
                   className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white">
                   <option value="">–</option>
                   {PILLARS.map(p => <option key={p}>{p}</option>)}
                 </select>
-              </Field>
-              <Field label="Profilbild URL"><InputField value={form.avatar_url} onChange={e => set("avatar_url", e.target.value)} placeholder="https://..." /></Field>
-              <div className="col-span-2">
-                <Field label="Problem">
-                  <textarea value={form.problem ?? ""} onChange={e => set("problem", e.target.value)} rows={2}
-                    className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
-                    placeholder="z.B. chronische Rückenschmerzen, 15kg Übergewicht..." />
-                </Field>
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Profilbild URL</label>
+                <input type="text" placeholder="https://..." value={form.avatar_url} onChange={e => updateForm("avatar_url", e.target.value)}
+                  className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white" />
               </div>
               <div className="col-span-2">
-                <Field label="Ergebnis">
-                  <textarea value={form.ergebnis ?? ""} onChange={e => set("ergebnis", e.target.value)} rows={2}
-                    className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
-                    placeholder="z.B. schmerzfrei in 8 Wochen..." />
-                </Field>
+                <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Problem</label>
+                <textarea value={form.problem} onChange={e => updateForm("problem", e.target.value)} rows={2}
+                  className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
+                  placeholder="z.B. chronische Rückenschmerzen, 15kg Übergewicht..." />
               </div>
               <div className="col-span-2">
-                <Field label="Direktes Zitat">
-                  <textarea value={form.zitat ?? ""} onChange={e => set("zitat", e.target.value)} rows={2}
-                    className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
-                    placeholder='"Ich habe endlich wieder Energie..."' />
-                </Field>
+                <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Ergebnis</label>
+                <textarea value={form.ergebnis} onChange={e => updateForm("ergebnis", e.target.value)} rows={2}
+                  className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
+                  placeholder="z.B. schmerzfrei in 8 Wochen..." />
+              </div>
+              <div className="col-span-2">
+                <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Direktes Zitat</label>
+                <textarea value={form.zitat} onChange={e => updateForm("zitat", e.target.value)} rows={2}
+                  className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
+                  placeholder='"Ich habe endlich wieder Energie..."' />
               </div>
               <div className="flex items-center gap-2 col-span-2">
-                <input type="checkbox" checked={form.is_active} onChange={e => set("is_active", e.target.checked)} id="is_active" className="rounded" />
+                <input type="checkbox" checked={form.is_active} onChange={e => updateForm("is_active", e.target.checked)} id="is_active" className="rounded" />
                 <label htmlFor="is_active" className="text-sm text-black/60 cursor-pointer">Aktiv (für Ads verwenden)</label>
               </div>
             </div>
@@ -231,15 +272,15 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
             </div>
             <textarea
               value={csvText}
-              onChange={e => { setCsvText(e.target.value); setCsvParsed(false); }}
+              onChange={e => setCsvText(e.target.value)}
               rows={4}
               placeholder={"Datum;Körpergewicht (kg);HRV (ms);Ruhepuls (bpm);Schrittanzahl\n01.01.2025;88.5;45;72;6500\n..."}
               className="w-full rounded-xl border border-black/10 px-3 py-2 text-xs font-mono resize-none focus:outline-none focus:ring-2 focus:ring-[#00416A]/20"
             />
             <button onClick={handleCSVImport}
               className="mt-2 flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white rounded-xl text-xs font-bold hover:bg-[#003356] transition">
-              {csvParsed ? <Check className="w-3.5 h-3.5" /> : <Upload className="w-3.5 h-3.5" />}
-              {csvParsed ? "Importiert ✓" : "Daten importieren & parsen"}
+              <Upload className="w-3.5 h-3.5" />
+              Daten importieren & parsen
             </button>
           </div>
 
@@ -256,14 +297,23 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
                 <div key={key} className="bg-white rounded-xl border border-black/8 p-3">
                   <p className="text-[10px] font-bold text-black/40 uppercase mb-2">{label}</p>
                   <div className="grid grid-cols-2 gap-2 mb-2">
-                    <Field label="Start"><InputField type="number" value={form[`${key}_start`]} onChange={e => set(`${key}_start`, e.target.value === "" ? "" : parseFloat(e.target.value))} /></Field>
-                    <Field label="Ende"><InputField type="number" value={form[`${key}_end`]} onChange={e => set(`${key}_end`, e.target.value === "" ? "" : parseFloat(e.target.value))} /></Field>
+                    <div>
+                      <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Start</label>
+                      <input type="number" value={form[`${key}_start`]} onChange={e => updateForm(`${key}_start`, e.target.value)}
+                        className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white" />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Ende</label>
+                      <input type="number" value={form[`${key}_end`]} onChange={e => updateForm(`${key}_end`, e.target.value)}
+                        className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white" />
+                    </div>
                   </div>
-                  <Field label="Verlauf (JSON-Array, z.B. [88.5, 87.2, ...])" >
-                    <textarea value={form[`${key}_verlauf_json`] ?? ""} onChange={e => set(`${key}_verlauf_json`, e.target.value)}
-                      rows={2}
-                      className="w-full rounded-xl border border-black/10 px-3 py-2 text-xs font-mono resize-none focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white" />
-                  </Field>
+                  <div>
+                    <label className="text-[10px] font-bold text-black/35 uppercase tracking-wider block mb-1">Verlauf (JSON-Array)</label>
+                    <textarea value={form[`${key}_verlauf_json`]} onChange={e => updateForm(`${key}_verlauf_json`, e.target.value)} rows={2}
+                      className="w-full rounded-xl border border-black/10 px-3 py-2 text-xs font-mono resize-none focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
+                      placeholder="[88.5, 87.2, ...]" />
+                  </div>
                 </div>
               ))}
             </div>
