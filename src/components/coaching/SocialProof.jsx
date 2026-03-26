@@ -246,7 +246,7 @@ export default function SocialProof({ images }) {
                     {/* BACK */}
                     <div
                       style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-                      className="absolute inset-0 flex items-center justify-center rounded-2xl overflow-hidden"
+                      className="flex items-center justify-center rounded-2xl overflow-hidden group bg-white shadow-sm hover:shadow-xl transition-shadow duration-500 relative aspect-[4/5]"
                     >
                       {testimonial ? (
                         <TestimonialCard testimonial={testimonial} />
