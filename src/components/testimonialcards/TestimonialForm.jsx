@@ -143,8 +143,23 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
   };
 
   const save = async () => {
-    if (!form.client_name) return;
+    if (!form.client_name.trim()) {
+      alert("Name erforderlich");
+      return;
+    }
     setSaving(true);
+
+    // Validiere JSON Arrays
+    const validateJSON = (str) => {
+      if (!str) return null;
+      try {
+        const parsed = JSON.parse(str);
+        if (Array.isArray(parsed)) return str;
+        return null;
+      } catch {
+        return null;
+      }
+    };
 
     const data = {
       client_name: form.client_name,
@@ -152,7 +167,7 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
       ergebnis: form.ergebnis,
       zitat: form.zitat,
       zielgruppe_typ: form.zielgruppe_typ,
-      pillar: form.pillar,
+      pillar: form.pillar || null,
       is_active: form.is_active,
       instagram_handle: form.instagram_handle,
       zeitraum: form.zeitraum,
@@ -160,16 +175,16 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
       sichtbare_metriken: form.sichtbare_metriken,
       gewicht_start: form.gewicht_start ? parseFloat(form.gewicht_start) : null,
       gewicht_end: form.gewicht_end ? parseFloat(form.gewicht_end) : null,
-      gewicht_verlauf_json: form.gewicht_verlauf_json || null,
+      gewicht_verlauf_json: validateJSON(form.gewicht_verlauf_json),
       hrv_start: form.hrv_start ? parseFloat(form.hrv_start) : null,
       hrv_end: form.hrv_end ? parseFloat(form.hrv_end) : null,
-      hrv_verlauf_json: form.hrv_verlauf_json || null,
+      hrv_verlauf_json: validateJSON(form.hrv_verlauf_json),
       ruhepuls_start: form.ruhepuls_start ? parseFloat(form.ruhepuls_start) : null,
       ruhepuls_end: form.ruhepuls_end ? parseFloat(form.ruhepuls_end) : null,
-      ruhepuls_verlauf_json: form.ruhepuls_verlauf_json || null,
+      ruhepuls_verlauf_json: validateJSON(form.ruhepuls_verlauf_json),
       schritte_start: form.schritte_start ? parseFloat(form.schritte_start) : null,
       schritte_end: form.schritte_end ? parseFloat(form.schritte_end) : null,
-      schritte_verlauf_json: form.schritte_verlauf_json || null,
+      schritte_verlauf_json: validateJSON(form.schritte_verlauf_json),
     };
 
     try {
@@ -183,7 +198,8 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
       onClose?.();
     } catch (err) {
       setSaving(false);
-      alert("Fehler beim Speichern");
+      console.error("Save error:", err);
+      alert(`Fehler: ${err.message || "Speichern fehlgeschlagen"}`);
     }
   };
 
