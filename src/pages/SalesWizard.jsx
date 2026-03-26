@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
@@ -49,16 +49,28 @@ export default function SalesWizard() {
     }
   };
 
-  const handleDataChange = async (field, value) => {
+  const pendingUpdates = useRef({});
+  const debounceTimer = useRef(null);
+
+  const flushUpdates = useCallback(async () => {
+    if (Object.keys(pendingUpdates.current).length === 0) return;
+    const updates = { ...pendingUpdates.current };
+    pendingUpdates.current = {};
+    await base44.entities.SalesCall.update(callId, updates);
+  }, [callId]);
+
+  const handleDataChange = (field, value) => {
     const updated = { ...call, [field]: value };
     setCall(updated);
-    await base44.entities.SalesCall.update(callId, { [field]: value });
+    pendingUpdates.current[field] = value;
+    clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(flushUpdates, 800);
   };
 
-  const handleNotesChange = async (stepKey, notes) => {
+  const handleNotesChange = (stepKey, notes) => {
     const stepNotes = call.step_notes_json ? JSON.parse(call.step_notes_json) : {};
     stepNotes[stepKey] = notes;
-    await handleDataChange('step_notes_json', JSON.stringify(stepNotes));
+    handleDataChange('step_notes_json', JSON.stringify(stepNotes));
   };
 
   const handleNext = async () => {
