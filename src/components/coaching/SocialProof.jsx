@@ -225,18 +225,18 @@ export default function SocialProof({ images }) {
                           </motion.div>
                           
                           {/* Mobile: Pulsing circles */}
-                          <div className="sm:hidden relative w-16 h-16 flex items-center justify-center">
+                          <div className="sm:hidden relative w-10 h-10 flex items-center justify-center">
                             {/* Outer pulsing circle */}
                             <motion.div
-                              animate={{ scale: [1, 1.3, 1], opacity: [0.8, 0.2, 0.8] }}
-                              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                              className="absolute w-16 h-16 rounded-full border-2 border-white"
+                              animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.15, 0.5] }}
+                              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                              className="absolute w-10 h-10 rounded-full border border-white"
                             />
                             {/* Inner pulsing circle */}
                             <motion.div
-                              animate={{ scale: [1, 1.2, 1], opacity: [1, 0.4, 1] }}
-                              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-                              className="absolute w-10 h-10 rounded-full border-2 border-white"
+                              animate={{ scale: [1, 1.1, 1], opacity: [0.7, 0.3, 0.7] }}
+                              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+                              className="absolute w-6 h-6 rounded-full border border-white"
                             />
                           </div>
                         </div>
