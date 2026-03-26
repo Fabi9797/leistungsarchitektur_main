@@ -118,7 +118,14 @@ export default function ContentPlanning832() {
             <ContentListView pieces={filtered} onSelect={openEdit} />
           ) : (
             <div className="bg-[#F0EAD6]/50 rounded-2xl p-4">
-              <ContentCalendarView pieces={filtered} onSelect={openEdit} />
+              <ContentCalendarView
+                pieces={filtered}
+                onSelect={openEdit}
+                onDateChange={async (pieceId, dateStr) => {
+                  await base44.entities.ContentPiece.update(pieceId, { planned_date: dateStr });
+                  load();
+                }}
+              />
             </div>
           )}
         </div>

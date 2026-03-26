@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { TypeBadge, CategoryBadge } from "./ContentBadge";
+import { TypeBadge } from "./ContentBadge";
 
 function getDaysInMonth(year, month) {
   return new Date(year, month + 1, 0).getDate();
@@ -14,10 +14,11 @@ const MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni",
   "Juli", "August", "September", "Oktober", "November", "Dezember"];
 const WEEKDAYS = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 
-export default function ContentCalendarView({ pieces, onSelect }) {
+export default function ContentCalendarView({ pieces, onSelect, onDateChange }) {
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
+  const [dragOverDay, setDragOverDay] = useState(null);
 
   const prevMonth = () => {
     if (month === 0) { setMonth(11); setYear(y => y - 1); }
@@ -50,6 +51,29 @@ export default function ContentCalendarView({ pieces, onSelect }) {
 
   const isToday = (d) => d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
 
+  const handleDragStart = (e, piece) => {
+    e.dataTransfer.setData("pieceId", piece.id);
+  };
+
+  const handleDrop = (e, day) => {
+    e.preventDefault();
+    const pieceId = e.dataTransfer.getData("pieceId");
+    if (!pieceId || !day) return;
+    // Format: YYYY-MM-DD
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    onDateChange && onDateChange(pieceId, dateStr);
+    setDragOverDay(null);
+  };
+
+  const handleDragOver = (e, day) => {
+    e.preventDefault();
+    setDragOverDay(day);
+  };
+
+  const handleDragLeave = () => {
+    setDragOverDay(null);
+  };
+
   return (
     <div>
       {/* Nav */}
@@ -69,7 +93,17 @@ export default function ContentCalendarView({ pieces, onSelect }) {
       {/* Calendar grid */}
       <div className="grid grid-cols-7 gap-1">
         {cells.map((day, idx) => (
-          <div key={idx} className={`min-h-[80px] rounded-xl p-1.5 ${day ? "bg-white" : ""} ${isToday(day) ? "ring-2 ring-[#00416A]/40" : ""}`}>
+          <div
+            key={idx}
+            className={`min-h-[80px] rounded-xl p-1.5 transition-colors
+              ${day ? "bg-white" : ""}
+              ${isToday(day) ? "ring-2 ring-[#00416A]/40" : ""}
+              ${dragOverDay === day && day ? "bg-[#00416A]/10 ring-2 ring-[#00416A]/30" : ""}
+            `}
+            onDragOver={(e) => day && handleDragOver(e, day)}
+            onDragLeave={handleDragLeave}
+            onDrop={(e) => day && handleDrop(e, day)}
+          >
             {day && (
               <>
                 <div className={`text-xs font-semibold mb-1 w-5 h-5 flex items-center justify-center rounded-full ${isToday(day) ? "bg-[#00416A] text-white" : "text-black/40"}`}>
@@ -77,8 +111,13 @@ export default function ContentCalendarView({ pieces, onSelect }) {
                 </div>
                 <div className="space-y-0.5">
                   {(byDate[day] || []).map(p => (
-                    <div key={p.id} onClick={() => onSelect(p)}
-                      className="cursor-pointer rounded-md px-1 py-0.5 text-[9px] font-semibold truncate hover:opacity-80 transition bg-[#00416A]/10 text-[#00416A]">
+                    <div
+                      key={p.id}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, p)}
+                      onClick={() => onSelect(p)}
+                      className="cursor-grab active:cursor-grabbing rounded-md px-1 py-0.5 text-[9px] font-semibold truncate hover:opacity-80 transition bg-[#00416A]/10 text-[#00416A]"
+                    >
                       {p.title}
                     </div>
                   ))}
@@ -89,14 +128,21 @@ export default function ContentCalendarView({ pieces, onSelect }) {
         ))}
       </div>
 
-      {/* Legend for pieces without date */}
+      {/* Pieces without date — draggable */}
       {pieces.filter(p => !p.planned_date).length > 0 && (
         <div className="mt-4 pt-4 border-t border-black/5">
-          <p className="text-[10px] font-bold text-black/30 uppercase mb-2">Ohne Datum ({pieces.filter(p => !p.planned_date).length})</p>
+          <p className="text-[10px] font-bold text-black/30 uppercase mb-2">
+            Ohne Datum ({pieces.filter(p => !p.planned_date).length}) — auf einen Tag ziehen
+          </p>
           <div className="flex flex-wrap gap-1.5">
             {pieces.filter(p => !p.planned_date).map(p => (
-              <div key={p.id} onClick={() => onSelect(p)}
-                className="cursor-pointer flex items-center gap-1 bg-white rounded-lg px-2 py-1 text-xs text-black/50 hover:shadow-sm transition">
+              <div
+                key={p.id}
+                draggable
+                onDragStart={(e) => handleDragStart(e, p)}
+                onClick={() => onSelect(p)}
+                className="cursor-grab active:cursor-grabbing flex items-center gap-1 bg-white rounded-lg px-2 py-1 text-xs text-black/50 hover:shadow-sm transition select-none"
+              >
                 <TypeBadge type={p.type} /> {p.title}
               </div>
             ))}
