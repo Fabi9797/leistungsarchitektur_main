@@ -54,6 +54,10 @@ function parseCSVData(text) {
 
 export default function TestimonialForm({ testimonial, onClose, onSaved }) {
   const [form, setForm] = useState({ ...EMPTY, ...testimonial });
+  
+  useEffect(() => {
+    setForm({ ...EMPTY, ...testimonial });
+  }, [testimonial?.id]);
   const [saving, setSaving] = useState(false);
   const [csvText, setCsvText] = useState("");
   const [csvParsed, setCsvParsed] = useState(false);
