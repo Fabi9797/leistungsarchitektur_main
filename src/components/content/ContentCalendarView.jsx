@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { TypeBadge } from "./ContentBadge";
 
@@ -19,6 +19,7 @@ export default function ContentCalendarView({ pieces, onSelect, onDateChange }) 
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
   const [dragOverDay, setDragOverDay] = useState(null);
+  const draggedPieceId = React.useRef(null);
 
   const prevMonth = () => {
     if (month === 0) { setMonth(11); setYear(y => y - 1); }
@@ -52,15 +53,17 @@ export default function ContentCalendarView({ pieces, onSelect, onDateChange }) 
   const isToday = (d) => d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
 
   const handleDragStart = (e, piece) => {
-    e.dataTransfer.setData("pieceId", piece.id);
+    draggedPieceId.current = piece.id;
+    e.dataTransfer.setData("text/plain", piece.id); // fallback
   };
 
   const handleDrop = (e, day) => {
     e.preventDefault();
-    const pieceId = e.dataTransfer.getData("pieceId");
+    const pieceId = draggedPieceId.current || e.dataTransfer.getData("text/plain");
     if (!pieceId || !day) return;
     // Format: YYYY-MM-DD
     const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    draggedPieceId.current = null;
     onDateChange && onDateChange(pieceId, dateStr);
     setDragOverDay(null);
   };
