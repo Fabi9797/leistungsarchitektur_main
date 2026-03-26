@@ -2,6 +2,15 @@ import React, { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { TypeBadge } from "./ContentBadge";
 
+const TYPE_PILL_COLORS = {
+  "Reden":     "bg-blue-100 text-blue-700",
+  "B-Roll":    "bg-orange-100 text-orange-700",
+  "Slideshow": "bg-purple-100 text-purple-700",
+  "Reel":      "bg-pink-100 text-pink-700",
+  "Story":     "bg-yellow-100 text-yellow-700",
+  "Carousel":  "bg-indigo-100 text-indigo-700",
+};
+
 function getDaysInMonth(year, month) {
   return new Date(year, month + 1, 0).getDate();
 }
@@ -119,7 +128,7 @@ export default function ContentCalendarView({ pieces, onSelect, onDateChange }) 
                       draggable
                       onDragStart={(e) => handleDragStart(e, p)}
                       onClick={() => onSelect(p)}
-                      className="cursor-grab active:cursor-grabbing rounded-md px-1 py-0.5 text-[9px] font-semibold truncate hover:opacity-80 transition bg-[#00416A]/10 text-[#00416A]"
+                      className={`cursor-grab active:cursor-grabbing rounded-md px-1 py-0.5 text-[9px] font-semibold truncate hover:opacity-80 transition ${TYPE_PILL_COLORS[p.type] || "bg-gray-100 text-gray-600"}`}
                     >
                       {p.title}
                     </div>
