@@ -179,6 +179,7 @@ export default function StoryWeekPlanner() {
     await load();
     setSaving(false);
     showToast("Gespeichert ✓");
+    window.dispatchEvent(new Event("storySlotsSaved"));
   };
 
   const saveAsTemplate = async () => {

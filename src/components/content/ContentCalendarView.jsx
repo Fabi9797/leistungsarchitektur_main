@@ -63,10 +63,16 @@ function isSameDay(a, b) {
 // --- Story loader hook ---
 function useStorySlots() {
   const [storySlots, setStorySlots] = useState([]);
-  useEffect(() => {
+  const load = () => {
     base44.entities.StorySlot.filter({ is_template: false }).then(all => {
       setStorySlots(all);
     }).catch(() => setStorySlots([]));
+  };
+  useEffect(() => {
+    load();
+    // Reload when Story Planer saves data
+    window.addEventListener("storySlotsSaved", load);
+    return () => window.removeEventListener("storySlotsSaved", load);
   }, []);
   return storySlots;
 }
