@@ -75,7 +75,10 @@ export default function TestimonialCard({ testimonial, cardRef }) {
   const sichtbar = parseArr(testimonial.sichtbare_metriken || '["gewicht","hrv","ruhepuls","schritte"]');
   const gewichtData = parseArr(testimonial.gewicht_verlauf_json);
   const [activeMetric, setActiveMetric] = useState(() => {
-    return ["hrv","ruhepuls","schritte"].find(m => sichtbar.includes(m) && testimonial[`${m}_start`]) || null;
+    const hasData = ["hrv","ruhepuls","schritte"].filter(m =>
+      sichtbar.includes(m) && (testimonial[`${m}_start`] || testimonial[`${m}_end`])
+    );
+    return hasData.length > 0 ? hasData[0] : null;
   });
 
   const initials = (testimonial.client_name || "?").split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase();
