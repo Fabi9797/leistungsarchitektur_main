@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { base44 } from "@/api/base44Client";
 import { Plus, Eye, Pencil, Trash2, CheckCircle2, XCircle } from "lucide-react";
 import TestimonialCardModal from "../components/testimonialcards/TestimonialCardModal";
@@ -20,14 +20,14 @@ export default function TestimonialCards832() {
   const [editItem, setEditItem] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true);
     const data = await base44.entities.Testimonial.list("-created_date");
     setTestimonials(data);
     setLoading(false);
-  };
+  }, []);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [load]);
 
   const del = async (id) => {
     if (!confirm("Testimonial löschen?")) return;
