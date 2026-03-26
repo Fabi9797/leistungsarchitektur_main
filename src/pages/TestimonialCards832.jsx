@@ -154,10 +154,10 @@ export default function TestimonialCards832() {
       )}
       {showForm && (
         <TestimonialForm
-          key="form"
+          key={editItem?.id || "new"}
           testimonial={editItem}
           onClose={() => setShowForm(false)}
-          onSaved={() => { setShowForm(false); load(); }}
+          onSaved={() => { setShowForm(false); setTimeout(() => load(), 100); }}
         />
       )}
     </div>
