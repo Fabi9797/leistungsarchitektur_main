@@ -6,7 +6,11 @@ import LeadAnswersCard from './LeadAnswersCard';
 
 export default function Step4({ call, stepGoal, onNotesChange }) {
   const step3Notes = call.step_notes_json ? JSON.parse(call.step_notes_json).step_3 || '' : '';
-  const [notes, setNotes] = useState(call.step_notes_json ? JSON.parse(call.step_notes_json).step_4 || '' : '');
+  const [notes, setNotes] = useState(() => {
+    const existing = call.step_notes_json ? JSON.parse(call.step_notes_json).step_4 || '' : '';
+    if (existing) return existing;
+    return step3Notes;
+  });
 
   const handleNotesChange = (value) => {
     setNotes(value);
