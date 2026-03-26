@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { base44 } from '@/api/base44Client';
+import { RefreshCw } from 'lucide-react';
 
 const FRAGEN = {
   1: "Beruf & Arbeitszeit",
@@ -52,13 +55,42 @@ export default function Step1({ call, onNotesChange }) {
     return <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">{String(val)}</p>;
   };
 
-  const talkPoints = [
-    `Schön, dass du da bist ${call.lead_name}! Ich freue mich auf das Gespräch mit dir.`
-  ];
-  const ziele = answers[3]?.selected || [];
-  if (ziele.length > 0) {
-    talkPoints.push(`Ich sehe, dass du ${ziele.join(', ')} als Ziel angegeben hast.`);
-  }
+  const [einstiege, setEinstiege] = useState([]);
+  const [loadingEinstiege, setLoadingEinstiege] = useState(false);
+
+  const generateEinstiege = async () => {
+    setLoadingEinstiege(true);
+    try {
+      const beruf = answers[1] || '';
+      const frueher = answers[2] || '';
+      const ziele = [...(answers[3]?.selected || []), answers[3]?.other || ''].filter(Boolean).join(', ');
+      const unterstuetzung = answers[4] || '';
+
+      const prompt = `Du bist ein erfahrener Fitness-Sales-Coach und hilfst mir, ein Verkaufsgespräch zu eröffnen.
+
+Der Lead heißt ${call.lead_name} und hat folgendes angegeben:
+- Beruf: ${beruf}
+- Was früher besser lief: ${frueher}
+- Ziele: ${ziele}
+- Wo er Unterstützung braucht: ${unterstuetzung}
+
+Generiere 3 individuelle Gesprächseinstiege für einen Coaching-Sales-Call. Jeder Einstieg soll:
+1. Persönlich und wertschätzend sein
+2. Auf eine konkrete Angabe des Leads eingehen
+3. Neugier wecken und zum Gespräch einladen
+4. Kurz sein (2-3 Sätze)
+
+Antworte als JSON: {"einstiege": ["...", "...", "..."]}`;
+
+      const result = await base44.functions.invoke('generateSalesAI', { prompt });
+      const data = result.data;
+      if (data?.einstiege) setEinstiege(data.einstiege);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoadingEinstiege(false);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -84,17 +116,45 @@ export default function Step1({ call, onNotesChange }) {
 
         {/* Gesprächseinstieg */}
         <Card className="p-6 lg:col-span-2" style={{ borderTop: '3px solid #C9A84C' }}>
-          <h3 className="font-bold text-base mb-4" style={{ color: '#1B365D' }}>Gesprächseinstieg</h3>
-          <div className="space-y-3 mb-4">
-            {talkPoints.map((point, i) => (
-              <p key={i} className="text-sm text-gray-700 leading-relaxed italic">
-                "{point}"
-              </p>
-            ))}
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-bold text-base" style={{ color: '#1B365D' }}>Gesprächseinstieg</h3>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={generateEinstiege}
+              disabled={loadingEinstiege}
+              className="flex items-center gap-2 text-xs"
+              style={{ borderColor: '#C9A84C', color: '#C9A84C' }}
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loadingEinstiege ? 'animate-spin' : ''}`} />
+              {loadingEinstiege ? 'Wird generiert...' : einstiege.length > 0 ? 'Aktualisieren' : 'Einstiege generieren'}
+            </Button>
           </div>
-          <div className="border-t border-gray-200 pt-3">
+
+          {einstiege.length === 0 ? (
+            <p className="text-sm text-gray-400 italic mb-4">
+              Klicke auf "Einstiege generieren" für 3 individuelle Vorschläge basierend auf den Antworten des Leads.
+            </p>
+          ) : (
+            <div className="space-y-3 mb-4">
+              {einstiege.map((einstieg, i) => (
+                <div
+                  key={i}
+                  className="p-3 rounded-lg text-sm text-gray-700 leading-relaxed italic border-l-2"
+                  style={{ backgroundColor: '#FDFAF3', borderColor: '#C9A84C' }}
+                >
+                  <span className="not-italic text-xs font-bold mr-2" style={{ color: '#C9A84C' }}>
+                    Variante {i + 1}
+                  </span>
+                  "{einstieg}"
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="border-t border-gray-200 pt-3 mt-2">
             <p className="text-xs font-semibold text-gray-600 mb-2">Checkliste vor dem Call:</p>
-            <div className="flex gap-6">
+            <div className="flex gap-6 flex-wrap">
               {['Ruhige Atmosphäre', 'Unterlagen bereit', 'Volle Konzentration'].map((item) => (
                 <label key={item} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
                   <input type="checkbox" className="w-4 h-4 rounded" />
