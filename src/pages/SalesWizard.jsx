@@ -15,15 +15,15 @@ import Step8 from '@/components/sales/wizard/Step8';
 import Step9 from '@/components/sales/wizard/Step9';
 
 const steps = [
-  { num: 1, title: 'Vorbereitung & Vertrauen schaffen', component: Step1, goal: 'Eine echte menschliche Verbindung herstellen — kein Pitch-Modus. Lächeln, Small Talk mit Substanz, den Kunden mit Namen ansprechen. Du willst verstehen, nicht verkaufen.' },
-  { num: 2, title: 'Klarheit über die Situation (GVZ)', component: Step2, goal: 'Den aktuellen Zustand des Interessenten vollständig erfassen. Gesprächsübernahme mit offenen W-Fragen, aktives Zuhören — lass ihn reden.' },
-  { num: 3, title: 'Bedürfnisse ergründen', component: Step3, goal: 'Die emotionalen Kaufmotive auf dem Silbertablett serviert bekommen. Nicht unterbrechen — Hidden Needs tauchen oft erst nach der dritten Antwort auf.' },
-  { num: 4, title: 'Bedürfnisse konkretisieren', component: Step4, goal: 'Vage Aussagen in konkrete Kaufmotive übersetzen. Echtes Kompliment einbauen — das ist der Übergang zum Nutzen-Pitch.' },
-  { num: 5, title: 'Zusammenfassung', component: Step5, goal: 'Nichts Entscheidendes geht verloren — der Interessent fühlt sich vollständig verstanden. Spiegel zurückwerfen: Gegenwart → Schmerz → Ziel.' },
-  { num: 6, title: 'Entscheidende Kaufmotive', component: Step6, goal: 'Den einen Hebel identifizieren, der wirklich zieht. Hier nicht verkaufen — nur zuhören und priorisieren lassen.' },
-  { num: 7, title: 'Provisorischer Vorabschluss', component: Step7, goal: 'Commitment einholen, bevor der Preis kommt. Auf ein klares Ja warten — nicht weitermachen ohne es. Das nimmt dem Preis die Angriffsfläche.' },
-  { num: 8, title: 'Kaufmotive bedienen (PÜK-Ketten)', component: Step8, goal: 'Leistungen direkt auf Bedürfnisse mappen — keine Feature-Liste. PÜK-Formel: Produktmerkmal → Übersetzer → Kundennutzen.' },
-  { num: 9, title: 'Verkaufsabschluss', component: Step9, goal: 'Klar, ruhig, souverän abschließen. Preis nennen — direkt, ohne Entschuldigung. Danach Mund halten. Schweigen = Denkprozess. Aushalten.' },
+  { num: 1, title: 'Vorbereitung & Vertrauen schaffen', component: Step1, goal: 'Vertrauen schaffen (Einstieg)' },
+  { num: 2, title: 'Klarheit über die Situation (GVZ)', component: Step2, goal: 'Situation mit GVZ verstehen' },
+  { num: 3, title: 'Bedürfnisse ergründen', component: Step3, goal: 'Hidden Needs identifizieren' },
+  { num: 4, title: 'Bedürfnisse konkretisieren', component: Step4, goal: 'Bedürfnisse konkretisieren' },
+  { num: 5, title: 'Zusammenfassung', component: Step5, goal: 'Situation zusammenfassen' },
+  { num: 6, title: 'Entscheidende Kaufmotive', component: Step6, goal: 'Entscheidendes Kaufmotiv finden' },
+  { num: 7, title: 'Provisorischer Vorabschluss', component: Step7, goal: 'Provisorischen Vorabschluss einholen' },
+  { num: 8, title: 'Kaufmotive bedienen (PÜK-Ketten)', component: Step8, goal: 'PÜK-Ketten präsentieren' },
+  { num: 9, title: 'Verkaufsabschluss', component: Step9, goal: 'Preis nennen & abschließen' },
 ];
 
 export default function SalesWizard() {
