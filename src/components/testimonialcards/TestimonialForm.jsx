@@ -148,7 +148,7 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
       {...props} />
   );
   const NumInput = ({ k, ...props }) => (
-    <input type="number" value={form[k] ?? ""} onChange={e => set(k, e.target.value)}
+    <input type="number" value={form[k] ?? ""} onChange={e => set(k, e.target.value === "" ? "" : parseFloat(e.target.value))}
       className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
       {...props} />
   );
