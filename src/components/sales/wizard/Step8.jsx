@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import StepGoalCard from './StepGoalCard';
 import LeadAnswersCard from './LeadAnswersCard';
+import { PUEK_KETTEN, PUEK_GESAMTVORTEIL } from '@/lib/salesleitfaden';
 
 export default function Step8({ call, stepGoal, onDataChange }) {
   const [loading, setLoading] = useState(false);
@@ -16,18 +17,17 @@ export default function Step8({ call, stepGoal, onDataChange }) {
   const generatePueuk = async () => {
     setLoading(true);
     try {
-      const prompt = `Generiere PÜK-Ketten (Produktmerkmal – Übersetzer – Kundennutzen) für ein Fitness-Coaching. Der Kunde heißt ${call.lead_name} und hat folgende Kaufmotive: ${JSON.stringify(kaufmotive)}.
+      const puekTexte = PUEK_KETTEN.map(pk => `- ${pk.titel}: P="${pk.p}" | Ü="${pk.ue}" | K="${pk.k}"`).join('\n');
 
-Mein Coaching "Leistungsarchitektur" umfasst diese 4 Säulen:
-1. TRAININGSPLAN: Individueller Trainingsplan, auf den persönlichen Alltag abgestimmt, damit Beruf und Sport in Einklang kommen
-2. ERNÄHRUNG: Optimale Anpassung der Ernährung innerhalb einer Rahmenvorgabe – ganz ohne Verbote und Hungern
-3. NAHRUNGSERGÄNZUNG: Zielführende und bedarfsorientierte Supplements, um die Entwicklung bestmöglich zu unterstützen
-4. STEUERUNG: Begleitung anhand echter Daten – Anpassungen erfolgen dann, wenn sie sinnvoll sind, nicht nach starrem Takt
+      const prompt = `Wähle für jeden der folgenden Kaufmotive des Kunden ${call.lead_name} die am besten passende PÜK-Kette aus meinen vordefinierten Ketten aus und passe den Kundennutzen leicht auf das spezifische Motiv an.
 
-Erstelle für jedes Kaufmotiv eine PÜK-Kette im Format:
-"[Produktmerkmal aus meinen 4 Säulen] (P) → das bedeutet für dich (Ü) → [konkreter Kundennutzen bezogen auf sein Kaufmotiv] (K)"
+Kaufmotive: ${JSON.stringify(kaufmotive)}
 
-Antworte als JSON Array mit objects: {kaufmotiv, produktmerkmal, uebersetzer, kundennutzen, formulierung_komplett}`;
+Meine PÜK-Ketten:
+${puekTexte}
+
+Antworte als JSON Array mit objects: {kaufmotiv, produktmerkmal, uebersetzer, kundennutzen, formulierung_komplett}
+Die formulierung_komplett soll eine natürliche Sprachformulierung sein: "[P] — [Ü] — [K]"`;
 
       const result = await base44.functions.invoke('generateSalesAI', {
         prompt,
@@ -84,8 +84,9 @@ Antworte als JSON Array mit objects: {kaufmotiv, produktmerkmal, uebersetzer, ku
           ))}
 
           <Card className="p-6 bg-green-50 border border-green-200">
-            <p className="text-green-900 font-semibold">
-              Abschluss-Formulierung: "Ich biete dir somit ein Rundum-Sorglos-Paket an, um dich wieder zu alter Stärke zu führen!"
+            <p className="text-xs font-semibold text-green-700 uppercase tracking-wide mb-2">Gesamtvorteil</p>
+            <p className="text-green-900 font-semibold italic">
+              „{PUEK_GESAMTVORTEIL.replace('[HAUPTPROBLEM]', kaufmotive[0] || 'deinen wichtigsten Punkt')}"
             </p>
           </Card>
         </div>

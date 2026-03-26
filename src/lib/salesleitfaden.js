@@ -74,6 +74,60 @@ GRUNDREGELN:
 - Nie gleichzeitig reden — aktiv zuhören
 `;
 
+export const PUEK_KETTEN = [
+  {
+    id: 'hebelanalyse',
+    titel: 'Der USP: Die Hebelanalyse',
+    p: 'Wir beginnen unsere Zusammenarbeit immer mit einer fundierten Hebelanalyse.',
+    ue: 'Das bedeutet für dich…',
+    k: '…dass wir dem ziellosen Aktionismus ein Ende setzen. Wir versuchen nicht, alles gleichzeitig zu ändern, sondern finden genau die 20 % Veränderung, die bei dir 80 % des Ergebnisses bringen.'
+  },
+  {
+    id: 'system',
+    titel: 'Das System „Leistungsarchitektur"',
+    p: 'Du bekommst kein isoliertes Training, sondern ein funktionierendes System, das Training, Ernährung und Alltag verbindet.',
+    ue: 'Der entscheidende Vorteil für dich ist…',
+    k: '…dass du sichtbar in Form kommst, ohne dein Leben komplett umkrempeln zu müssen – ideal für deinen ohnehin schon vollen Zeitplan.'
+  },
+  {
+    id: 'datensteuerung',
+    titel: 'Datengestützte Steuerung',
+    p: 'Unsere Begleitung und die Anpassungen erfolgen rein auf Basis deiner echten Daten und nicht nach einem starren Takt.',
+    ue: 'Das bedeutet konkret für dich…',
+    k: '…dass es kein Rätselraten mehr gibt. Wir steuern nur dann nach, wenn es wirklich sinnvoll ist und du weißt immer genau, welcher Faktor bei dir über Abnehmen oder Stillstand entscheidet.'
+  },
+  {
+    id: 'gewohnheiten',
+    titel: 'Realistische Gewohnheiten',
+    p: 'Wir etablieren Schritt für Schritt neue Gewohnheiten in deinem Alltag.',
+    ue: 'Das hat den großen Nutzen für dich…',
+    k: '…dass diese nicht zu 100 % perfekt sein müssen, sondern zuverlässig funktionieren. So stellen wir sicher, dass du deine Form auch in 12 Monaten noch hältst – selbst dann, wenn unser Coaching bereits beendet ist.'
+  },
+  {
+    id: 'training',
+    titel: 'Training & Alltag',
+    p: 'Du erhältst einen individuellen Trainingsplan.',
+    ue: 'Das bedeutet für dich…',
+    k: '…dass er so auf deinen persönlichen Alltag abgestimmt wird, dass Beruf und Sport endlich effizient in Einklang kommen, auch wenn du wenig Zeit hast.'
+  },
+  {
+    id: 'ernaehrung',
+    titel: 'Ernährung ohne Verbote',
+    p: 'Wir passen deine Ernährung innerhalb einer klaren Rahmenvorgabe an.',
+    ue: 'Der Vorteil für dich ist…',
+    k: '…dass wir ständiges Hin und Her beenden und du deine Ziele ganz ohne Verbote und ohne zu hungern erreichst.'
+  },
+  {
+    id: 'supplements',
+    titel: 'Nahrungsergänzung',
+    p: 'Zusätzlich nutzen wir zielführende und bedarfsorientierte Nahrungsergänzungsmittel.',
+    ue: 'Das bedeutet für dich…',
+    k: '…dass deine körperliche Entwicklung bestmöglich und effizient unterstützt wird.'
+  }
+];
+
+export const PUEK_GESAMTVORTEIL = 'Ich biete dir ein System, das kein Raten und keinen Perfektionismus erfordert. Insbesondere werde ich den Fokus auf [HAUPTPROBLEM] legen, damit du nachhaltige Ergebnisse erzielst, die dauerhaft Bestand haben.';
+
 export const COACHING_SAEULEN = `
 Das Coaching "Leistungsarchitektur" umfasst 4 Säulen:
 1. TRAININGSPLAN: Individueller Trainingsplan, auf den persönlichen Alltag abgestimmt, damit Beruf und Sport in Einklang kommen.
