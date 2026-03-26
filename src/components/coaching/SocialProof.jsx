@@ -187,8 +187,11 @@ export default function SocialProof({ images }) {
               return (
                 <div
                    key={t.name}
-                   className="flex-shrink-0 w-[90vw] sm:w-[45vw] lg:w-[30%] snap-start"
-                   style={{ perspective: "1000px" }}
+                   className="flex-shrink-0 snap-start"
+                   style={{ 
+                     perspective: "1000px",
+                     width: "clamp(300px, 85vw, 440px)"
+                   }}
                  >
                   <motion.div
                     animate={{ rotateY: isFlipped ? 180 : 0 }}
