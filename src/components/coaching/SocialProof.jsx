@@ -215,13 +215,30 @@ export default function SocialProof({ images }) {
                           <p className="text-white/80 text-sm font-medium mt-1">{t.tagline}</p>
                         </div>
                         <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
+                          {/* Desktop: Text */}
                           <motion.div 
                             animate={{ opacity: [0.3, 0.8, 0.3] }}
                             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                            className="sm:opacity-0 sm:group-hover:opacity-100 sm:transition-opacity sm:duration-300 text-white text-xs font-semibold tracking-widest uppercase"
+                            className="hidden sm:block text-white text-xs font-semibold tracking-widest uppercase"
                           >
                             Drücken für Details
                           </motion.div>
+                          
+                          {/* Mobile: Pulsing circles */}
+                          <div className="sm:hidden relative w-16 h-16 flex items-center justify-center">
+                            {/* Outer pulsing circle */}
+                            <motion.div
+                              animate={{ scale: [1, 1.3, 1], opacity: [0.8, 0.2, 0.8] }}
+                              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                              className="absolute w-16 h-16 rounded-full border-2 border-white"
+                            />
+                            {/* Inner pulsing circle */}
+                            <motion.div
+                              animate={{ scale: [1, 1.2, 1], opacity: [1, 0.4, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                              className="absolute w-10 h-10 rounded-full border-2 border-white"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div className="p-6">
