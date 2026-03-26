@@ -4,6 +4,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import { RefreshCw } from 'lucide-react';
+import { SALESLEITFADEN } from '@/lib/salesleitfaden';
 
 const FRAGEN = {
   1: "Beruf & Arbeitszeit",
@@ -66,19 +67,23 @@ export default function Step1({ call, onNotesChange }) {
       const ziele = [...(answers[3]?.selected || []), answers[3]?.other || ''].filter(Boolean).join(', ');
       const unterstuetzung = answers[4] || '';
 
-      const prompt = `Du bist ein erfahrener Fitness-Sales-Coach und hilfst mir, ein Verkaufsgespräch zu eröffnen.
+      const prompt = `Du bist ein Fitness-Sales-Coach und führst gleich ein Verkaufsgespräch nach folgendem Leitfaden:
 
-Der Lead heißt ${call.lead_name} und hat folgendes angegeben:
-- Beruf: ${beruf}
+${SALESLEITFADEN}
+
+---
+Der Lead heißt ${call.lead_name} und hat im Vorab-Formular folgendes angegeben:
+- Beruf & Alltag: ${beruf}
 - Was früher besser lief: ${frueher}
 - Ziele: ${ziele}
 - Wo er Unterstützung braucht: ${unterstuetzung}
 
-Generiere 3 individuelle Gesprächseinstiege für einen Coaching-Sales-Call. Jeder Einstieg soll:
-1. Persönlich und wertschätzend sein
-2. Auf eine konkrete Angabe des Leads eingehen
-3. Neugier wecken und zum Gespräch einladen
-4. Kurz sein (2-3 Sätze)
+Deine Aufgabe: Generiere exakt 3 verschiedene Gesprächseinstiege für Schritt 1 des Leitfadens (Vertrauen schaffen).
+Jeder Einstieg soll:
+- Die empfohlenen Eröffnungssätze aus dem Leitfaden als Basis nutzen
+- Konkret auf eine Angabe des Leads eingehen (Small Talk mit Substanz, kein Wetter/Politik)
+- Emotional und authentisch klingen — nicht nach Skript
+- Kurz sein (2-3 Sätze)
 
 Antworte als JSON: {"einstiege": ["...", "...", "..."]}`;
 
