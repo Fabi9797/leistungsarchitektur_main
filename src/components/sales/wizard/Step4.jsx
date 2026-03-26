@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
+import StepGoalCard from './StepGoalCard';
 
-export default function Step4({ call, onNotesChange }) {
+export default function Step4({ call, stepGoal, onNotesChange }) {
   const step3Notes = call.step_notes_json ? JSON.parse(call.step_notes_json).step_3 || '' : '';
   const [notes, setNotes] = useState(call.step_notes_json ? JSON.parse(call.step_notes_json).step_4 || '' : '');
 
@@ -13,11 +14,7 @@ export default function Step4({ call, onNotesChange }) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-sm text-blue-900">
-          Vertiefe die genannten Bedürfnisse — <strong>Was genau meint er?</strong>
-        </p>
-      </div>
+      <StepGoalCard goal={stepGoal} />
 
       {step3Notes && (
         <Card className="p-6 bg-gray-50">

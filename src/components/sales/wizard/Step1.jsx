@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import { RefreshCw } from 'lucide-react';
 import { SALESLEITFADEN } from '@/lib/salesleitfaden';
+import StepGoalCard from './StepGoalCard';
 
 const FRAGEN = {
   1: "Beruf & Arbeitszeit",
@@ -13,7 +14,7 @@ const FRAGEN = {
   4: "Wo braucht er Unterstützung?",
 };
 
-export default function Step1({ call, onNotesChange }) {
+export default function Step1({ call, stepGoal, onNotesChange }) {
   const [notes, setNotes] = useState(() => {
     try { return JSON.parse(call.step_notes_json || '{}').step_1 || ''; } catch { return ''; }
   });
@@ -100,27 +101,30 @@ Antworte als JSON: {"einstiege": ["...", "...", "..."]}`;
   return (
     <div className="space-y-6">
 
-      {/* Kontaktdaten — kompakt horizontal */}
-      <Card className="p-4" style={{ borderTop: '3px solid #1B365D' }}>
-        <div className="flex flex-wrap items-center gap-6">
-          <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wide">Name</p>
-            <p className="font-semibold text-gray-900 text-sm">{call.lead_name}</p>
+      {/* Kontaktdaten + Ziel nebeneinander */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        <Card className="p-4" style={{ borderTop: '3px solid #1B365D' }}>
+          <div className="flex flex-wrap items-center gap-6">
+            <div>
+              <p className="text-xs text-gray-400 uppercase tracking-wide">Name</p>
+              <p className="font-semibold text-gray-900 text-sm">{call.lead_name}</p>
+            </div>
+            {call.lead_email && (
+              <div>
+                <p className="text-xs text-gray-400 uppercase tracking-wide">E-Mail</p>
+                <p className="text-gray-700 text-sm">{call.lead_email}</p>
+              </div>
+            )}
+            {call.lead_phone && (
+              <div>
+                <p className="text-xs text-gray-400 uppercase tracking-wide">Telefon</p>
+                <p className="text-gray-700 text-sm">{call.lead_phone}</p>
+              </div>
+            )}
           </div>
-          {call.lead_email && (
-            <div>
-              <p className="text-xs text-gray-400 uppercase tracking-wide">E-Mail</p>
-              <p className="text-gray-700 text-sm">{call.lead_email}</p>
-            </div>
-          )}
-          {call.lead_phone && (
-            <div>
-              <p className="text-xs text-gray-400 uppercase tracking-wide">Telefon</p>
-              <p className="text-gray-700 text-sm">{call.lead_phone}</p>
-            </div>
-          )}
-        </div>
-      </Card>
+        </Card>
+        <StepGoalCard goal={stepGoal} />
+      </div>
 
       {/* Gesprächseinstieg + Notizen nebeneinander */}
       <div className="grid lg:grid-cols-2 gap-6">

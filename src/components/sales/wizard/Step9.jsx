@@ -11,8 +11,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import StepGoalCard from './StepGoalCard';
 
-export default function Step9({ call, onDataChange, onComplete }) {
+export default function Step9({ call, stepGoal, onDataChange, onComplete }) {
   const [preisReaction, setPreisReaction] = useState(call.preis_reaktion || '');
   const [followUpDate, setFollowUpDate] = useState(call.follow_up_date || '');
   const [ergebnis, setErgebnis] = useState(call.ergebnis || '');
@@ -35,6 +36,7 @@ export default function Step9({ call, onDataChange, onComplete }) {
 
   return (
     <div className="space-y-6">
+      <StepGoalCard goal={stepGoal} />
       {/* Preisnennung */}
       <Card className="p-6 bg-red-50 border-2 border-red-200">
         <div className="flex items-start gap-3 mb-4">

@@ -3,8 +3,9 @@ import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
+import StepGoalCard from './StepGoalCard';
 
-export default function Step5({ call, onDataChange }) {
+export default function Step5({ call, stepGoal, onDataChange }) {
   const [zusammenfassung, setZusammenfassung] = useState(call.zusammenfassung || '');
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -34,11 +35,7 @@ export default function Step5({ call, onDataChange }) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-sm text-blue-900">
-          Generiere eine Zusammenfassung, die du dem Kunden vorlesen kannst.
-        </p>
-      </div>
+      <StepGoalCard goal={stepGoal} />
 
       {!zusammenfassung ? (
         <div className="flex justify-center">

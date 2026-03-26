@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import StepGoalCard from './StepGoalCard';
 
-export default function Step7({ call, onNotesChange }) {
+export default function Step7({ call, stepGoal, onNotesChange }) {
   const kaufmotive = call.kaufmotive_json ? JSON.parse(call.kaufmotive_json) : [];
   const [reaction, setReaction] = useState('');
   const [notes, setNotes] = useState(call.step_notes_json ? JSON.parse(call.step_notes_json).step_7 || '' : '');
@@ -17,6 +18,7 @@ export default function Step7({ call, onNotesChange }) {
 
   return (
     <div className="space-y-6">
+      <StepGoalCard goal={stepGoal} />
       <Card className="p-6 bg-red-50 border-2 border-red-200">
         <h3 className="font-bold text-lg text-red-900 mb-4">Provisorischer Vorabschluss</h3>
         <div className="bg-white p-4 rounded border-l-4" style={{ borderColor: '#1B365D' }}>

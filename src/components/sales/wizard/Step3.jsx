@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
+import StepGoalCard from './StepGoalCard';
 
 const suggestedQuestions = [
   'Was ist dir wichtig, wenn es um Training geht?',
@@ -9,7 +10,7 @@ const suggestedQuestions = [
   'Was genau meinst du mit "Fitnessziele"?'
 ];
 
-export default function Step3({ call, onNotesChange }) {
+export default function Step3({ call, stepGoal, onNotesChange }) {
   const [notes, setNotes] = useState(call.step_notes_json ? JSON.parse(call.step_notes_json).step_3 || '' : '');
 
   const handleNotesChange = (value) => {
@@ -19,11 +20,7 @@ export default function Step3({ call, onNotesChange }) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-sm text-blue-900">
-          Setze <strong>offene W-Fragen</strong> ein und höre aktiv zu.
-        </p>
-      </div>
+      <StepGoalCard goal={stepGoal} />
 
       <Card className="p-6">
         <h3 className="font-bold text-lg mb-4" style={{ color: '#1B365D' }}>Vorgeschlagene Fragen</h3>

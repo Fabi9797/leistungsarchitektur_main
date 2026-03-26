@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
+import StepGoalCard from './StepGoalCard';
 
-export default function Step8({ call, onDataChange }) {
+export default function Step8({ call, stepGoal, onDataChange }) {
   const [loading, setLoading] = useState(false);
   const [pueukChains, setPueukChains] = useState(
     call.puek_json ? JSON.parse(call.puek_json) : null
@@ -44,11 +45,7 @@ Antworte als JSON Array mit objects: {kaufmotiv, produktmerkmal, uebersetzer, ku
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-sm text-blue-900">
-          Generiere <strong>PÜK-Ketten</strong> um die Kaufmotive optimal zu bedienen.
-        </p>
-      </div>
+      <StepGoalCard goal={stepGoal} />
 
       {!pueukChains ? (
         <div className="flex justify-center">

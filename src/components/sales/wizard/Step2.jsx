@@ -3,8 +3,9 @@ import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
+import StepGoalCard from './StepGoalCard';
 
-export default function Step2({ call, onDataChange }) {
+export default function Step2({ call, stepGoal, onDataChange }) {
   const [gegenwart, setGegenwart] = useState(call.gvz_gegenwart || '');
   const [vergangenheit, setVergangenheit] = useState(call.gvz_vergangenheit || '');
   const [zukunft, setZukunft] = useState(call.gvz_zukunft || '');
@@ -35,11 +36,7 @@ export default function Step2({ call, onDataChange }) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-sm text-blue-900">
-          Nutze die <strong>GVZ-Methode</strong> um die Situation strukturiert zu erfassen.
-        </p>
-      </div>
+      <StepGoalCard goal={stepGoal} />
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Gegenwart */}

@@ -3,8 +3,9 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { X } from 'lucide-react';
+import StepGoalCard from './StepGoalCard';
 
-export default function Step6({ call, onDataChange }) {
+export default function Step6({ call, stepGoal, onDataChange }) {
   const [kaufmotive, setKaufmotive] = useState(
     call.kaufmotive_json ? JSON.parse(call.kaufmotive_json) : []
   );
@@ -27,11 +28,7 @@ export default function Step6({ call, onDataChange }) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-sm text-blue-900">
-          Welche der genannten Punkte sind dem Kunden <strong>besonders wichtig?</strong>
-        </p>
-      </div>
+      <StepGoalCard goal={stepGoal} />
 
       <Card className="p-6">
         <h3 className="font-bold text-lg mb-4" style={{ color: '#1B365D' }}>Kaufmotive</h3>
