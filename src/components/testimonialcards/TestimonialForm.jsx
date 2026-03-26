@@ -194,8 +194,10 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
         await base44.entities.Testimonial.create(data);
       }
       setSaving(false);
-      onSaved?.();
-      onClose?.();
+      setTimeout(() => {
+        onSaved?.();
+        onClose?.();
+      }, 100);
     } catch (err) {
       setSaving(false);
       console.error("Save error:", err);
