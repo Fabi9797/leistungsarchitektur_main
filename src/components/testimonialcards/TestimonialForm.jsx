@@ -147,15 +147,29 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
     setSaving(true);
 
     const data = {
-      ...form,
-      gewicht_start: form.gewicht_start ? parseFloat(form.gewicht_start) : undefined,
-      gewicht_end: form.gewicht_end ? parseFloat(form.gewicht_end) : undefined,
-      hrv_start: form.hrv_start ? parseFloat(form.hrv_start) : undefined,
-      hrv_end: form.hrv_end ? parseFloat(form.hrv_end) : undefined,
-      ruhepuls_start: form.ruhepuls_start ? parseFloat(form.ruhepuls_start) : undefined,
-      ruhepuls_end: form.ruhepuls_end ? parseFloat(form.ruhepuls_end) : undefined,
-      schritte_start: form.schritte_start ? parseFloat(form.schritte_start) : undefined,
-      schritte_end: form.schritte_end ? parseFloat(form.schritte_end) : undefined,
+      client_name: form.client_name,
+      problem: form.problem,
+      ergebnis: form.ergebnis,
+      zitat: form.zitat,
+      zielgruppe_typ: form.zielgruppe_typ,
+      pillar: form.pillar,
+      is_active: form.is_active,
+      instagram_handle: form.instagram_handle,
+      zeitraum: form.zeitraum,
+      avatar_url: form.avatar_url,
+      sichtbare_metriken: form.sichtbare_metriken,
+      gewicht_start: form.gewicht_start ? parseFloat(form.gewicht_start) : null,
+      gewicht_end: form.gewicht_end ? parseFloat(form.gewicht_end) : null,
+      gewicht_verlauf_json: form.gewicht_verlauf_json || null,
+      hrv_start: form.hrv_start ? parseFloat(form.hrv_start) : null,
+      hrv_end: form.hrv_end ? parseFloat(form.hrv_end) : null,
+      hrv_verlauf_json: form.hrv_verlauf_json || null,
+      ruhepuls_start: form.ruhepuls_start ? parseFloat(form.ruhepuls_start) : null,
+      ruhepuls_end: form.ruhepuls_end ? parseFloat(form.ruhepuls_end) : null,
+      ruhepuls_verlauf_json: form.ruhepuls_verlauf_json || null,
+      schritte_start: form.schritte_start ? parseFloat(form.schritte_start) : null,
+      schritte_end: form.schritte_end ? parseFloat(form.schritte_end) : null,
+      schritte_verlauf_json: form.schritte_verlauf_json || null,
     };
 
     try {
