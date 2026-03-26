@@ -246,15 +246,13 @@ export default function SocialProof({ images }) {
                     {/* BACK */}
                     <div
                       style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-                      className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-500"
+                      className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-500"
                     >
-                      <div className="relative aspect-[4/5] w-full h-full overflow-hidden">
+                      <div className="relative aspect-[4/5] overflow-y-auto">
                         {testimonial ? (
-                          <div className="w-full h-full">
-                            <TestimonialCard testimonial={testimonial} />
-                          </div>
+                          <TestimonialCard testimonial={testimonial} />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center">
+                          <div className="flex items-center justify-center h-full">
                             <p className="text-black/30 text-sm">Card wird geladen...</p>
                           </div>
                         )}
