@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import StepGoalCard from './StepGoalCard';
+import LeadAnswersCard from './LeadAnswersCard';
 
 export default function Step7({ call, stepGoal, onNotesChange }) {
   const kaufmotive = call.kaufmotive_json ? JSON.parse(call.kaufmotive_json) : [];
@@ -77,6 +78,8 @@ export default function Step7({ call, stepGoal, onNotesChange }) {
           className="min-h-32"
         />
       </Card>
+
+      <LeadAnswersCard call={call} />
     </div>
   );
 }

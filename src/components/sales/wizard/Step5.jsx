@@ -4,6 +4,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import StepGoalCard from './StepGoalCard';
+import LeadAnswersCard from './LeadAnswersCard';
 
 export default function Step5({ call, stepGoal, onDataChange }) {
   const [zusammenfassung, setZusammenfassung] = useState(call.zusammenfassung || '');
@@ -76,6 +77,7 @@ export default function Step5({ call, stepGoal, onDataChange }) {
           )}
         </Card>
       )}
+      <LeadAnswersCard call={call} />
     </div>
   );
 }

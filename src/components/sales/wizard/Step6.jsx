@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { X } from 'lucide-react';
 import StepGoalCard from './StepGoalCard';
+import LeadAnswersCard from './LeadAnswersCard';
 
 export default function Step6({ call, stepGoal, onDataChange }) {
   const [kaufmotive, setKaufmotive] = useState(
@@ -64,6 +65,7 @@ export default function Step6({ call, stepGoal, onDataChange }) {
           </Button>
         </div>
       </Card>
+      <LeadAnswersCard call={call} />
     </div>
   );
 }

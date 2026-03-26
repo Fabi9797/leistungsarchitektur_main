@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/select';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import StepGoalCard from './StepGoalCard';
+import LeadAnswersCard from './LeadAnswersCard';
 
 export default function Step9({ call, stepGoal, onDataChange, onComplete }) {
   const [preisReaction, setPreisReaction] = useState(call.preis_reaktion || '');
@@ -129,6 +130,8 @@ export default function Step9({ call, stepGoal, onDataChange, onComplete }) {
           </SelectContent>
         </Select>
       </Card>
+
+      <LeadAnswersCard call={call} />
 
       {/* Finish Button */}
       <Button

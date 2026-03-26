@@ -6,6 +6,7 @@ import { base44 } from '@/api/base44Client';
 import { RefreshCw } from 'lucide-react';
 import { SALESLEITFADEN } from '@/lib/salesleitfaden';
 import StepGoalCard from './StepGoalCard';
+import LeadAnswersCard from './LeadAnswersCard';
 
 const FRAGEN = {
   1: "Beruf & Arbeitszeit",
@@ -191,22 +192,7 @@ Antworte als JSON: {"einstiege": ["...", "...", "..."]}`;
         </Card>
       </div>
 
-      {/* Formular-Antworten */}
-      <Card className="p-6" style={{ borderTop: '3px solid #1B365D' }}>
-        <h3 className="font-bold text-base mb-5" style={{ color: '#1B365D' }}>
-          Formular-Antworten des Leads
-        </h3>
-        <div className="space-y-5">
-          {[1, 2, 3, 4].map((key) => (
-            <div key={key} className="pb-5 border-b border-gray-100 last:border-0 last:pb-0">
-              <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
-                {FRAGEN[key]}
-              </p>
-              {renderAnswer(key)}
-            </div>
-          ))}
-        </div>
-      </Card>
+      <LeadAnswersCard call={call} />
 
     </div>
   );

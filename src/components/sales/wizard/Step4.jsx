@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import StepGoalCard from './StepGoalCard';
+import LeadAnswersCard from './LeadAnswersCard';
 
 export default function Step4({ call, stepGoal, onNotesChange }) {
   const step3Notes = call.step_notes_json ? JSON.parse(call.step_notes_json).step_3 || '' : '';
@@ -34,6 +35,8 @@ export default function Step4({ call, stepGoal, onNotesChange }) {
           className="min-h-48"
         />
       </Card>
+
+      <LeadAnswersCard call={call} />
     </div>
   );
 }

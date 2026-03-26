@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import StepGoalCard from './StepGoalCard';
+import LeadAnswersCard from './LeadAnswersCard';
 
 export default function Step8({ call, stepGoal, onDataChange }) {
   const [loading, setLoading] = useState(false);
@@ -89,6 +90,7 @@ Antworte als JSON Array mit objects: {kaufmotiv, produktmerkmal, uebersetzer, ku
           </Card>
         </div>
       )}
+      <LeadAnswersCard call={call} />
     </div>
   );
 }

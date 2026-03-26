@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import StepGoalCard from './StepGoalCard';
+import LeadAnswersCard from './LeadAnswersCard';
 
 const suggestedQuestions = [
   'Was ist dir wichtig, wenn es um Training geht?',
@@ -51,6 +52,8 @@ export default function Step3({ call, stepGoal, onNotesChange }) {
           className="min-h-48"
         />
       </Card>
+
+      <LeadAnswersCard call={call} />
     </div>
   );
 }

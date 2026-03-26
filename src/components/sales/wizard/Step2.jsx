@@ -4,6 +4,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import StepGoalCard from './StepGoalCard';
+import LeadAnswersCard from './LeadAnswersCard';
 
 export default function Step2({ call, stepGoal, onDataChange }) {
   const [gegenwart, setGegenwart] = useState(call.gvz_gegenwart || '');
@@ -137,6 +138,8 @@ export default function Step2({ call, stepGoal, onDataChange }) {
           {loading ? 'Wird generiert...' : 'GVZ-Fragen generieren'}
         </Button>
       </div>
+
+      <LeadAnswersCard call={call} />
     </div>
   );
 }
