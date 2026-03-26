@@ -22,6 +22,7 @@ import SalesCockpit from './pages/SalesCockpit';
 import SalesWizard from './pages/SalesWizard';
 import AdStudio832 from './pages/AdStudio832';
 import TestimonialCards832 from './pages/TestimonialCards832';
+import AdminDashboard from './pages/AdminDashboard';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -88,6 +89,7 @@ const AuthenticatedApp = () => {
       <Route path="/sales-wizard/:callId" element={<SalesWizard />} />
       <Route path="/AdStudio832" element={<LayoutWrapper currentPageName="AdStudio832"><AdStudio832 /></LayoutWrapper>} />
       <Route path="/TestimonialCards832" element={<LayoutWrapper currentPageName="TestimonialCards832"><TestimonialCards832 /></LayoutWrapper>} />
+      <Route path="/admin" element={<LayoutWrapper currentPageName="AdminDashboard"><AdminDashboard /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     <AdminNav />

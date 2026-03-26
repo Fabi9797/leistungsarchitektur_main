@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { LayoutDashboard, Users, Pill, Utensils, CalendarDays, ChevronRight, X, TrendingUp, Mic, Phone, Megaphone, CreditCard } from "lucide-react";
 
 const TOOLS = [
+  { label: "Admin Dashboard", icon: LayoutDashboard, path: "/admin" },
   { label: "Clients", icon: Users, path: "/Clients832" },
   { label: "Content Planer", icon: CalendarDays, path: "/ContentPlanning832" },
   { label: "Ad Studio", icon: Megaphone, path: "/AdStudio832" },
