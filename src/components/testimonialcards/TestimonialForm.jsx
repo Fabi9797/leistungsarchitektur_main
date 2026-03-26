@@ -53,11 +53,11 @@ function parseCSVData(text) {
 }
 
 export default function TestimonialForm({ testimonial, onClose, onSaved }) {
-  const [form, setForm] = useState({ ...EMPTY, ...testimonial });
+  const [form, setForm] = useState(() => ({ ...EMPTY, ...(testimonial || {}) }));
   
   useEffect(() => {
-    setForm({ ...EMPTY, ...testimonial });
-  }, [testimonial?.id]);
+    setForm({ ...EMPTY, ...(testimonial || {}) });
+  }, [testimonial?.id || 'new']);
   const [saving, setSaving] = useState(false);
   const [csvText, setCsvText] = useState("");
   const [csvParsed, setCsvParsed] = useState(false);
