@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Upload, Mic, Check, Loader2 } from "lucide-react";
+import { Upload, Mic, Check, Loader2, Link2 } from "lucide-react";
 
 const NAMES = ["Frederick", "Alex", "Shayan"];
 
@@ -8,12 +8,18 @@ export default function TestimonialAdmin832() {
   const [records, setRecords] = useState({});
   const [uploading, setUploading] = useState({});
   const [saved, setSaved] = useState({});
+  const [testimonials, setTestimonials] = useState([]);
+  const [showMapping, setShowMapping] = useState(false);
 
   useEffect(() => {
     base44.entities.TestimonialAudio.list().then(list => {
       const map = {};
       list.forEach(r => { map[r.name] = r; });
       setRecords(map);
+    });
+
+    base44.entities.Testimonial.list().then(list => {
+      setTestimonials(list || []);
     });
   }, []);
 
@@ -40,13 +46,61 @@ export default function TestimonialAdmin832() {
   return (
     <div className="min-h-screen bg-[#0f0f0f] p-8">
       <div className="max-w-2xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-white text-2xl font-bold mb-1">Testimonial Audios</h1>
-          <p className="text-white/40 text-sm">MP3-Dateien für die Kundenstimmen auf der Website hochladen.</p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-white text-2xl font-bold mb-1">Testimonial Audios</h1>
+            <p className="text-white/40 text-sm">MP3-Dateien für die Kundenstimmen auf der Website hochladen.</p>
+          </div>
+          <button
+            onClick={() => setShowMapping(!showMapping)}
+            className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-medium transition-colors"
+          >
+            <Link2 className="w-4 h-4" />
+            Zuordnungen
+          </button>
         </div>
 
+        {showMapping && (
+          <div className="mb-8 bg-white/5 border border-white/10 rounded-2xl p-6">
+            <h2 className="text-white font-bold mb-4">Zuordnungen zu Startseite</h2>
+            <p className="text-white/40 text-sm mb-4">Wähle ein Testimonial für jeden Namen auf der Startseite:</p>
+            <div className="space-y-3">
+              {NAMES.map(name => (
+                <div key={name} className="bg-[#1a1a1a] rounded-lg p-4 border border-white/5">
+                  <p className="text-white/60 text-sm mb-2">{name}</p>
+                  <select
+                    value={
+                      testimonials.find(t => t.client_name === name)?.id || ""
+                    }
+                    onChange={e => {
+                      const testId = e.target.value;
+                      if (!testId) return;
+                      const testimonial = testimonials.find(t => t.id === testId);
+                      if (testimonial && testimonial.client_name !== name) {
+                        base44.entities.Testimonial.update(testId, { client_name: name }).then(() => {
+                          base44.entities.Testimonial.list().then(list => {
+                            setTestimonials(list);
+                          });
+                        });
+                      }
+                    }}
+                    className="w-full bg-[#0f0f0f] text-white border border-white/10 rounded-lg px-3 py-2 text-sm"
+                  >
+                    <option value="">– Kein Testimonial –</option>
+                    {testimonials.map(t => (
+                      <option key={t.id} value={t.id}>
+                        {t.client_name || "(Namenlos)"} {t.id === testimonials.find(x => x.client_name === name)?.id ? "✓" : ""}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="space-y-4">
-          {NAMES.map(name => {
+           {NAMES.map(name => {
             const rec = records[name];
             const isUploading = uploading[name];
             const isSaved = saved[name];
