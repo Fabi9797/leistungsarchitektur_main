@@ -198,7 +198,7 @@ export default function SocialProof({ images }) {
                     transition={{ duration: 0.6, ease: "easeInOut" }}
                     style={{ transformStyle: "preserve-3d" }}
                     onClick={() => setFlipped(prev => ({ ...prev, [t.name]: !prev[t.name] }))}
-                    className="cursor-pointer"
+                    className="cursor-pointer rounded-2xl overflow-hidden"
                   >
                     {/* FRONT */}
                     <div
