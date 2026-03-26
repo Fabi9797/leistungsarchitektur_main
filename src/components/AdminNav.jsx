@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import { LayoutDashboard, Users, Pill, Utensils, CalendarDays, ChevronRight, X, TrendingUp, Mic, Phone } from "lucide-react";
+import { LayoutDashboard, Users, Pill, Utensils, CalendarDays, ChevronRight, X, TrendingUp, Mic, Phone, Megaphone } from "lucide-react";
 
 const TOOLS = [
   { label: "Clients", icon: Users, path: "/Clients832" },
   { label: "Content Planer", icon: CalendarDays, path: "/ContentPlanning832" },
+  { label: "Ad Studio", icon: Megaphone, path: "/AdStudio832" },
   { label: "Supplements", icon: Pill, path: "/SupplementAdmin832" },
   { label: "Ernährung", icon: Utensils, path: "/NutritionAdmin832" },
   { label: "Dashboard", icon: LayoutDashboard, path: "/ClientOverview832" },

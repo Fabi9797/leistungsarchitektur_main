@@ -20,6 +20,7 @@ import Impressum from './pages/Impressum';
 import Datenschutz from './pages/Datenschutz';
 import SalesCockpit from './pages/SalesCockpit';
 import SalesWizard from './pages/SalesWizard';
+import AdStudio832 from './pages/AdStudio832';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -84,6 +85,7 @@ const AuthenticatedApp = () => {
       <Route path="/datenschutz" element={<Datenschutz />} />
       <Route path="/sales-cockpit" element={<LayoutWrapper currentPageName="SalesCockpit"><SalesCockpit /></LayoutWrapper>} />
       <Route path="/sales-wizard/:callId" element={<SalesWizard />} />
+      <Route path="/AdStudio832" element={<LayoutWrapper currentPageName="AdStudio832"><AdStudio832 /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     <AdminNav />
