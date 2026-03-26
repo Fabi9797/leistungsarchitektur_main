@@ -5,12 +5,14 @@ import { base44 } from '@/api/base44Client';
 import StepGoalCard from './StepGoalCard';
 import LeadAnswersCard from './LeadAnswersCard';
 import { PUEK_KETTEN, PUEK_GESAMTVORTEIL } from '@/lib/salesleitfaden';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function Step8({ call, stepGoal, onDataChange }) {
   const [loading, setLoading] = useState(false);
   const [pueukChains, setPueukChains] = useState(
     call.puek_json ? JSON.parse(call.puek_json) : null
   );
+  const [vorlagenOpen, setVorlagenOpen] = useState(false);
 
   const kaufmotive = call.kaufmotive_json ? JSON.parse(call.kaufmotive_json) : [];
 
@@ -47,6 +49,34 @@ Die formulierung_komplett soll eine natürliche Sprachformulierung sein: "[P] �
   return (
     <div className="space-y-6">
       <StepGoalCard goal={stepGoal} />
+
+      {/* PÜK Vorlagen Accordion */}
+      <Card className="overflow-hidden border border-gray-200">
+        <button
+          onClick={() => setVorlagenOpen(!vorlagenOpen)}
+          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-bold uppercase tracking-widest px-2 py-0.5 rounded" style={{ backgroundColor: '#C9A84C20', color: '#C9A84C' }}>Vorlagen</span>
+            <span className="font-semibold text-sm" style={{ color: '#1B365D' }}>PÜK-Ketten Referenz</span>
+          </div>
+          {vorlagenOpen ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+        </button>
+        {vorlagenOpen && (
+          <div className="border-t border-gray-100 divide-y divide-gray-100">
+            {PUEK_KETTEN.map((pk) => (
+              <div key={pk.id} className="px-5 py-4">
+                <p className="text-xs font-bold uppercase tracking-wide mb-2" style={{ color: '#1B365D' }}>{pk.titel}</p>
+                <div className="space-y-1 text-sm text-gray-700">
+                  <div><span className="font-semibold text-gray-500">P:</span> {pk.p}</div>
+                  <div><span className="font-semibold text-gray-500">Ü:</span> {pk.ue}</div>
+                  <div><span className="font-semibold text-gray-500">K:</span> {pk.k}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </Card>
 
       {!pueukChains ? (
         <div className="flex justify-center">
