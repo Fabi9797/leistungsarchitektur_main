@@ -99,28 +99,33 @@ Antworte als JSON: {"einstiege": ["...", "...", "..."]}`;
 
   return (
     <div className="space-y-6">
-      <div className="grid lg:grid-cols-3 gap-6">
-        {/* Kontaktdaten */}
-        <Card className="p-6" style={{ borderTop: '3px solid #1B365D' }}>
-          <h3 className="font-bold text-base mb-4" style={{ color: '#1B365D' }}>Kontakt</h3>
-          <div className="space-y-3">
-            <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide mb-0.5">Name</p>
-              <p className="font-semibold text-gray-900 text-sm">{call.lead_name}</p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide mb-0.5">E-Mail</p>
-              <p className="text-gray-700 text-sm">{call.lead_email || '-'}</p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide mb-0.5">Telefon</p>
-              <p className="text-gray-700 text-sm">{call.lead_phone || '-'}</p>
-            </div>
-          </div>
-        </Card>
 
+      {/* Kontaktdaten — kompakt horizontal */}
+      <Card className="p-4" style={{ borderTop: '3px solid #1B365D' }}>
+        <div className="flex flex-wrap items-center gap-6">
+          <div>
+            <p className="text-xs text-gray-400 uppercase tracking-wide">Name</p>
+            <p className="font-semibold text-gray-900 text-sm">{call.lead_name}</p>
+          </div>
+          {call.lead_email && (
+            <div>
+              <p className="text-xs text-gray-400 uppercase tracking-wide">E-Mail</p>
+              <p className="text-gray-700 text-sm">{call.lead_email}</p>
+            </div>
+          )}
+          {call.lead_phone && (
+            <div>
+              <p className="text-xs text-gray-400 uppercase tracking-wide">Telefon</p>
+              <p className="text-gray-700 text-sm">{call.lead_phone}</p>
+            </div>
+          )}
+        </div>
+      </Card>
+
+      {/* Gesprächseinstieg + Notizen nebeneinander */}
+      <div className="grid lg:grid-cols-2 gap-6">
         {/* Gesprächseinstieg */}
-        <Card className="p-6 lg:col-span-2" style={{ borderTop: '3px solid #C9A84C' }}>
+        <Card className="p-6" style={{ borderTop: '3px solid #C9A84C' }}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-base" style={{ color: '#1B365D' }}>Gesprächseinstieg</h3>
             <Button
@@ -132,13 +137,13 @@ Antworte als JSON: {"einstiege": ["...", "...", "..."]}`;
               style={{ borderColor: '#C9A84C', color: '#C9A84C' }}
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loadingEinstiege ? 'animate-spin' : ''}`} />
-              {loadingEinstiege ? 'Wird generiert...' : einstiege.length > 0 ? 'Aktualisieren' : 'Einstiege generieren'}
+              {loadingEinstiege ? 'Wird generiert...' : einstiege.length > 0 ? 'Aktualisieren' : 'Generieren'}
             </Button>
           </div>
 
           {einstiege.length === 0 ? (
             <p className="text-sm text-gray-400 italic mb-4">
-              Klicke auf "Einstiege generieren" für 3 individuelle Vorschläge basierend auf den Antworten des Leads.
+              Klicke auf "Generieren" für 3 individuelle Vorschläge basierend auf den Lead-Antworten.
             </p>
           ) : (
             <div className="space-y-3 mb-4">
@@ -159,7 +164,7 @@ Antworte als JSON: {"einstiege": ["...", "...", "..."]}`;
 
           <div className="border-t border-gray-200 pt-3 mt-2">
             <p className="text-xs font-semibold text-gray-600 mb-2">Checkliste vor dem Call:</p>
-            <div className="flex gap-6 flex-wrap">
+            <div className="flex gap-4 flex-wrap">
               {['Ruhige Atmosphäre', 'Unterlagen bereit', 'Volle Konzentration'].map((item) => (
                 <label key={item} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
                   <input type="checkbox" className="w-4 h-4 rounded" />
@@ -168,6 +173,17 @@ Antworte als JSON: {"einstiege": ["...", "...", "..."]}`;
               ))}
             </div>
           </div>
+        </Card>
+
+        {/* Notizfeld */}
+        <Card className="p-6">
+          <label className="block text-sm font-semibold text-gray-900 mb-3">Meine Notizen</label>
+          <Textarea
+            value={notes}
+            onChange={(e) => handleNotesChange(e.target.value)}
+            placeholder="Deine Notizen zu diesem Schritt..."
+            className="min-h-52"
+          />
         </Card>
       </div>
 
@@ -188,16 +204,6 @@ Antworte als JSON: {"einstiege": ["...", "...", "..."]}`;
         </div>
       </Card>
 
-      {/* Notizfeld */}
-      <Card className="p-6">
-        <label className="block text-sm font-semibold text-gray-900 mb-3">Meine Notizen zu diesem Schritt</label>
-        <Textarea
-          value={notes}
-          onChange={(e) => handleNotesChange(e.target.value)}
-          placeholder="Deine Notizen..."
-          className="min-h-28"
-        />
-      </Card>
     </div>
   );
 }
