@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Plus, LayoutList, Calendar, Filter } from "lucide-react";
+import { Plus, LayoutList, Calendar, Filter, BookOpen } from "lucide-react";
 import ContentListView from "../components/content/ContentListView";
 import ContentCalendarView from "../components/content/ContentCalendarView";
 import ContentEditor from "../components/content/ContentEditor";
+import StoryWeekPlanner from "../components/content/StoryWeekPlanner";
 import { TypeBadge, CategoryBadge, StatusBadge } from "../components/content/ContentBadge";
 
 const CATEGORIES = ["Alle", "Training", "Ernährung", "Supplements", "Steuerung"];
@@ -21,6 +22,7 @@ export default function ContentPlanning832() {
   const [pieces, setPieces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState("list");
+  const [tab, setTab] = useState("feed"); // "feed" | "stories"
   const [selected, setSelected] = useState(null);
   const [showEditor, setShowEditor] = useState(false);
   const [filterCat, setFilterCat] = useState("Alle");
@@ -60,75 +62,99 @@ export default function ContentPlanning832() {
             <h1 className="text-2xl font-bold text-[#00416A]">Content Planung</h1>
             <p className="text-xs text-black/40 mt-1 uppercase tracking-widest">Instagram · Contentkalender</p>
           </div>
-          <button onClick={openNew}
-            className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white rounded-xl text-sm font-semibold hover:bg-[#003356] transition">
-            <Plus className="w-4 h-4" /> Neues Content Piece
+          {tab === "feed" && (
+            <button onClick={openNew}
+              className="flex items-center gap-2 px-4 py-2 bg-[#00416A] text-white rounded-xl text-sm font-semibold hover:bg-[#003356] transition">
+              <Plus className="w-4 h-4" /> Neues Content Piece
+            </button>
+          )}
+        </div>
+
+        {/* Tab switch */}
+        <div className="flex gap-1 bg-black/5 rounded-xl p-1 w-fit mb-6">
+          <button onClick={() => setTab("feed")}
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition ${tab === "feed" ? "bg-white text-[#00416A] shadow-sm" : "text-black/40"}`}>
+            <LayoutList className="w-4 h-4" /> Feed-Beiträge
+          </button>
+          <button onClick={() => setTab("stories")}
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition ${tab === "stories" ? "bg-white text-[#00416A] shadow-sm" : "text-black/40"}`}>
+            <BookOpen className="w-4 h-4" /> Story Planer
           </button>
         </div>
 
-        {/* Stats bar */}
-        <div className="grid grid-cols-5 gap-2 mb-6">
-          {stats.map(s => (
-            <div key={s.label} className="bg-white rounded-xl px-3 py-3 text-center shadow-sm">
-              <p className={`text-2xl font-bold ${STATUS_COUNTS_COLORS[s.label]}`}>{s.count}</p>
-              <p className="text-[10px] text-black/40 font-semibold uppercase mt-0.5">{s.label}</p>
+        {tab === "feed" && (
+          <>
+            {/* Stats bar */}
+            <div className="grid grid-cols-5 gap-2 mb-6">
+              {stats.map(s => (
+                <div key={s.label} className="bg-white rounded-xl px-3 py-3 text-center shadow-sm">
+                  <p className={`text-2xl font-bold ${STATUS_COUNTS_COLORS[s.label]}`}>{s.count}</p>
+                  <p className="text-[10px] text-black/40 font-semibold uppercase mt-0.5">{s.label}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* Controls */}
-        <div className="flex flex-wrap items-center gap-3 mb-4">
-          {/* View toggle */}
-          <div className="flex gap-1 bg-black/5 rounded-xl p-1">
-            <button onClick={() => setView("list")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition ${view === "list" ? "bg-white text-[#00416A] shadow-sm" : "text-black/40"}`}>
-              <LayoutList className="w-4 h-4" /> Liste
-            </button>
-            <button onClick={() => setView("calendar")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition ${view === "calendar" ? "bg-white text-[#00416A] shadow-sm" : "text-black/40"}`}>
-              <Calendar className="w-4 h-4" /> Kalender
-            </button>
-          </div>
+            {/* Controls */}
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              {/* View toggle */}
+              <div className="flex gap-1 bg-black/5 rounded-xl p-1">
+                <button onClick={() => setView("list")}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition ${view === "list" ? "bg-white text-[#00416A] shadow-sm" : "text-black/40"}`}>
+                  <LayoutList className="w-4 h-4" /> Liste
+                </button>
+                <button onClick={() => setView("calendar")}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition ${view === "calendar" ? "bg-white text-[#00416A] shadow-sm" : "text-black/40"}`}>
+                  <Calendar className="w-4 h-4" /> Kalender
+                </button>
+              </div>
 
-          {/* Filters */}
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <Filter className="w-3.5 h-3.5 text-black/30" />
-            {CATEGORIES.map(c => (
-              <button key={c} onClick={() => setFilterCat(c)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition ${filterCat === c ? "bg-[#00416A] text-white" : "bg-white text-black/40 hover:bg-black/5"}`}>
-                {c}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {STATUSES.slice(1).map(s => (
-              <button key={s} onClick={() => setFilterStatus(filterStatus === s ? "Alle" : s)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition ${filterStatus === s ? "bg-[#00416A] text-white" : "bg-white text-black/40 hover:bg-black/5"}`}>
-                {s}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="mt-2">
-          {loading ? (
-            <p className="text-center py-10 text-black/30 text-sm">Laden...</p>
-          ) : view === "list" ? (
-            <ContentListView pieces={filtered} onSelect={openEdit} />
-          ) : (
-            <div className="bg-[#F0EAD6]/50 rounded-2xl p-4">
-              <ContentCalendarView
-                pieces={filtered}
-                onSelect={openEdit}
-                onDateChange={async (pieceId, dateStr) => {
-                  await base44.entities.ContentPiece.update(pieceId, { planned_date: dateStr });
-                  load();
-                }}
-              />
+              {/* Filters */}
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <Filter className="w-3.5 h-3.5 text-black/30" />
+                {CATEGORIES.map(c => (
+                  <button key={c} onClick={() => setFilterCat(c)}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold transition ${filterCat === c ? "bg-[#00416A] text-white" : "bg-white text-black/40 hover:bg-black/5"}`}>
+                    {c}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {STATUSES.slice(1).map(s => (
+                  <button key={s} onClick={() => setFilterStatus(filterStatus === s ? "Alle" : s)}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold transition ${filterStatus === s ? "bg-[#00416A] text-white" : "bg-white text-black/40 hover:bg-black/5"}`}>
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
-          )}
-        </div>
+
+            {/* Content */}
+            <div className="mt-2">
+              {loading ? (
+                <p className="text-center py-10 text-black/30 text-sm">Laden...</p>
+              ) : view === "list" ? (
+                <ContentListView pieces={filtered} onSelect={openEdit} />
+              ) : (
+                <div className="bg-[#F0EAD6]/50 rounded-2xl p-4">
+                  <ContentCalendarView
+                    pieces={filtered}
+                    onSelect={openEdit}
+                    onDateChange={async (pieceId, dateStr) => {
+                      await base44.entities.ContentPiece.update(pieceId, { planned_date: dateStr });
+                      load();
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          </>
+        )}
+
+        {tab === "stories" && (
+          <div className="bg-white/60 rounded-2xl p-4">
+            <StoryWeekPlanner />
+          </div>
+        )}
       </div>
 
       {showEditor && (
