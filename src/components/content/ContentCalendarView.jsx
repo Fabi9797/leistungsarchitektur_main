@@ -61,27 +61,35 @@ function isSameDay(a, b) {
 }
 
 // --- Story loader hook ---
-function useStorySlotsForRange(startDate, endDate) {
+function useStorySlots() {
   const [storySlots, setStorySlots] = useState([]);
   useEffect(() => {
-    // Load all non-template story slots and filter by date range
     base44.entities.StorySlot.filter({ is_template: false }).then(all => {
       setStorySlots(all);
     }).catch(() => setStorySlots([]));
-  }, [startDate?.toISOString(), endDate?.toISOString()]);
+  }, []);
   return storySlots;
 }
 
 // Map story slots (with week_key + day_index) to actual dates
+// Uses the same getMonday logic as StoryWeekPlanner to ensure consistency
+function weekKeyToMonday(weekKey) {
+  const [y, w] = weekKey.split("-").map(Number);
+  // Jan 4 is always in week 1 of its year (ISO 8601)
+  const jan4 = new Date(y, 0, 4);
+  // Find Monday of week 1
+  const week1Monday = new Date(jan4);
+  week1Monday.setDate(jan4.getDate() - ((jan4.getDay() + 6) % 7));
+  // Add (w-1) weeks to get to desired week
+  week1Monday.setDate(week1Monday.getDate() + (w - 1) * 7);
+  return week1Monday;
+}
+
 function storySlotsToDateMap(slots) {
   const map = {}; // "YYYY-MM-DD" -> [slot, ...]
   slots.forEach(slot => {
     if (!slot.week_key || slot.week_key === "template") return;
-    const [y, w] = slot.week_key.split("-").map(Number);
-    // Get Monday of that ISO week
-    const jan4 = new Date(y, 0, 4);
-    const monday = new Date(jan4);
-    monday.setDate(jan4.getDate() - ((jan4.getDay() + 6) % 7) + (w - 1) * 7);
+    const monday = weekKeyToMonday(slot.week_key);
     const dayDate = new Date(monday);
     dayDate.setDate(monday.getDate() + slot.day_index);
     const key = toDateStr(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate());
@@ -368,7 +376,7 @@ export default function ContentCalendarView({ pieces, onSelect, onDateChange }) 
   const [currentMonday, setCurrentMonday] = useState(() => getMonday(today));
   const [currentDay, setCurrentDay] = useState(today);
 
-  const allStorySlots = useStorySlotsForRange(null, null);
+  const allStorySlots = useStorySlots();
   const storyByDate = storySlotsToDateMap(allStorySlots);
 
   // Navigation helpers
