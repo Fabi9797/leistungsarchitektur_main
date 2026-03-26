@@ -16,6 +16,17 @@ const EMPTY = {
   sichtbare_metriken: '["gewicht","hrv","ruhepuls","schritte"]',
 };
 
+const InputField = ({ k, value, onChange, placeholder, type = "text", ...props }) => (
+  <input 
+    type={type} 
+    placeholder={placeholder} 
+    value={value ?? ""} 
+    onChange={onChange}
+    className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
+    {...props} 
+  />
+);
+
 function parseCSVData(text) {
   const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
   // Find header line
@@ -147,16 +158,6 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
       {children}
     </div>
   );
-  const Input = ({ k, placeholder, ...props }) => (
-    <input type="text" placeholder={placeholder} value={form[k] ?? ""} onChange={e => set(k, e.target.value)}
-      className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
-      {...props} />
-  );
-  const NumInput = ({ k, ...props }) => (
-    <input type="number" value={form[k] ?? ""} onChange={e => set(k, e.target.value === "" ? "" : parseFloat(e.target.value))}
-      className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
-      {...props} />
-  );
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 overflow-y-auto">
@@ -173,10 +174,10 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
           <div>
             <p className="text-[10px] font-black text-black/30 uppercase tracking-widest mb-3">Basis-Infos</p>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Name *"><Input k="client_name" placeholder="z.B. Frederick" /></Field>
-              <Field label="Instagram Handle"><Input k="instagram_handle" placeholder="@name" /></Field>
-              <Field label="Zeitraum"><Input k="zeitraum" placeholder="z.B. 12 Wochen" /></Field>
-              <Field label="Zielgruppen-Typ"><Input k="zielgruppe_typ" placeholder="Unternehmer, Läufer..." /></Field>
+              <Field label="Name *"><InputField value={form.client_name} onChange={e => set("client_name", e.target.value)} placeholder="z.B. Frederick" /></Field>
+              <Field label="Instagram Handle"><InputField value={form.instagram_handle} onChange={e => set("instagram_handle", e.target.value)} placeholder="@name" /></Field>
+              <Field label="Zeitraum"><InputField value={form.zeitraum} onChange={e => set("zeitraum", e.target.value)} placeholder="z.B. 12 Wochen" /></Field>
+              <Field label="Zielgruppen-Typ"><InputField value={form.zielgruppe_typ} onChange={e => set("zielgruppe_typ", e.target.value)} placeholder="Unternehmer, Läufer..." /></Field>
               <Field label="Pillar">
                 <select value={form.pillar} onChange={e => set("pillar", e.target.value)}
                   className="w-full rounded-xl border border-black/10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white">
@@ -184,7 +185,7 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
                   {PILLARS.map(p => <option key={p}>{p}</option>)}
                 </select>
               </Field>
-              <Field label="Profilbild URL"><Input k="avatar_url" placeholder="https://..." /></Field>
+              <Field label="Profilbild URL"><InputField value={form.avatar_url} onChange={e => set("avatar_url", e.target.value)} placeholder="https://..." /></Field>
               <div className="col-span-2">
                 <Field label="Problem">
                   <textarea value={form.problem ?? ""} onChange={e => set("problem", e.target.value)} rows={2}
@@ -264,8 +265,8 @@ export default function TestimonialForm({ testimonial, onClose, onSaved }) {
                 <div key={key} className="bg-white rounded-xl border border-black/8 p-3">
                   <p className="text-[10px] font-bold text-black/40 uppercase mb-2">{label}</p>
                   <div className="grid grid-cols-2 gap-2 mb-2">
-                    <Field label="Start"><NumInput k={`${key}_start`} /></Field>
-                    <Field label="Ende"><NumInput k={`${key}_end`} /></Field>
+                    <Field label="Start"><InputField type="number" value={form[`${key}_start`]} onChange={e => set(`${key}_start`, e.target.value === "" ? "" : parseFloat(e.target.value))} /></Field>
+                    <Field label="Ende"><InputField type="number" value={form[`${key}_end`]} onChange={e => set(`${key}_end`, e.target.value === "" ? "" : parseFloat(e.target.value))} /></Field>
                   </div>
                   <Field label="Verlauf (JSON-Array, z.B. [88.5, 87.2, ...])" >
                     <textarea value={form[`${key}_verlauf_json`] ?? ""} onChange={e => set(`${key}_verlauf_json`, e.target.value)}
