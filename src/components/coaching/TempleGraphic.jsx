@@ -1,11 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Target, Dumbbell, Apple, CalendarCheck, TrendingUp } from "lucide-react";
+import { Target, Dumbbell, Apple, FlaskConical, TrendingUp } from "lucide-react";
 
 const pillars = [
   { icon: Dumbbell, label: "Training", num: "01" },
   { icon: Apple, label: "Ernährung", num: "02" },
-  { icon: CalendarCheck, label: "Nahrungsergänzung", num: "03" },
+  { icon: FlaskConical, label: "Nahrungs\u00adergänzung", num: "03" },
 ];
 
 const containerVariants = {
@@ -89,7 +89,7 @@ export default function TempleGraphic() {
                   <p className="text-[8px] font-bold text-[#00416A]/35 tracking-[0.15em] uppercase leading-none">
                     {p.num}
                   </p>
-                  <p className="text-[9px] font-bold text-black mt-0.5 leading-tight text-center hyphens-auto" lang="de">{p.label}</p>
+                  <p className="text-[10px] sm:text-[11px] font-bold text-black mt-0.5 leading-tight text-center">{p.label}</p>
                 </div>
 
                 <div className="hidden xs:flex gap-px">
