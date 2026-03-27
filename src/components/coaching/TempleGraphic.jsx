@@ -89,7 +89,7 @@ export default function TempleGraphic() {
                   <p className="text-[8px] font-bold text-[#00416A]/35 tracking-[0.15em] uppercase leading-none">
                     {p.num}
                   </p>
-                  <p className="text-[11px] sm:text-sm font-bold text-black mt-0.5 leading-tight">{p.label}</p>
+                  <p className="text-[9px] sm:text-[11px] font-bold text-black mt-0.5 leading-tight text-center break-words">{p.label}</p>
                 </div>
 
                 <div className="hidden xs:flex gap-px">
