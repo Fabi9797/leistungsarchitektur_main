@@ -32,7 +32,7 @@ export default function Navbar() {
             <a href="#" className="flex items-center gap-2.5">
               <div className="w-9 h-9 flex items-center justify-center flex-shrink-0">
                 <img
-                  src="https://media.base44.com/images/public/69b064c89953b727c5202e21/a128f5dab_ChatGPTImage19Marz202616_44_51.png"
+                  src="https://media.base44.com/images/public/69b064c89953b727c5202e21/0890b8689_DesignohneTitel15.png"
                   alt="Logo"
                   className="w-9 h-9 object-contain rounded-lg"
                 />
