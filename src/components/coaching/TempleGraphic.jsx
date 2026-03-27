@@ -5,7 +5,7 @@ import { Target, Dumbbell, Apple, CalendarCheck, TrendingUp } from "lucide-react
 const pillars = [
   { icon: Dumbbell, label: "Training", num: "01" },
   { icon: Apple, label: "Ernährung", num: "02" },
-  { icon: CalendarCheck, label: "Gewohnheiten", num: "03" },
+  { icon: CalendarCheck, label: "Nahrungsergänzung", num: "03" },
 ];
 
 const containerVariants = {
