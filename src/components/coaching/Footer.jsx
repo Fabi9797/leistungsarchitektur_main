@@ -6,12 +6,19 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xs">PA</span>
+          <a href="#" className="flex items-center gap-2.5">
+            <div className="w-9 h-9 flex items-center justify-center flex-shrink-0">
+              <img
+                src="https://media.base44.com/images/public/69b064c89953b727c5202e21/4e221e904_DesignohneTitel16.png"
+                alt="Logo"
+                className="w-9 h-9 object-contain rounded-lg"
+              />
             </div>
-            <span className="text-sm text-white/40 font-medium">Performance Architecture</span>
-          </div>
+            <span className="text-xs font-bold tracking-widest text-white/70 leading-tight uppercase">
+              LEISTUNGS<br/>
+              <span className="font-light tracking-widest">ARCHITEKTUR</span>
+            </span>
+          </a>
 
           {/* Links */}
           <div className="flex items-center gap-8">
