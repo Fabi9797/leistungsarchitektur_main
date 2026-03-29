@@ -189,7 +189,7 @@ export default function SocialProof({ images }) {
                   <div
                     className="relative aspect-[4/5] overflow-hidden"
                     style={{ cursor: igHandles[t.name] ? "pointer" : "default" }}
-                    onClick={() => { if (igHandles[t.name]) window.open(igHandles[t.name], "_blank"); }}
+                    onClick={() => { if (igHandles[t.name]) window.open(igHandles[t.name].startsWith("http") ? igHandles[t.name] : `https://instagram.com/${igHandles[t.name].replace(/^@/, "")}`, "_blank"); }}
                   >
                     <img
                       src={images[i]}
