@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import { Lock } from "lucide-react";
 
 const PASSWORD = "4802";
-const STORAGE_KEY = "backoffice_auth";
+const STORAGE_KEY = "backoffice_auth_expiry";
+const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+
+function isAuthValid() {
+  const expiry = localStorage.getItem(STORAGE_KEY);
+  return expiry && Date.now() < parseInt(expiry, 10);
+}
 
 export default function BackofficeGuard({ children }) {
-  const [authed, setAuthed] = useState(() => sessionStorage.getItem(STORAGE_KEY) === "1");
+  const [authed, setAuthed] = useState(() => isAuthValid());
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
 
@@ -14,7 +20,7 @@ export default function BackofficeGuard({ children }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input === PASSWORD) {
-      sessionStorage.setItem(STORAGE_KEY, "1");
+      localStorage.setItem(STORAGE_KEY, String(Date.now() + SEVEN_DAYS));
       setAuthed(true);
     } else {
       setError(true);
