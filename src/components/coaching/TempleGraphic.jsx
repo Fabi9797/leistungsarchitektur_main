@@ -72,7 +72,7 @@ export default function TempleGraphic() {
               <motion.div
                 variants={pillarGrow}
                 style={{ transformOrigin: "top" }}
-                className="w-full flex flex-col items-center justify-center py-5 sm:py-8 px-2 gap-2"
+                className="w-full flex flex-col items-center justify-center py-5 sm:py-8 px-2 gap-2 min-h-[120px] sm:min-h-[160px]"
               >
                 {/* Fluting – hidden on very small screens to save space */}
                 <div className="hidden xs:flex gap-px">
