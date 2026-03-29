@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Pause, Mic } from "lucide-react";
 import { base44 } from "@/api/base44Client";
-import TestimonialCard from "../testimonialcards/TestimonialCard";
 
 const DEFAULT_VOICE_URLS = {
   Shayan: "https://industrial-maroon-afdxrnj55j.edgeone.app/Shayan.mp3",
@@ -100,8 +99,7 @@ export default function SocialProof({ images }) {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [voiceUrls, setVoiceUrls] = useState(DEFAULT_VOICE_URLS);
-  const [flipped, setFlipped] = useState({});
-  const [testimonials, setTestimonials] = useState({});
+  
 
   useEffect(() => {
     base44.entities.TestimonialAudio.list().then(records => {
@@ -109,14 +107,6 @@ export default function SocialProof({ images }) {
         const urls = { ...DEFAULT_VOICE_URLS };
         records.forEach(r => { if (r.name && r.audio_url) urls[r.name] = r.audio_url; });
         setVoiceUrls(urls);
-      }
-    }).catch(() => {});
-
-    base44.entities.Testimonial.list().then(records => {
-      if (records && records.length > 0) {
-        const map = {};
-        records.forEach(r => { if (r.client_name) map[r.client_name] = r; });
-        setTestimonials(map);
       }
     }).catch(() => {});
   }, []);
@@ -180,88 +170,33 @@ export default function SocialProof({ images }) {
             className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-3"
             style={{ scrollbarWidth: "none" }}
           >
-            {transformations.map((t, i) => {
-              const isFlipped = flipped[t.name];
-              const testimonial = testimonials[t.name];
-              
-              return (
-                <div
-                   key={t.name}
-                   className="flex-shrink-0 snap-start"
-                   style={{ 
-                     perspective: "1000px",
-                     width: "clamp(300px, 85vw, 440px)"
-                   }}
-                 >
-                  <motion.div
-                    animate={{ rotateY: isFlipped ? 180 : 0 }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                    style={{ transformStyle: "preserve-3d" }}
-                    onClick={() => setFlipped(prev => ({ ...prev, [t.name]: !prev[t.name] }))}
-                    className="cursor-pointer"
-                  >
-                    {/* FRONT */}
-                    <div
-                      style={{ backfaceVisibility: "hidden" }}
-                      className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-500"
-                    >
-                      <div className="relative aspect-[4/5] overflow-hidden">
-                        <img
-                          src={images[i]}
-                          alt={`Transformation ${t.name}`}
-                          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <p className="text-white/70 text-xs font-semibold tracking-wider uppercase">{t.stats}</p>
-                          <h3 className="text-white text-xl font-bold mt-1">{t.name}</h3>
-                          <p className="text-white/80 text-sm font-medium mt-1">{t.tagline}</p>
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
-                          {/* Pulsing circles - all devices */}
-                          <div className="relative w-10 h-10 flex items-center justify-center">
-                            {/* Outer pulsing circle */}
-                            <motion.div
-                              animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.15, 0.5] }}
-                              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                              className="absolute w-10 h-10 rounded-full border border-white"
-                            />
-                            {/* Inner pulsing circle */}
-                            <motion.div
-                              animate={{ scale: [1, 1.1, 1], opacity: [0.7, 0.3, 0.7] }}
-                              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-                              className="absolute w-6 h-6 rounded-full border border-white"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="p-6">
-                        <p className="text-sm text-black/60 leading-relaxed italic">„{t.quote}"</p>
-                        <div onClick={(e) => e.stopPropagation()}>
-                          <VoicePlayer name={t.name} url={voiceUrls[t.name]} />
-                        </div>
-                      </div>
+            {transformations.map((t, i) => (
+              <div
+                key={t.name}
+                className="flex-shrink-0 snap-start"
+                style={{ width: "clamp(300px, 85vw, 440px)" }}
+              >
+                <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+                  <div className="relative aspect-[4/5] overflow-hidden">
+                    <img
+                      src={images[i]}
+                      alt={`Transformation ${t.name}`}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <p className="text-white/70 text-xs font-semibold tracking-wider uppercase">{t.stats}</p>
+                      <h3 className="text-white text-xl font-bold mt-1">{t.name}</h3>
+                      <p className="text-white/80 text-sm font-medium mt-1">{t.tagline}</p>
                     </div>
-
-                    {/* BACK */}
-                    <div
-                      style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", width: "100%", height: "100%" }}
-                      className="absolute inset-0 rounded-2xl overflow-hidden flex items-center justify-center"
-                    >
-                      {testimonial ? (
-                        <div style={{ transform: "scale(0.95)", transformOrigin: "center" }}>
-                          <TestimonialCard testimonial={testimonial} />
-                        </div>
-                      ) : (
-                        <div className="bg-white rounded-2xl shadow-sm p-6 flex items-center justify-center">
-                          <p className="text-black/30 text-sm">Card wird geladen...</p>
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
+                  </div>
+                  <div className="p-6">
+                    <p className="text-sm text-black/60 leading-relaxed italic">„{t.quote}"</p>
+                    <VoicePlayer name={t.name} url={voiceUrls[t.name]} />
+                  </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
 
           {/* Swipe hint */}
