@@ -1,0 +1,132 @@
+{
+  "name": "Testimonial",
+  "type": "object",
+  "properties": {
+    "client_name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "tagline": {
+      "type": "string",
+      "title": "Tagline (unter dem Namen)"
+    },
+    "stats": {
+      "type": "string",
+      "title": "Stats (z.B. -14 kg \u00b7 10 Wochen)"
+    },
+    "zitat": {
+      "type": "string",
+      "title": "Zitat"
+    },
+    "foto_url": {
+      "type": "string",
+      "title": "Foto URL (Startseite)"
+    },
+    "instagram_handle": {
+      "type": "string",
+      "title": "Instagram Profil-Link"
+    },
+    "is_active": {
+      "type": "boolean",
+      "title": "Auf Startseite anzeigen",
+      "default": true
+    },
+    "sort_order": {
+      "type": "number",
+      "title": "Reihenfolge (1, 2, 3...)",
+      "default": 99
+    },
+    "audio_url": {
+      "type": "string",
+      "title": "Audio URL"
+    },
+    "problem": {
+      "type": "string",
+      "title": "Problem des Klienten"
+    },
+    "ergebnis": {
+      "type": "string",
+      "title": "Erreichtes Ergebnis"
+    },
+    "zielgruppe_typ": {
+      "type": "string",
+      "title": "Typ (z.B. Unternehmer, L\u00e4ufer)"
+    },
+    "pillar": {
+      "type": "string",
+      "title": "Themen-Pillar",
+      "enum": [
+        "Ern\u00e4hrung",
+        "Training",
+        "Nahrungserg\u00e4nzung",
+        "Umweltanpassung",
+        "Alltagsbewegung",
+        "Mindset"
+      ]
+    },
+    "zeitraum": {
+      "type": "string",
+      "title": "Zeitraum"
+    },
+    "avatar_url": {
+      "type": "string",
+      "title": "Profilbild URL"
+    },
+    "gewicht_start": {
+      "type": "number",
+      "title": "Gewicht Start (kg)"
+    },
+    "gewicht_end": {
+      "type": "number",
+      "title": "Gewicht Ende (kg)"
+    },
+    "gewicht_verlauf_json": {
+      "type": "string",
+      "title": "Gewichtsverlauf (JSON Array)"
+    },
+    "hrv_start": {
+      "type": "number",
+      "title": "HRV Start (ms)"
+    },
+    "hrv_end": {
+      "type": "number",
+      "title": "HRV Ende (ms)"
+    },
+    "hrv_verlauf_json": {
+      "type": "string",
+      "title": "HRV Verlauf (JSON Array)"
+    },
+    "ruhepuls_start": {
+      "type": "number",
+      "title": "Ruhepuls Start (bpm)"
+    },
+    "ruhepuls_end": {
+      "type": "number",
+      "title": "Ruhepuls Ende (bpm)"
+    },
+    "ruhepuls_verlauf_json": {
+      "type": "string",
+      "title": "Ruhepuls Verlauf (JSON Array)"
+    },
+    "schritte_start": {
+      "type": "number",
+      "title": "Schritte Start (/Tag)"
+    },
+    "schritte_end": {
+      "type": "number",
+      "title": "Schritte Ende (/Tag)"
+    },
+    "schritte_verlauf_json": {
+      "type": "string",
+      "title": "Schritte Verlauf (JSON Array)"
+    },
+    "sichtbare_metriken": {
+      "type": "string",
+      "title": "Sichtbare Metriken (JSON Array)",
+      "default": "[\"gewicht\",\"hrv\",\"ruhepuls\",\"schritte\"]"
+    }
+  },
+  "required": [
+    "client_name"
+  ]
+}
