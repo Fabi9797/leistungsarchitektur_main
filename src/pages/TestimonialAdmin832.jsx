@@ -1,191 +1,255 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Upload, Mic, Check, Loader2, Link2 } from "lucide-react";
+import { Upload, Mic, Check, Loader2, Plus, Trash2, ChevronDown, ChevronUp, Eye, EyeOff } from "lucide-react";
 
-const NAMES = ["Frederick", "Alex", "Shayan"];
+const EMPTY_TESTIMONIAL = {
+  client_name: "",
+  tagline: "",
+  stats: "",
+  zitat: "",
+  foto_url: "",
+  instagram_handle: "",
+  audio_url: "",
+  sort_order: 99,
+  is_active: true,
+};
 
 export default function TestimonialAdmin832() {
-  const [records, setRecords] = useState({});
-  const [uploading, setUploading] = useState({});
-  const [saved, setSaved] = useState({});
   const [testimonials, setTestimonials] = useState([]);
-  const [showMapping, setShowMapping] = useState(false);
-  const [igHandles, setIgHandles] = useState({});
-  const [igSaving, setIgSaving] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [expanded, setExpanded] = useState({});
+  const [saving, setSaving] = useState({});
+  const [saved, setSaved] = useState({});
+  const [uploading, setUploading] = useState({});
+  const [localData, setLocalData] = useState({});
+  const [showNew, setShowNew] = useState(false);
+  const [newData, setNewData] = useState(EMPTY_TESTIMONIAL);
+  const [creating, setCreating] = useState(false);
 
-  useEffect(() => {
-    base44.entities.TestimonialAudio.list().then(list => {
-      const map = {};
-      list.forEach(r => { map[r.name] = r; });
-      setRecords(map);
-    });
-
-    base44.entities.Testimonial.list().then(list => {
-      setTestimonials(list || []);
-      const handles = {};
-      (list || []).forEach(t => {
-        if (t.client_name && t.instagram_handle) handles[t.client_name] = t.instagram_handle;
-      });
-      setIgHandles(handles);
-    });
-  }, []);
-
-  const saveIgHandle = async (name, handle) => {
-    setIgSaving(s => ({ ...s, [name]: true }));
-    const testimonial = testimonials.find(t => t.client_name === name);
-    if (testimonial) {
-      await base44.entities.Testimonial.update(testimonial.id, { instagram_handle: handle });
-    }
-    setIgSaving(s => ({ ...s, [name]: false }));
-    setSaved(s => ({ ...s, [`ig_${name}`]: true }));
-    setTimeout(() => setSaved(s => ({ ...s, [`ig_${name}`]: false })), 2000);
+  const load = async () => {
+    const list = await base44.entities.Testimonial.list("sort_order");
+    setTestimonials(list);
+    const local = {};
+    list.forEach(t => { local[t.id] = { ...t }; });
+    setLocalData(local);
+    setLoading(false);
   };
 
-  const handleUpload = async (name, file) => {
+  useEffect(() => { load(); }, []);
+
+  const toggle = (id) => setExpanded(e => ({ ...e, [id]: !e[id] }));
+
+  const update = (id, field, value) => {
+    setLocalData(d => ({ ...d, [id]: { ...d[id], [field]: value } }));
+  };
+
+  const save = async (id) => {
+    setSaving(s => ({ ...s, [id]: true }));
+    await base44.entities.Testimonial.update(id, localData[id]);
+    setSaving(s => ({ ...s, [id]: false }));
+    setSaved(s => ({ ...s, [id]: true }));
+    setTimeout(() => setSaved(s => ({ ...s, [id]: false })), 2000);
+  };
+
+  const toggleActive = async (t) => {
+    const newVal = !t.is_active;
+    await base44.entities.Testimonial.update(t.id, { is_active: newVal });
+    setTestimonials(list => list.map(x => x.id === t.id ? { ...x, is_active: newVal } : x));
+    setLocalData(d => ({ ...d, [t.id]: { ...d[t.id], is_active: newVal } }));
+  };
+
+  const deleteTestimonial = async (id) => {
+    if (!confirm("Testimonial wirklich löschen?")) return;
+    await base44.entities.Testimonial.delete(id);
+    setTestimonials(list => list.filter(t => t.id !== id));
+  };
+
+  const uploadAudio = async (id, file) => {
     if (!file) return;
-    setUploading(u => ({ ...u, [name]: true }));
-    try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
-      const existing = records[name];
-      let updated;
-      if (existing) {
-        updated = await base44.entities.TestimonialAudio.update(existing.id, { audio_url: file_url });
-      } else {
-        updated = await base44.entities.TestimonialAudio.create({ name, audio_url: file_url });
-      }
-      setRecords(r => ({ ...r, [name]: updated }));
-      setSaved(s => ({ ...s, [name]: true }));
-      setTimeout(() => setSaved(s => ({ ...s, [name]: false })), 2000);
-    } finally {
-      setUploading(u => ({ ...u, [name]: false }));
-    }
+    setUploading(u => ({ ...u, [id]: true }));
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    update(id, "audio_url", file_url);
+    await base44.entities.Testimonial.update(id, { audio_url: file_url });
+    setUploading(u => ({ ...u, [id]: false }));
+    setSaved(s => ({ ...s, [`audio_${id}`]: true }));
+    setTimeout(() => setSaved(s => ({ ...s, [`audio_${id}`]: false })), 2000);
   };
+
+  const uploadFoto = async (id, file) => {
+    if (!file) return;
+    setUploading(u => ({ ...u, [`foto_${id}`]: true }));
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    update(id, "foto_url", file_url);
+    await base44.entities.Testimonial.update(id, { foto_url: file_url });
+    setUploading(u => ({ ...u, [`foto_${id}`]: false }));
+    setSaved(s => ({ ...s, [`foto_${id}`]: true }));
+    setTimeout(() => setSaved(s => ({ ...s, [`foto_${id}`]: false })), 2000);
+  };
+
+  const createNew = async () => {
+    if (!newData.client_name.trim()) return;
+    setCreating(true);
+    await base44.entities.Testimonial.create(newData);
+    setCreating(false);
+    setShowNew(false);
+    setNewData(EMPTY_TESTIMONIAL);
+    load();
+  };
+
+  if (loading) return (
+    <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center">
+      <Loader2 className="w-6 h-6 text-white animate-spin" />
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-[#0f0f0f] p-8">
+    <div className="min-h-screen bg-[#0f0f0f] p-6 lg:p-10">
       <div className="max-w-2xl mx-auto">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-white text-2xl font-bold mb-1">Testimonial Audios</h1>
-            <p className="text-white/40 text-sm">MP3-Dateien für die Kundenstimmen auf der Website hochladen.</p>
+            <h1 className="text-white text-2xl font-bold mb-1">Testimonials</h1>
+            <p className="text-white/40 text-sm">Alle Inhalte der Startseiten-Testimonials verwalten.</p>
           </div>
           <button
-            onClick={() => setShowMapping(!showMapping)}
-            className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-medium transition-colors"
+            onClick={() => setShowNew(!showNew)}
+            className="flex items-center gap-2 px-4 py-2 bg-amber-400 hover:bg-amber-300 text-black rounded-lg text-sm font-semibold transition-colors"
           >
-            <Link2 className="w-4 h-4" />
-            Zuordnungen
+            <Plus className="w-4 h-4" />
+            Neu
           </button>
         </div>
 
-        {showMapping && (
-          <div className="mb-8 bg-white/5 border border-white/10 rounded-2xl p-6">
-            <h2 className="text-white font-bold mb-4">Zuordnungen zu Startseite</h2>
-            <p className="text-white/40 text-sm mb-4">Wähle ein Testimonial für jeden Namen auf der Startseite:</p>
+        {/* New Testimonial Form */}
+        {showNew && (
+          <div className="mb-6 bg-[#1a1a1a] rounded-2xl p-6 border border-amber-400/30">
+            <h2 className="text-white font-bold mb-4">Neues Testimonial</h2>
             <div className="space-y-3">
-              {NAMES.map(name => (
-                <div key={name} className="bg-[#1a1a1a] rounded-lg p-4 border border-white/5">
-                  <p className="text-white/60 text-sm mb-2">{name}</p>
-                  <select
-                    value={
-                      testimonials.find(t => t.client_name === name)?.id || ""
-                    }
-                    onChange={e => {
-                      const testId = e.target.value;
-                      if (!testId) return;
-                      const testimonial = testimonials.find(t => t.id === testId);
-                      if (testimonial && testimonial.client_name !== name) {
-                        base44.entities.Testimonial.update(testId, { client_name: name }).then(() => {
-                          base44.entities.Testimonial.list().then(list => {
-                            setTestimonials(list);
-                          });
-                        });
-                      }
-                    }}
-                    className="w-full bg-[#0f0f0f] text-white border border-white/10 rounded-lg px-3 py-2 text-sm"
-                  >
-                    <option value="">– Kein Testimonial –</option>
-                    {testimonials.map(t => (
-                      <option key={t.id} value={t.id}>
-                        {t.client_name || "(Namenlos)"} {t.id === testimonials.find(x => x.client_name === name)?.id ? "✓" : ""}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              ))}
+              <Field label="Name *" value={newData.client_name} onChange={v => setNewData(d => ({ ...d, client_name: v }))} />
+              <Field label="Tagline" value={newData.tagline} onChange={v => setNewData(d => ({ ...d, tagline: v }))} />
+              <Field label="Stats (z.B. -14 kg · 10 Wochen)" value={newData.stats} onChange={v => setNewData(d => ({ ...d, stats: v }))} />
+              <Field label="Zitat" value={newData.zitat} onChange={v => setNewData(d => ({ ...d, zitat: v }))} textarea />
+              <Field label="Foto URL" value={newData.foto_url} onChange={v => setNewData(d => ({ ...d, foto_url: v }))} />
+              <Field label="Instagram Link" value={newData.instagram_handle} onChange={v => setNewData(d => ({ ...d, instagram_handle: v }))} />
+              <Field label="Reihenfolge" value={String(newData.sort_order)} onChange={v => setNewData(d => ({ ...d, sort_order: Number(v) }))} type="number" />
+            </div>
+            <div className="flex gap-3 mt-5">
+              <button onClick={createNew} disabled={creating || !newData.client_name.trim()}
+                className="flex items-center gap-2 px-5 py-2 bg-amber-400 hover:bg-amber-300 text-black rounded-lg text-sm font-semibold disabled:opacity-40 transition-colors">
+                {creating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                Erstellen
+              </button>
+              <button onClick={() => setShowNew(false)} className="px-5 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm transition-colors">
+                Abbrechen
+              </button>
             </div>
           </div>
         )}
 
+        {/* Testimonial Cards */}
         <div className="space-y-4">
-           {NAMES.map(name => {
-            const rec = records[name];
-            const isUploading = uploading[name];
-            const isSaved = saved[name];
+          {testimonials.map(t => {
+            const d = localData[t.id] || t;
+            const isOpen = expanded[t.id];
             return (
-              <div key={name} className="bg-[#1a1a1a] rounded-2xl p-6 border border-white/5">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-amber-400/10 flex items-center justify-center">
-                      <Mic className="w-5 h-5 text-amber-400" />
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold">{name}</p>
-                      <p className="text-white/30 text-xs">
-                        {rec?.audio_url ? "Audio vorhanden ✓" : "Noch kein Audio"}
-                      </p>
-                    </div>
-                  </div>
-                  {isSaved && (
-                    <span className="flex items-center gap-1 text-green-400 text-xs">
-                      <Check className="w-3 h-3" /> Gespeichert
-                    </span>
-                  )}
-                </div>
-
-                {/* Instagram Handle */}
-                <div className="mb-4 flex items-center gap-2">
-                  <div className="flex-1 flex items-center gap-2 bg-[#0f0f0f] border border-white/10 rounded-lg px-3 py-2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white" opacity="0.4" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                    </svg>
-                    <input
-                      type="url"
-                      placeholder="https://instagram.com/username"
-                      value={igHandles[name] || ""}
-                      onChange={e => setIgHandles(h => ({ ...h, [name]: e.target.value }))}
-                      className="flex-1 bg-transparent text-white text-sm outline-none placeholder-white/20"
-                    />
-                  </div>
-                  <button
-                    onClick={() => saveIgHandle(name, igHandles[name] || "")}
-                    disabled={igSaving[name]}
-                    className="px-3 py-2 bg-white/10 hover:bg-white/20 text-white text-sm rounded-lg transition-colors flex items-center gap-1"
-                  >
-                    {igSaving[name] ? <Loader2 className="w-3 h-3 animate-spin" /> : saved[`ig_${name}`] ? <Check className="w-3 h-3 text-green-400" /> : "Speichern"}
-                  </button>
-                </div>
-
-                {rec?.audio_url && (
-                  <audio controls src={rec.audio_url} className="w-full mb-4 rounded-lg" style={{ height: 36 }} />
-                )}
-
-                <label className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-dashed cursor-pointer transition-colors text-sm font-medium
-                  ${isUploading ? "border-amber-400/30 text-amber-400/50" : "border-white/10 text-white/40 hover:border-amber-400/40 hover:text-amber-400"}`}>
-                  {isUploading ? (
-                    <><Loader2 className="w-4 h-4 animate-spin" /> Wird hochgeladen...</>
+              <div key={t.id} className={`bg-[#1a1a1a] rounded-2xl border ${t.is_active ? "border-white/5" : "border-white/5 opacity-60"}`}>
+                {/* Header */}
+                <div className="flex items-center gap-4 p-5">
+                  {d.foto_url ? (
+                    <img src={d.foto_url} className="w-12 h-12 rounded-full object-cover flex-shrink-0" alt={d.client_name} />
                   ) : (
-                    <><Upload className="w-4 h-4" /> MP3 hochladen</>
+                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 text-white/30 text-lg font-bold">
+                      {d.client_name?.[0] || "?"}
+                    </div>
                   )}
-                  <input type="file" accept="audio/mp3,audio/*" className="hidden"
-                    disabled={isUploading}
-                    onChange={e => handleUpload(name, e.target.files[0])} />
-                </label>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white font-semibold truncate">{d.client_name || "Unbenannt"}</p>
+                    <p className="text-white/40 text-xs truncate">{d.stats || "Keine Stats"}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {saved[t.id] && <span className="text-green-400 text-xs flex items-center gap-1"><Check className="w-3 h-3" />Gespeichert</span>}
+                    <button onClick={() => toggleActive(t)} title={t.is_active ? "Ausblenden" : "Anzeigen"}
+                      className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/40 hover:text-white transition-colors">
+                      {t.is_active ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                    </button>
+                    <button onClick={() => deleteTestimonial(t.id)} title="Löschen"
+                      className="w-8 h-8 rounded-lg bg-white/5 hover:bg-red-500/20 flex items-center justify-center text-white/40 hover:text-red-400 transition-colors">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                    <button onClick={() => toggle(t.id)}
+                      className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/40 hover:text-white transition-colors">
+                      {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Expanded Edit Area */}
+                {isOpen && (
+                  <div className="px-5 pb-5 border-t border-white/5 pt-5 space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <Field label="Name" value={d.client_name || ""} onChange={v => update(t.id, "client_name", v)} />
+                      <Field label="Reihenfolge" value={String(d.sort_order ?? 99)} onChange={v => update(t.id, "sort_order", Number(v))} type="number" />
+                      <Field label="Stats (z.B. -14 kg · 10 Wochen)" value={d.stats || ""} onChange={v => update(t.id, "stats", v)} />
+                      <Field label="Tagline" value={d.tagline || ""} onChange={v => update(t.id, "tagline", v)} />
+                    </div>
+                    <Field label="Zitat" value={d.zitat || ""} onChange={v => update(t.id, "zitat", v)} textarea />
+                    <Field label="Instagram Link (URL)" value={d.instagram_handle || ""} onChange={v => update(t.id, "instagram_handle", v)} />
+
+                    {/* Foto Upload */}
+                    <div>
+                      <p className="text-white/40 text-xs mb-2 font-medium">Foto (Startseite)</p>
+                      <div className="flex gap-2 items-center">
+                        <Field label="" value={d.foto_url || ""} onChange={v => update(t.id, "foto_url", v)} placeholder="https://... oder Datei hochladen" />
+                        <label className={`flex-shrink-0 flex items-center gap-1 px-3 py-2 rounded-lg border border-dashed cursor-pointer text-xs font-medium transition-colors
+                          ${uploading[`foto_${t.id}`] ? "border-amber-400/30 text-amber-400/50" : "border-white/20 text-white/40 hover:border-amber-400/40 hover:text-amber-400"}`}>
+                          {uploading[`foto_${t.id}`] ? <Loader2 className="w-3 h-3 animate-spin" /> : <Upload className="w-3 h-3" />}
+                          {saved[`foto_${t.id}`] ? <Check className="w-3 h-3 text-green-400" /> : "Upload"}
+                          <input type="file" accept="image/*" className="hidden" disabled={uploading[`foto_${t.id}`]}
+                            onChange={e => uploadFoto(t.id, e.target.files[0])} />
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Audio Upload */}
+                    <div>
+                      <p className="text-white/40 text-xs mb-2 font-medium">Audio (Kundenstimme)</p>
+                      {d.audio_url && (
+                        <audio controls src={d.audio_url} className="w-full mb-2 rounded-lg" style={{ height: 36 }} />
+                      )}
+                      <label className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-dashed cursor-pointer transition-colors text-sm font-medium
+                        ${uploading[t.id] ? "border-amber-400/30 text-amber-400/50" : "border-white/10 text-white/40 hover:border-amber-400/40 hover:text-amber-400"}`}>
+                        {uploading[t.id] ? <><Loader2 className="w-4 h-4 animate-spin" /> Wird hochgeladen...</>
+                          : saved[`audio_${t.id}`] ? <><Check className="w-4 h-4 text-green-400" /> Gespeichert</>
+                          : <><Mic className="w-4 h-4" /> MP3 hochladen</>}
+                        <input type="file" accept="audio/*" className="hidden" disabled={uploading[t.id]}
+                          onChange={e => uploadAudio(t.id, e.target.files[0])} />
+                      </label>
+                    </div>
+
+                    <button onClick={() => save(t.id)} disabled={saving[t.id]}
+                      className="w-full flex items-center justify-center gap-2 py-2.5 bg-amber-400 hover:bg-amber-300 text-black rounded-xl text-sm font-semibold transition-colors disabled:opacity-40">
+                      {saving[t.id] ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                      Änderungen speichern
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}
         </div>
       </div>
+    </div>
+  );
+}
+
+function Field({ label, value, onChange, textarea, type = "text", placeholder }) {
+  const cls = "w-full bg-[#0f0f0f] text-white text-sm border border-white/10 rounded-lg px-3 py-2 outline-none focus:border-amber-400/50 placeholder-white/20 resize-none";
+  return (
+    <div className="flex-1">
+      {label && <p className="text-white/40 text-xs mb-1 font-medium">{label}</p>}
+      {textarea
+        ? <textarea value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} className={cls} rows={3} />
+        : <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} className={cls} />
+      }
     </div>
   );
 }

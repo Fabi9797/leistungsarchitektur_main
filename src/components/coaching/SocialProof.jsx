@@ -3,12 +3,6 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Pause, Mic } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
-const DEFAULT_VOICE_URLS = {
-  Shayan: "https://industrial-maroon-afdxrnj55j.edgeone.app/Shayan.mp3",
-  Alex: "",
-  Frederick: "",
-};
-
 function VoicePlayer({ name, url }) {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
@@ -73,51 +67,17 @@ function VoicePlayer({ name, url }) {
   );
 }
 
-const transformations = [
-  {
-    name: "Frederick",
-    tagline: "Endlich ein Plan, der meinen Kalender respektiert.",
-    stats: "-14 kg · 10 Wochen",
-    quote: "Als Unternehmer habe ich keine Zeit für Experimente. Hier wurde analysiert, was bei mir den größten Hebel hat – und genau das haben wir umgesetzt.",
-  },
-  {
-    name: "Alex",
-    tagline: "Keine Diät, sondern Steuerung.",
-    stats: "-9 kg · 8 Wochen",
-    quote: "Keine extreme Diät, kein stundenlanges Training. Einfach ein klares System, das in meinen Alltag passt. Das hat den Unterschied gemacht.",
-  },
-  {
-    name: "Shayan",
-    tagline: "Vom Chaos zur Systematik.",
-    stats: "-18 kg · 16 Wochen",
-    quote: "Ich hatte vorher alles Mögliche probiert – ohne Plan und ohne Ergebnis. Mit dem System habe ich zum ersten Mal verstanden, woran es wirklich lag.",
-  },
-];
-
 export default function SocialProof({ images }) {
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [voiceUrls, setVoiceUrls] = useState(DEFAULT_VOICE_URLS);
-  const [igHandles, setIgHandles] = useState({});
+  const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
-    base44.entities.TestimonialAudio.list().then(records => {
-      if (records && records.length > 0) {
-        const urls = { ...DEFAULT_VOICE_URLS };
-        records.forEach(r => { if (r.name && r.audio_url) urls[r.name] = r.audio_url; });
-        setVoiceUrls(urls);
-      }
+    base44.entities.Testimonial.list("sort_order").then(list => {
+      const active = (list || []).filter(t => t.is_active);
+      setTestimonials(active);
     }).catch(() => {});
-
-    base44.entities.Testimonial.list().then(list => {
-      const handles = {};
-      list.forEach(t => {
-        if (t.client_name && t.instagram_handle) handles[t.client_name] = t.instagram_handle;
-      });
-      setIgHandles(handles);
-    }).catch(() => {});
-
   }, []);
 
   const checkScroll = () => {
@@ -132,6 +92,14 @@ export default function SocialProof({ images }) {
     if (!el) return;
     el.scrollBy({ left: dir * (el.clientWidth * 0.8), behavior: "smooth" });
     setTimeout(checkScroll, 400);
+  };
+
+  // Fallback to images prop for backwards compat when foto_url not set
+  const getImage = (t, index) => t.foto_url || (images && images[index]) || "";
+
+  const getIgUrl = (t) => {
+    if (!t.instagram_handle) return null;
+    return t.instagram_handle.startsWith("http") ? t.instagram_handle : `https://instagram.com/${t.instagram_handle.replace(/^@/, "")}`;
   };
 
   return (
@@ -158,7 +126,6 @@ export default function SocialProof({ images }) {
 
         {/* Carousel */}
         <div className="relative">
-          {/* Arrows */}
           <button
             onClick={() => scroll(-1)}
             className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center transition-opacity duration-200 ${canScrollLeft ? "opacity-100" : "opacity-30 pointer-events-none"}`}
@@ -172,54 +139,58 @@ export default function SocialProof({ images }) {
             <ChevronRight className="w-5 h-5 text-[#00416A]" />
           </button>
 
-          {/* Scroll Container */}
           <div
             ref={scrollRef}
             onScroll={checkScroll}
             className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-3"
             style={{ scrollbarWidth: "none" }}
           >
-            {transformations.map((t, i) => (
-              <div
-                key={t.name}
-                className="flex-shrink-0 snap-start"
-                style={{ width: "clamp(300px, 85vw, 440px)" }}
-              >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
-                  <div
-                    className="relative aspect-[4/5] overflow-hidden"
-                    style={{ cursor: igHandles[t.name] ? "pointer" : "default" }}
-                    onClick={() => { if (igHandles[t.name]) window.open(igHandles[t.name].startsWith("http") ? igHandles[t.name] : `https://instagram.com/${igHandles[t.name].replace(/^@/, "")}`, "_blank"); }}
-                  >
-                    <img
-                      src={images[i]}
-                      alt={`Transformation ${t.name}`}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                    {igHandles[t.name] && (
-                      <div className="absolute top-3 right-3 z-10 opacity-90">
-                        <svg width="36" height="36" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                        </svg>
+            {testimonials.map((t, i) => {
+              const igUrl = getIgUrl(t);
+              const img = getImage(t, i);
+              return (
+                <div
+                  key={t.id}
+                  className="flex-shrink-0 snap-start"
+                  style={{ width: "clamp(300px, 85vw, 440px)" }}
+                >
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+                    <div
+                      className="relative aspect-[4/5] overflow-hidden"
+                      style={{ cursor: igUrl ? "pointer" : "default" }}
+                      onClick={() => { if (igUrl) window.open(igUrl, "_blank"); }}
+                    >
+                      {img ? (
+                        <img src={img} alt={`Transformation ${t.client_name}`} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-[#00416A]/10 flex items-center justify-center">
+                          <span className="text-[#00416A]/30 text-6xl font-bold">{t.client_name?.[0]}</span>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                      {igUrl && (
+                        <div className="absolute top-3 right-3 z-10 opacity-90">
+                          <svg width="36" height="36" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                          </svg>
+                        </div>
+                      )}
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <p className="text-white/70 text-xs font-semibold tracking-wider uppercase">{t.stats}</p>
+                        <h3 className="text-white text-xl font-bold mt-1">{t.client_name}</h3>
+                        <p className="text-white/80 text-sm font-medium mt-1">{t.tagline}</p>
                       </div>
-                    )}
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <p className="text-white/70 text-xs font-semibold tracking-wider uppercase">{t.stats}</p>
-                      <h3 className="text-white text-xl font-bold mt-1">{t.name}</h3>
-                      <p className="text-white/80 text-sm font-medium mt-1">{t.tagline}</p>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-sm text-black/60 leading-relaxed italic">„{t.zitat}"</p>
+                      <VoicePlayer name={t.client_name} url={t.audio_url} />
                     </div>
                   </div>
-                  <div className="p-6">
-                    <p className="text-sm text-black/60 leading-relaxed italic">„{t.quote}"</p>
-                    <VoicePlayer name={t.name} url={voiceUrls[t.name]} />
-                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          {/* Swipe hint */}
           <p className="text-center text-xs text-black/30 mt-4 sm:hidden">← Swipen für mehr →</p>
         </div>
       </div>
