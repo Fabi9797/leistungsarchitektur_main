@@ -23,6 +23,7 @@ import SalesWizard from './pages/SalesWizard';
 import AdStudio832 from './pages/AdStudio832';
 import TestimonialCards832 from './pages/TestimonialCards832';
 import AdminDashboard from './pages/AdminDashboard';
+import BackofficeGuard from '@/components/BackofficeGuard';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -75,21 +76,21 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
-      <Route path="/SupplementAdmin832" element={<LayoutWrapper currentPageName="SupplementAdmin832"><SupplementAdmin832 /></LayoutWrapper>} />
-      <Route path="/SupplementStrategy832" element={<LayoutWrapper currentPageName="SupplementStrategy832"><SupplementStrategy832 /></LayoutWrapper>} />
-      <Route path="/ContentPlanning832" element={<LayoutWrapper currentPageName="ContentPlanning832"><ContentPlanning832 /></LayoutWrapper>} />
+      <Route path="/SupplementAdmin832" element={<BackofficeGuard><LayoutWrapper currentPageName="SupplementAdmin832"><SupplementAdmin832 /></LayoutWrapper></BackofficeGuard>} />
+      <Route path="/SupplementStrategy832" element={<BackofficeGuard><LayoutWrapper currentPageName="SupplementStrategy832"><SupplementStrategy832 /></LayoutWrapper></BackofficeGuard>} />
+      <Route path="/ContentPlanning832" element={<BackofficeGuard><LayoutWrapper currentPageName="ContentPlanning832"><ContentPlanning832 /></LayoutWrapper></BackofficeGuard>} />
       <Route path="/kunde/:clientName" element={<KundenPortal />} />
-      <Route path="/BrandAssets832" element={<LayoutWrapper currentPageName="BrandAssets832"><BrandAssets832 /></LayoutWrapper>} />
-      <Route path="/progress" element={<Progress />} />
-      <Route path="/TestimonialAdmin832" element={<LayoutWrapper currentPageName="TestimonialAdmin832"><TestimonialAdmin832 /></LayoutWrapper>} />
-      <Route path="/progress-report" element={<ProgressReport />} />
+      <Route path="/BrandAssets832" element={<BackofficeGuard><LayoutWrapper currentPageName="BrandAssets832"><BrandAssets832 /></LayoutWrapper></BackofficeGuard>} />
+      <Route path="/progress" element={<BackofficeGuard><Progress /></BackofficeGuard>} />
+      <Route path="/TestimonialAdmin832" element={<BackofficeGuard><LayoutWrapper currentPageName="TestimonialAdmin832"><TestimonialAdmin832 /></LayoutWrapper></BackofficeGuard>} />
+      <Route path="/progress-report" element={<BackofficeGuard><ProgressReport /></BackofficeGuard>} />
       <Route path="/impressum" element={<Impressum />} />
       <Route path="/datenschutz" element={<Datenschutz />} />
-      <Route path="/sales-cockpit" element={<LayoutWrapper currentPageName="SalesCockpit"><SalesCockpit /></LayoutWrapper>} />
-      <Route path="/sales-wizard/:callId" element={<SalesWizard />} />
-      <Route path="/AdStudio832" element={<LayoutWrapper currentPageName="AdStudio832"><AdStudio832 /></LayoutWrapper>} />
-      <Route path="/TestimonialCards832" element={<LayoutWrapper currentPageName="TestimonialCards832"><TestimonialCards832 /></LayoutWrapper>} />
-      <Route path="/admin" element={<LayoutWrapper currentPageName="AdminDashboard"><AdminDashboard /></LayoutWrapper>} />
+      <Route path="/sales-cockpit" element={<BackofficeGuard><LayoutWrapper currentPageName="SalesCockpit"><SalesCockpit /></LayoutWrapper></BackofficeGuard>} />
+      <Route path="/sales-wizard/:callId" element={<BackofficeGuard><SalesWizard /></BackofficeGuard>} />
+      <Route path="/AdStudio832" element={<BackofficeGuard><LayoutWrapper currentPageName="AdStudio832"><AdStudio832 /></LayoutWrapper></BackofficeGuard>} />
+      <Route path="/TestimonialCards832" element={<BackofficeGuard><LayoutWrapper currentPageName="TestimonialCards832"><TestimonialCards832 /></LayoutWrapper></BackofficeGuard>} />
+      <Route path="/admin" element={<BackofficeGuard><LayoutWrapper currentPageName="AdminDashboard"><AdminDashboard /></LayoutWrapper></BackofficeGuard>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     <AdminNav />
