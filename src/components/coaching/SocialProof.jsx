@@ -3,13 +3,23 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Pause, Mic } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
-function VoicePlayer({ name, url }) {
+function VoicePlayer({ name, url, playingId, setPlayingId, id }) {
   const audioRef = useRef(null);
-  const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  const playing = playingId === id;
+
   const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    if (playing) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [playing]);
 
   if (!url) {
     return (
@@ -26,8 +36,7 @@ function VoicePlayer({ name, url }) {
   }
 
   const toggle = () => {
-    if (playing) { audioRef.current.pause(); } else { audioRef.current.play(); }
-    setPlaying(!playing);
+    setPlayingId(playing ? null : id);
   };
 
   return (
@@ -37,7 +46,7 @@ function VoicePlayer({ name, url }) {
         src={url}
         onTimeUpdate={() => setProgress(audioRef.current?.currentTime || 0)}
         onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)}
-        onEnded={() => { setPlaying(false); setProgress(0); }}
+        onEnded={() => { setPlayingId(null); setProgress(0); }}
       />
       <button
         onClick={toggle}
@@ -72,6 +81,7 @@ export default function SocialProof({ images }) {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [testimonials, setTestimonials] = useState([]);
+  const [playingId, setPlayingId] = useState(null);
 
   useEffect(() => {
     base44.entities.Testimonial.list("sort_order").then(list => {
@@ -183,7 +193,7 @@ export default function SocialProof({ images }) {
                     </div>
                     <div className="p-6">
                       <p className="text-sm text-black/60 leading-relaxed italic">„{t.zitat}"</p>
-                      <VoicePlayer name={t.client_name} url={t.audio_url} />
+                      <VoicePlayer name={t.client_name} url={t.audio_url} id={t.id} playingId={playingId} setPlayingId={setPlayingId} />
                     </div>
                   </div>
                 </div>
