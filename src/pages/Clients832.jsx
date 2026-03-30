@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { Plus, Eye, Trash2, ChevronDown, ChevronUp, LayoutDashboard, FileText, Pill, Utensils, Users, UserPlus, Pencil } from "lucide-react";
-import { createPageUrl } from "@/utils";
+import { Link } from "react-router-dom";
 import ClientDocuments from "../components/clients/ClientDocuments";
 import LeadsSection from "../components/clients/LeadsSection";
 
@@ -224,20 +224,18 @@ export default function Clients832() {
                     )}
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    <a
-                      href={createPageUrl(`CoachingDashboard832?clientId=${c.id}&name=${encodeURIComponent(c.name)}`)}
+                    <Link
+                      to={`/CoachingDashboard832?clientId=${c.id}&name=${encodeURIComponent(c.name)}`}
                       className="flex items-center gap-1.5 px-4 py-2 bg-[#00416A]/10 text-[#00416A] rounded-lg text-sm font-medium hover:bg-[#00416A]/20 transition"
                     >
                       <LayoutDashboard className="w-4 h-4" /> Control
-                    </a>
-                    <a
-                      href={createPageUrl(`FactSheet832?id=${c.id}`)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    </Link>
+                    <Link
+                      to={`/FactSheet832?id=${c.id}`}
                       className="flex items-center gap-1.5 px-4 py-2 bg-[#00416A] text-white rounded-lg text-sm font-medium hover:bg-[#003356] transition"
                     >
                       <Eye className="w-4 h-4" /> Fact Sheet
-                    </a>
+                    </Link>
                     <button onClick={() => handleEdit(c)} className="p-2 text-black/20 hover:text-[#00416A] transition">
                       <Pencil className="w-4 h-4" />
                     </button>
@@ -255,16 +253,16 @@ export default function Clients832() {
                   return (
                     <div className="mt-3 pt-3 border-t border-black/5 flex flex-wrap gap-2">
                       {supp && (
-                        <a href={`/SupplementStrategy832?id=${supp.id}`} target="_blank" rel="noopener noreferrer"
+                        <Link to={`/SupplementStrategy832?id=${supp.id}`}
                           className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 text-purple-700 border border-purple-100 rounded-lg text-xs font-semibold hover:bg-purple-100 transition">
                           <Pill className="w-3 h-3" /> Supplementplan v{supp.version}
-                        </a>
+                        </Link>
                       )}
                       {nutri && (
-                        <a href={`/NutritionStrategy832?id=${nutri.id}`} target="_blank" rel="noopener noreferrer"
+                        <Link to={`/NutritionStrategy832?id=${nutri.id}`}
                           className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 border border-green-100 rounded-lg text-xs font-semibold hover:bg-green-100 transition">
                           <Utensils className="w-3 h-3" /> Ernährungsstrategie v{nutri.version}
-                        </a>
+                        </Link>
                       )}
                     </div>
                   );
