@@ -228,12 +228,11 @@ export default function NutritionStrategy832() {
     const id = new URLSearchParams(window.location.search).get("id");
     entityId.current = id;
     if (id) {
-      base44.entities.NutritionStrategy.list().then(all => {
-        const found = all.find(c => c.id === id);
+      base44.entities.NutritionStrategy.filter({ id }).then(all => {
+        const found = all[0];
         if (found) {
           setOrigData(found);
           setDraft(toDraft(found));
-          // Lade Client-Email aus Stammdaten
           if (found.client_name) {
             base44.entities.ClientProfile.list().then(clients => {
               const client = clients.find(c => c.name?.toLowerCase() === found.client_name?.toLowerCase());

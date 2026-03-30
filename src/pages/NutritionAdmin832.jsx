@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { Plus, Eye, Trash2 } from "lucide-react";
-import { createPageUrl } from "@/utils";
+import { Link } from "react-router-dom";
 
 const DEFAULT = {
   client_name: "",
@@ -153,10 +153,10 @@ export default function NutritionAdmin832() {
                   <p className="text-xs text-black/40 mt-0.5">Version {item.version} · {item.kalorien_ziel ? `${item.kalorien_ziel} kcal` : ""}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <a href={createPageUrl(`NutritionStrategy832?id=${item.id}`)} target="_blank" rel="noopener noreferrer"
+                  <Link to={`/NutritionStrategy832?id=${item.id}`}
                     className="flex items-center gap-1.5 px-4 py-2 bg-[#00416A] text-white rounded-lg text-sm font-medium hover:bg-[#003356] transition">
                     <Eye className="w-4 h-4" /> Präsentation
-                  </a>
+                  </Link>
                   <button onClick={() => handleDelete(item.id)} className="p-2 text-black/20 hover:text-red-500 transition">
                     <Trash2 className="w-4 h-4" />
                   </button>
