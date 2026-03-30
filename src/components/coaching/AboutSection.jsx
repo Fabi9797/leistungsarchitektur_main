@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Play, Pause } from "lucide-react";
 import { useAnalyse } from "@/lib/AnalyseContext";
 import { base44 } from "@/api/base44Client";
+import { useAudio } from "@/lib/AudioContext";
 
 const FALLBACK = {
   headline: "Warum ich das mache",
@@ -18,18 +19,24 @@ const FALLBACK = {
   studio_link_url: "https://fitter.jetzt/badharzburg/",
 };
 
+const ABOUT_AUDIO_ID = "__about_section__";
+
 function VoicePlayer({ url, label }) {
   const audioRef = useRef(null);
-  const [playing, setPlaying] = useState(false);
+  const { playingId, setPlayingId } = useAudio();
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  const playing = playingId === ABOUT_AUDIO_ID;
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    if (playing) { audioRef.current.play(); } else { audioRef.current.pause(); }
+  }, [playing]);
+
   if (!url) return null;
 
-  const toggle = () => {
-    if (playing) { audioRef.current.pause(); } else { audioRef.current.play(); }
-    setPlaying(!playing);
-  };
+  const toggle = () => setPlayingId(playing ? null : ABOUT_AUDIO_ID);
 
   const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
@@ -38,11 +45,12 @@ function VoicePlayer({ url, label }) {
       <audio ref={audioRef} src={url}
         onTimeUpdate={() => setProgress(audioRef.current?.currentTime || 0)}
         onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)}
-        onEnded={() => setPlaying(false)} />
+        onEnded={() => { setPlayingId(null); setProgress(0); }} />
       <button onClick={toggle}
         className="w-12 h-12 rounded-full bg-[#F0EAD6] flex items-center justify-center flex-shrink-0 hover:bg-white transition-colors">
         {playing ? <Pause className="w-5 h-5 text-[#00416A]" /> : <Play className="w-5 h-5 text-[#00416A] ml-0.5" />}
       </button>
+
       <div className="flex-1 min-w-0">
         <p className="text-white text-sm font-semibold mb-2">🎙️ {label}</p>
         <div className="relative h-1.5 bg-white/20 rounded-full overflow-hidden cursor-pointer"

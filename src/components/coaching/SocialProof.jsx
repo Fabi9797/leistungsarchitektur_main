@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Pause, Mic } from "lucide-react";
 import { base44 } from "@/api/base44Client";
+import { useAudio } from "@/lib/AudioContext";
 
 function VoicePlayer({ name, url, playingId, setPlayingId, id }) {
   const audioRef = useRef(null);
@@ -81,7 +82,7 @@ export default function SocialProof({ images }) {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [testimonials, setTestimonials] = useState([]);
-  const [playingId, setPlayingId] = useState(null);
+  const { playingId, setPlayingId } = useAudio();
 
   useEffect(() => {
     base44.entities.Testimonial.list("sort_order").then(list => {

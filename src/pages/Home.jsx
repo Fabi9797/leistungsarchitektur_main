@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { AudioProvider } from "@/lib/AudioContext";
 import Navbar from "../components/coaching/Navbar";
 import HeroSection from "../components/coaching/HeroSection";
 import SocialProof from "../components/coaching/SocialProof";
@@ -22,6 +23,7 @@ export default function Home() {
   const finalCtaRef = useRef(null);
 
   return (
+    <AudioProvider>
     <div className="min-h-screen bg-white">
       <Navbar />
       <HeroSection heroImage={HERO_IMAGE} heroButtonRef={heroButtonRef} />
@@ -34,5 +36,6 @@ export default function Home() {
       <Footer />
       <StickyAnalyseButton heroButtonRef={heroButtonRef} finalCtaRef={finalCtaRef} />
     </div>
+    </AudioProvider>
   );
 }
