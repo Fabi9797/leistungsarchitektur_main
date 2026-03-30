@@ -44,14 +44,19 @@ const DEFAULT = {
 
 export default function NutritionAdmin832() {
   const [items, setItems] = useState([]);
+  const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(DEFAULT);
 
   const load = async () => {
     setLoading(true);
-    const data = await base44.entities.NutritionStrategy.list("-created_date");
+    const [data, clientData] = await Promise.all([
+      base44.entities.NutritionStrategy.list("-created_date"),
+      base44.entities.ClientProfile.list("name"),
+    ]);
     setItems(data);
+    setClients(clientData);
     setLoading(false);
   };
 
@@ -102,7 +107,20 @@ export default function NutritionAdmin832() {
           <form onSubmit={handleCreate} className="bg-white rounded-2xl shadow-sm mb-8 p-6 space-y-4">
             <h2 className="text-base font-bold text-[#00416A] mb-2">Neue Ernährungsstrategie</h2>
             <div className="grid grid-cols-2 gap-4">
-              <F k="client_name" label="Kundenname" />
+              <div className="flex flex-col gap-1">
+                <label className="text-[10px] font-bold text-black/40 uppercase tracking-wider">Kunde</label>
+                <select
+                  value={form.client_name || ""}
+                  onChange={e => setForm(p => ({ ...p, client_name: e.target.value }))}
+                  className="border border-black/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00416A]/20 bg-white"
+                  required
+                >
+                  <option value="">Kunde auswählen…</option>
+                  {clients.map(c => (
+                    <option key={c.id} value={c.name}>{c.name}</option>
+                  ))}
+                </select>
+              </div>
               <F k="version" label="Version" />
               <F k="ist_summary" label="IST-Zusammenfassung" />
               <F k="soll_summary" label="SOLL-Zusammenfassung" />
