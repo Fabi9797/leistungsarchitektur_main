@@ -255,13 +255,13 @@ export default function Clients832() {
                   return (
                     <div className="mt-3 pt-3 border-t border-black/5 flex flex-wrap gap-2">
                       {supp && (
-                        <a href={createPageUrl(`SupplementStrategy832?id=${supp.id}`)} target="_blank" rel="noopener noreferrer"
+                        <a href={`/SupplementStrategy832?id=${supp.id}`} target="_blank" rel="noopener noreferrer"
                           className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 text-purple-700 border border-purple-100 rounded-lg text-xs font-semibold hover:bg-purple-100 transition">
                           <Pill className="w-3 h-3" /> Supplementplan v{supp.version}
                         </a>
                       )}
                       {nutri && (
-                        <a href={createPageUrl(`NutritionStrategy832?id=${nutri.id}`)} target="_blank" rel="noopener noreferrer"
+                        <a href={`/NutritionStrategy832?id=${nutri.id}`} target="_blank" rel="noopener noreferrer"
                           className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 border border-green-100 rounded-lg text-xs font-semibold hover:bg-green-100 transition">
                           <Utensils className="w-3 h-3" /> Ernährungsstrategie v{nutri.version}
                         </a>
