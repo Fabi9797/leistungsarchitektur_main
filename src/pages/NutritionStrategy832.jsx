@@ -254,13 +254,13 @@ export default function NutritionStrategy832() {
       kalorien_defizit: d.kalorien_defizit || "",
       protein_ziel: d.protein_ziel || "",
       protein_info: d.protein_info || "",
-      warum: parse(d.warum_json, []),
-      mahlzeiten: parse(d.mahlzeiten_json, []),
-      morgens: parse(d.morgens_json, []),
-      mittags: parse(d.mittags_json, []),
-      snack: parse(d.snack_json, []),
-      abend: parse(d.abend_json, []),
-      sectionOrder: parse(d.section_order_json, DEFAULT_ORDER),
+      warum: parse(d.warum_json, []) || [],
+      mahlzeiten: parse(d.mahlzeiten_json, []) || [],
+      morgens: parse(d.morgens_json, []) || [],
+      mittags: parse(d.mittags_json, []) || [],
+      snack: parse(d.snack_json, []) || [],
+      abend: parse(d.abend_json, []) || [],
+      sectionOrder: parse(d.section_order_json, DEFAULT_ORDER) || DEFAULT_ORDER,
     };
   }
 
