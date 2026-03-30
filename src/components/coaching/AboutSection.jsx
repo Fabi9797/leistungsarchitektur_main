@@ -122,6 +122,12 @@ export default function AboutSection() {
                 <p key={i}>{t}</p>
               ))}
             </div>
+            {p.studio_link_url && (
+              <a href={p.studio_link_url} target="_blank" rel="noopener noreferrer"
+                className="inline-block mt-6 text-[#F0EAD6] text-sm font-semibold underline underline-offset-4 hover:text-white transition-colors">
+                {p.studio_link_text || p.studio_link_url}
+              </a>
+            )}
             <VoicePlayer url={p.voice_url} label={p.voice_label} />
           </motion.div>
         </div>
