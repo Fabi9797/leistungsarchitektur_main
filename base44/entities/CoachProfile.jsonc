@@ -1,0 +1,53 @@
+{
+  "name": "CoachProfile",
+  "type": "object",
+  "properties": {
+    "headline": {
+      "type": "string",
+      "title": "\u00dcberschrift (z.B. Warum ich das mache)"
+    },
+    "text_1": {
+      "type": "string",
+      "title": "Absatz 1"
+    },
+    "text_2": {
+      "type": "string",
+      "title": "Absatz 2"
+    },
+    "text_3": {
+      "type": "string",
+      "title": "Absatz 3"
+    },
+    "text_4": {
+      "type": "string",
+      "title": "Absatz 4"
+    },
+    "foto_url": {
+      "type": "string",
+      "title": "Profilfoto URL"
+    },
+    "voice_url": {
+      "type": "string",
+      "title": "Audio URL (pers\u00f6nliche Nachricht)"
+    },
+    "voice_label": {
+      "type": "string",
+      "title": "Audio-Label (z.B. Pers\u00f6nliche Nachricht von Fabian)",
+      "default": "Pers\u00f6nliche Nachricht von Fabian"
+    },
+    "years_experience": {
+      "type": "string",
+      "title": "Erfahrungs-Badge (z.B. +14)",
+      "default": "+14"
+    },
+    "studio_link_text": {
+      "type": "string",
+      "title": "Studio-Link Text"
+    },
+    "studio_link_url": {
+      "type": "string",
+      "title": "Studio-Link URL"
+    }
+  },
+  "required": []
+}

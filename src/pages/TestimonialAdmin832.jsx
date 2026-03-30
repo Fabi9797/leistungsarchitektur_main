@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { Upload, Mic, Check, Loader2, Plus, Trash2, ChevronDown, ChevronUp, Eye, EyeOff } from "lucide-react";
+import AboutSectionAdmin from "@/components/admin/AboutSectionAdmin";
 
 const EMPTY_TESTIMONIAL = {
   client_name: "",
@@ -145,6 +146,13 @@ export default function TestimonialAdmin832() {
           </div>
         )}
 
+        {/* Über Mich Sektion */}
+        <div className="mb-8">
+          <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-3">Über Mich – Startseite</p>
+          <AboutSectionAdmin />
+        </div>
+
+        <p className="text-white/30 text-xs font-bold uppercase tracking-widest mb-3">Athleten-Testimonials</p>
         {/* Testimonial Cards */}
         <div className="space-y-4">
           {testimonials.map(t => {
