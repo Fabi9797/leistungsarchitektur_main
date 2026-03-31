@@ -531,6 +531,15 @@ export default function NutritionStrategy832() {
                   >
                     Seite zurück <ArrowDown size={11} />
                   </button>
+                  <button
+                    onClick={() => {
+                      if (!window.confirm(`Mahlzeit "${SECTION_LABELS[key]}" wirklich entfernen?`)) return;
+                      upd("sectionOrder", draft.sectionOrder.filter((_, j) => j !== idx));
+                    }}
+                    style={{ background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "6px", padding: "4px 8px", cursor: "pointer", color: "#cc3333", display: "flex", alignItems: "center", gap: "3px", fontSize: "10px", fontWeight: 600 }}
+                  >
+                    <Trash2 size={11} /> Sektion löschen
+                  </button>
                 </div>
               )}
             </div>
