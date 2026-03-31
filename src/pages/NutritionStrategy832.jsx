@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { base44 } from "@/api/base44Client";
 import { Printer, Pencil, Check, X, Plus, Trash2, Sparkles, Loader2, ArrowUp, ArrowDown, Mail } from "lucide-react";
 import EmailNutritionModal from "@/components/content/EmailNutritionModal";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const DEFAULT_ORDER = ["morgens", "mittags", "snack", "abend"];
 const SECTION_LABELS = { morgens: "Morgens", mittags: "Mittags", snack: "Snack", abend: "Abends" };
@@ -177,18 +178,59 @@ function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
   );
 }
 
-function MealSection({ title, items, edit, onChange }) {
+function MealSection({ title, items, edit, onChange, sectionKey }) {
   const newCard = { name: "Neue Option", basis: [], kcal: "000 kcal", protein: "00g P" };
+
+  const handleDragEnd = (result) => {
+    if (!result.destination) return;
+    const reordered = [...items];
+    const [moved] = reordered.splice(result.source.index, 1);
+    reordered.splice(result.destination.index, 0, moved);
+    onChange(reordered);
+  };
+
   return (
     <>
       <h2 style={{ ...s.h2, marginBottom: "20px" }}>{title}</h2>
-      <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(Math.max(items.length, 1), 3)}, 1fr)`, gap: "16px" }}>
-        {items.map((v, i) => (
-          <MealCard key={i} variant={v} index={i} showIndex={items.length > 1} edit={edit}
-            onChange={updated => { const n = [...items]; n[i] = updated; onChange(n); }}
-            onDelete={() => onChange(items.filter((_, j) => j !== i))} />
-        ))}
-      </div>
+      {edit ? (
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId={sectionKey} direction="horizontal">
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(Math.max(items.length, 1), 3)}, 1fr)`, gap: "16px" }}
+              >
+                {items.map((v, i) => (
+                  <Draggable key={i} draggableId={`${sectionKey}-${i}`} index={i}>
+                    {(prov, snapshot) => (
+                      <div ref={prov.innerRef} {...prov.draggableProps}
+                        style={{ ...prov.draggableProps.style, opacity: snapshot.isDragging ? 0.85 : 1 }}>
+                        <div {...prov.dragHandleProps}
+                          style={{ textAlign: "center", fontSize: "10px", color: "rgba(0,65,106,0.35)", marginBottom: "4px", cursor: "grab", userSelect: "none" }}>
+                          ⠿ verschieben
+                        </div>
+                        <MealCard variant={v} index={i} showIndex={items.length > 1} edit={edit}
+                          onChange={updated => { const n = [...items]; n[i] = updated; onChange(n); }}
+                          onDelete={() => onChange(items.filter((_, j) => j !== i))} />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(Math.max(items.length, 1), 3)}, 1fr)`, gap: "16px" }}>
+          {items.map((v, i) => (
+            <MealCard key={i} variant={v} index={i} showIndex={items.length > 1} edit={edit}
+              onChange={updated => { const n = [...items]; n[i] = updated; onChange(n); }}
+              onDelete={() => onChange(items.filter((_, j) => j !== i))} />
+          ))}
+        </div>
+      )}
       {edit && (
         <button onClick={() => onChange([...items, { ...newCard }])}
           style={{ marginTop: "12px", background: "none", border: "1px dashed rgba(0,65,106,0.3)", borderRadius: "8px", cursor: "pointer", color: C.indigo, fontSize: "11px", fontWeight: 600, padding: "8px 16px", display: "flex", alignItems: "center", gap: "6px" }}>
@@ -540,6 +582,7 @@ export default function NutritionStrategy832() {
               items={draft[key]}
               edit={e}
               onChange={v => upd(key, v)}
+              sectionKey={key}
             />
           </Page>
         ))}
