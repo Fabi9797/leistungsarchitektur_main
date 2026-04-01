@@ -153,7 +153,7 @@ export default function SocialProof({ images }) {
           <div
             ref={scrollRef}
             onScroll={checkScroll}
-            className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-3"
+            className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-3 items-stretch"
             style={{ scrollbarWidth: "none" }}
           >
             {testimonials.map((t, i) => {
@@ -162,12 +162,12 @@ export default function SocialProof({ images }) {
               return (
                 <div
                   key={t.id}
-                  className="flex-shrink-0 snap-start"
+                  className="flex-shrink-0 snap-start flex flex-col"
                   style={{ width: "clamp(300px, 85vw, 440px)" }}
                 >
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm flex flex-col flex-1">
                     <div
-                      className="relative aspect-[4/5] overflow-hidden"
+                      className="relative aspect-[4/5] overflow-hidden flex-shrink-0"
                       style={{ cursor: igUrl ? "pointer" : "default" }}
                       onClick={() => { if (igUrl) window.open(igUrl, "_blank"); }}
                     >
@@ -197,8 +197,8 @@ export default function SocialProof({ images }) {
                         <p className="text-white/80 text-sm font-medium mt-1">{t.tagline}</p>
                       </div>
                     </div>
-                    <div className="p-6">
-                      <p className="text-sm text-black/60 leading-relaxed italic">„{t.zitat}"</p>
+                    <div className="p-6 flex flex-col flex-1">
+                      <p className="text-sm text-black/60 leading-relaxed italic flex-1">„{t.zitat}"</p>
                       <VoicePlayer name={t.client_name} url={t.audio_url} id={t.id} playingId={playingId} setPlayingId={setPlayingId} />
                     </div>
                   </div>
