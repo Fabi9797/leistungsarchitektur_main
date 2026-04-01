@@ -181,47 +181,37 @@ function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
 function MealSection({ title, items, edit, onChange, sectionKey }) {
   const newCard = { name: "Neue Option", basis: [], kcal: "000 kcal", protein: "00g P" };
 
-  const handleDragEnd = (result) => {
-    if (!result.destination) return;
-    const reordered = [...items];
-    const [moved] = reordered.splice(result.source.index, 1);
-    reordered.splice(result.destination.index, 0, moved);
-    onChange(reordered);
-  };
-
   return (
     <>
       <h2 style={{ ...s.h2, marginBottom: "20px" }}>{title}</h2>
       {edit ? (
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable droppableId={sectionKey} direction="horizontal">
-            {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(Math.max(items.length, 1), 3)}, 1fr)`, gap: "16px" }}
-              >
-                {items.map((v, i) => (
-                  <Draggable key={i} draggableId={`${sectionKey}-${i}`} index={i}>
-                    {(prov, snapshot) => (
-                      <div ref={prov.innerRef} {...prov.draggableProps}
-                        style={{ ...prov.draggableProps.style, opacity: snapshot.isDragging ? 0.85 : 1 }}>
-                        <div {...prov.dragHandleProps}
-                          style={{ textAlign: "center", fontSize: "10px", color: "rgba(0,65,106,0.35)", marginBottom: "4px", cursor: "grab", userSelect: "none" }}>
-                          ⠿ verschieben
-                        </div>
-                        <MealCard variant={v} index={i} showIndex={items.length > 1} edit={edit}
-                          onChange={updated => { const n = [...items]; n[i] = updated; onChange(n); }}
-                          onDelete={() => onChange(items.filter((_, j) => j !== i))} />
+        <Droppable droppableId={sectionKey} direction="horizontal">
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              style={{ display: "flex", gap: "16px", minHeight: "80px", flexWrap: "wrap", alignItems: "flex-start" }}
+            >
+              {items.map((v, i) => (
+                <Draggable key={`${sectionKey}-${i}`} draggableId={`${sectionKey}-${i}`} index={i}>
+                  {(prov, snapshot) => (
+                    <div ref={prov.innerRef} {...prov.draggableProps}
+                      style={{ ...prov.draggableProps.style, opacity: snapshot.isDragging ? 0.85 : 1, width: "calc(33% - 12px)", minWidth: "200px", flexShrink: 0 }}>
+                      <div {...prov.dragHandleProps}
+                        style={{ textAlign: "center", fontSize: "10px", color: "rgba(0,65,106,0.35)", marginBottom: "4px", cursor: "grab", userSelect: "none" }}>
+                        ⠿ verschieben
                       </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+                      <MealCard variant={v} index={i} showIndex={items.length > 1} edit={edit}
+                        onChange={updated => { const n = [...items]; n[i] = updated; onChange(n); }}
+                        onDelete={() => onChange(items.filter((_, j) => j !== i))} />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(Math.max(items.length, 1), 3)}, 1fr)`, gap: "16px" }}>
           {items.map((v, i) => (
@@ -543,6 +533,21 @@ export default function NutritionStrategy832() {
         </Page>
 
         {/* SEITEN 3+: Mahlzeiten in konfigurierbarer Reihenfolge */}
+        <DragDropContext onDragEnd={(result) => {
+          if (!result.destination) return;
+          const srcKey = result.source.droppableId;
+          const dstKey = result.destination.droppableId;
+          const srcItems = [...draft[srcKey]];
+          const [moved] = srcItems.splice(result.source.index, 1);
+          if (srcKey === dstKey) {
+            srcItems.splice(result.destination.index, 0, moved);
+            upd(srcKey, srcItems);
+          } else {
+            const dstItems = [...draft[dstKey]];
+            dstItems.splice(result.destination.index, 0, moved);
+            setDraft(d => ({ ...d, [srcKey]: srcItems, [dstKey]: dstItems }));
+          }
+        }}>
         {draft.sectionOrder.filter(key => !editMode || draft[key].length > 0).map((key, idx) => (
           <Page key={key} pageNum={idx + 3}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "4px" }}>
@@ -586,6 +591,7 @@ export default function NutritionStrategy832() {
             />
           </Page>
         ))}
+        </DragDropContext>
 
       </div>
     </>
