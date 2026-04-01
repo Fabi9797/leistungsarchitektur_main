@@ -56,7 +56,7 @@ export default function HeroSection({ heroImage, heroButtonRef }) {
             {/* Video on mobile (below subheadline) */}
             <div className="lg:hidden mt-6 rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: "16/9" }}>
               <iframe
-                src="https://www.youtube.com/embed/zo_YE1LY460"
+                src="https://www.youtube.com/embed/obWQpAfoBGc"
                 title="Performance Architecture"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -119,7 +119,7 @@ export default function HeroSection({ heroImage, heroButtonRef }) {
           >
             <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: "16/9" }}>
               <iframe
-                src="https://www.youtube.com/embed/zo_YE1LY460"
+                src="https://www.youtube.com/embed/obWQpAfoBGc"
                 title="Performance Architecture"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
