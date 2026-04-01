@@ -175,13 +175,8 @@ export default function SocialProof({ images }) {
                         <img
                           src={img}
                           alt={`Transformation ${t.client_name}`}
-                          className="w-full h-full"
-                          style={{
-                            objectFit: "cover",
-                            objectPosition: t.client_name === "Shayan" ? "center 10%" : "center center",
-                            transform: t.client_name === "Shayan" ? "scale(0.75)" : "scale(1)",
-                            transformOrigin: "center center",
-                          }}
+                          className="w-full h-full object-cover"
+                          style={{ objectPosition: t.client_name === "Shayan" ? "center 15%" : "center center" }}
                         />
                       ) : (
                         <div className="w-full h-full bg-[#00416A]/10 flex items-center justify-center">
