@@ -172,7 +172,17 @@ export default function SocialProof({ images }) {
                       onClick={() => { if (igUrl) window.open(igUrl, "_blank"); }}
                     >
                       {img ? (
-                        <img src={img} alt={`Transformation ${t.client_name}`} className="w-full h-full object-cover" />
+                        <img
+                          src={img}
+                          alt={`Transformation ${t.client_name}`}
+                          className="w-full h-full"
+                          style={{
+                            objectFit: "cover",
+                            objectPosition: t.client_name === "Shayan" ? "center 10%" : "center center",
+                            transform: t.client_name === "Shayan" ? "scale(0.75)" : "scale(1)",
+                            transformOrigin: "center center",
+                          }}
+                        />
                       ) : (
                         <div className="w-full h-full bg-[#00416A]/10 flex items-center justify-center">
                           <span className="text-[#00416A]/30 text-6xl font-bold">{t.client_name?.[0]}</span>
