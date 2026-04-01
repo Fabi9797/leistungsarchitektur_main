@@ -87,7 +87,7 @@ export default function AnalyseModal({ onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
@@ -96,13 +96,10 @@ export default function AnalyseModal({ onClose }) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 60 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        className="bg-white w-full sm:max-w-lg sm:rounded-2xl rounded-t-2xl shadow-2xl overflow-hidden flex flex-col"
-        style={{ maxHeight: "92dvh" }}
+        className="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+        style={{ maxHeight: "90dvh" }}
       >
-        {/* Drag handle (mobile) */}
-        <div className="flex justify-center pt-3 pb-1 sm:hidden">
-          <div className="w-10 h-1 bg-black/10 rounded-full" />
-        </div>
+
 
         {/* Header */}
         <div className="flex items-center justify-between px-5 sm:px-6 py-3 sm:py-4 border-b border-black/5 flex-shrink-0">
