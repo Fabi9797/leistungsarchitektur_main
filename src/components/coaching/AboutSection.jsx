@@ -118,16 +118,25 @@ export default function AboutSection() {
               {p.headline}
             </h2>
             <div className="mt-8 space-y-5 text-white/70 text-base leading-relaxed">
-              {texts.map((t, i) => (
-                <p key={i}>{t}</p>
-              ))}
+              {texts.map((t, i) => {
+                if (i === 0 && p.studio_link_url && p.studio_link_text) {
+                  const parts = t.split(p.studio_link_text);
+                  if (parts.length === 2) {
+                    return (
+                      <p key={i}>
+                        {parts[0]}
+                        <a href={p.studio_link_url} target="_blank" rel="noopener noreferrer"
+                          className="text-[#F0EAD6] font-semibold underline underline-offset-4 hover:text-white transition-colors">
+                          {p.studio_link_text}
+                        </a>
+                        {parts[1]}
+                      </p>
+                    );
+                  }
+                }
+                return <p key={i}>{t}</p>;
+              })}
             </div>
-            {p.studio_link_url && (
-              <a href={p.studio_link_url} target="_blank" rel="noopener noreferrer"
-                className="inline-block mt-6 text-[#F0EAD6] text-sm font-semibold underline underline-offset-4 hover:text-white transition-colors">
-                {p.studio_link_text || p.studio_link_url}
-              </a>
-            )}
             {/* <VoicePlayer url={p.voice_url} label={p.voice_label} /> */}
           </motion.div>
         </div>
