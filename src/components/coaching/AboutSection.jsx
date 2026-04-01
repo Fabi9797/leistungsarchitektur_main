@@ -128,7 +128,7 @@ export default function AboutSection() {
                 {p.studio_link_text || p.studio_link_url}
               </a>
             )}
-            <VoicePlayer url={p.voice_url} label={p.voice_label} />
+            {/* <VoicePlayer url={p.voice_url} label={p.voice_label} /> */}
           </motion.div>
         </div>
       </div>
