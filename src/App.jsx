@@ -23,6 +23,7 @@ import SalesWizard from './pages/SalesWizard';
 import AdStudio832 from './pages/AdStudio832';
 import TestimonialCards832 from './pages/TestimonialCards832';
 import AdminDashboard from './pages/AdminDashboard';
+import ExportGraphic from './pages/ExportGraphic';
 import BackofficeGuard from '@/components/BackofficeGuard';
 
 const { Pages, Layout, mainPage } = pagesConfig;
@@ -91,6 +92,7 @@ const AuthenticatedApp = () => {
       <Route path="/AdStudio832" element={<BackofficeGuard><LayoutWrapper currentPageName="AdStudio832"><AdStudio832 /></LayoutWrapper></BackofficeGuard>} />
       <Route path="/TestimonialCards832" element={<BackofficeGuard><LayoutWrapper currentPageName="TestimonialCards832"><TestimonialCards832 /></LayoutWrapper></BackofficeGuard>} />
       <Route path="/admin" element={<BackofficeGuard><LayoutWrapper currentPageName="AdminDashboard"><AdminDashboard /></LayoutWrapper></BackofficeGuard>} />
+      <Route path="/export-graphic" element={<ExportGraphic />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
     <AdminNav />
