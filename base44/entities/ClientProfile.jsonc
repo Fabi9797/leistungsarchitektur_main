@@ -1,0 +1,174 @@
+{
+  "name": "ClientProfile",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-Mail"
+    },
+    "telefon": {
+      "type": "string",
+      "title": "Telefon / WhatsApp"
+    },
+    "geburtstag": {
+      "type": "string",
+      "format": "date",
+      "title": "Geburtstag"
+    },
+    "instagram": {
+      "type": "string",
+      "title": "Instagram"
+    },
+    "alter": {
+      "type": "number",
+      "title": "Alter"
+    },
+    "groesse": {
+      "type": "number",
+      "title": "Gr\u00f6\u00dfe (cm)"
+    },
+    "gewicht": {
+      "type": "number",
+      "title": "Gewicht (kg)"
+    },
+    "koerperfett": {
+      "type": "string",
+      "title": "K\u00f6rperfett (%)"
+    },
+    "beruf": {
+      "type": "string",
+      "title": "Beruf / Alltag"
+    },
+    "trainingserfahrung": {
+      "type": "string",
+      "title": "Trainingserfahrung"
+    },
+    "coaching_ziel": {
+      "type": "string",
+      "title": "Ziel des Coachings"
+    },
+    "training_ist_system": {
+      "type": "string",
+      "title": "Trainingssystem IST"
+    },
+    "training_ist_frequenz": {
+      "type": "string",
+      "title": "Trainingsfrequenz IST"
+    },
+    "training_ist_probleme": {
+      "type": "string",
+      "title": "Probleme im Training (kommagetrennt)"
+    },
+    "training_soll_system": {
+      "type": "string",
+      "title": "Trainingssystem SOLL"
+    },
+    "training_soll_frequenz": {
+      "type": "string",
+      "title": "Trainingsfrequenz SOLL"
+    },
+    "training_soll_fokus": {
+      "type": "string",
+      "title": "Trainingsfokus (kommagetrennt)"
+    },
+    "ernaehrung_ist_struktur": {
+      "type": "string",
+      "title": "Ern\u00e4hrungsstruktur IST"
+    },
+    "ernaehrung_ist_probleme": {
+      "type": "string",
+      "title": "Probleme Ern\u00e4hrung (kommagetrennt)"
+    },
+    "kalorien_ziel": {
+      "type": "number",
+      "title": "Kalorienziel (kcal)"
+    },
+    "protein_ziel": {
+      "type": "number",
+      "title": "Protein (g)"
+    },
+    "fett_ziel": {
+      "type": "number",
+      "title": "Fett (g)"
+    },
+    "kohlenhydrate_ziel": {
+      "type": "number",
+      "title": "Kohlenhydrate (g)"
+    },
+    "mahlzeiten_struktur": {
+      "type": "string",
+      "title": "Mahlzeitenstruktur"
+    },
+    "schlaf": {
+      "type": "string",
+      "title": "Schlafdauer"
+    },
+    "stresslevel": {
+      "type": "string",
+      "title": "Stresslevel",
+      "enum": [
+        "Niedrig",
+        "Mittel",
+        "Hoch",
+        "Sehr hoch"
+      ]
+    },
+    "schritte": {
+      "type": "string",
+      "title": "Schritte pro Tag"
+    },
+    "lifestyle_faktoren": {
+      "type": "string",
+      "title": "Weitere Lifestyle-Faktoren (kommagetrennt)"
+    },
+    "hebel_1": {
+      "type": "string",
+      "title": "Hebel 1"
+    },
+    "hebel_2": {
+      "type": "string",
+      "title": "Hebel 2"
+    },
+    "hebel_3": {
+      "type": "string",
+      "title": "Hebel 3"
+    },
+    "zielbild": {
+      "type": "string",
+      "title": "Zielbild (kommagetrennt)"
+    },
+    "coaching_plan_json": {
+      "type": "string",
+      "title": "Coaching Plan (JSON)"
+    },
+    "documents": {
+      "type": "array",
+      "title": "Dokumente",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "uploaded_at": {
+            "type": "string"
+          }
+        }
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
