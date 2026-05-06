@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Plus, Eye, Trash2, ChevronDown, ChevronUp, LayoutDashboard, FileText, Pill, Utensils, Users, UserPlus, Pencil } from "lucide-react";
+import { Plus, Eye, Trash2, ChevronDown, ChevronUp, LayoutDashboard, FileText, Pill, Utensils, Users, UserPlus, Pencil, ClipboardList } from "lucide-react";
 import { Link } from "react-router-dom";
 import ClientDocuments from "../components/clients/ClientDocuments";
 import LeadsSection from "../components/clients/LeadsSection";
@@ -230,6 +230,14 @@ export default function Clients832() {
                     >
                       <LayoutDashboard className="w-4 h-4" /> Control
                     </Link>
+                    {c.coaching_plan_json && (
+                      <Link
+                        to={`/CoachingPlan832?clientId=${c.id}&name=${encodeURIComponent(c.name)}`}
+                        className="flex items-center gap-1.5 px-4 py-2 bg-amber-50 text-amber-700 border border-amber-200 rounded-lg text-sm font-medium hover:bg-amber-100 transition"
+                      >
+                        <ClipboardList className="w-4 h-4" /> Plan
+                      </Link>
+                    )}
                     <Link
                       to={`/FactSheet832?id=${c.id}`}
                       className="flex items-center gap-1.5 px-4 py-2 bg-[#00416A] text-white rounded-lg text-sm font-medium hover:bg-[#003356] transition"
