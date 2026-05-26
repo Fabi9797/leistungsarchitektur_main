@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Plus, Eye, Trash2, Copy } from "lucide-react";
+import { Plus, Eye, Trash2, Copy, Link } from "lucide-react";
+
 import { createPageUrl } from "@/utils";
 
 const DEFAULT_SUPPLEMENTS = [
@@ -16,6 +17,14 @@ export default function SupplementAdmin832() {
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ client_name: "", version: "1", intro_text: "" });
   const [showForm, setShowForm] = useState(false);
+  const [copiedId, setCopiedId] = useState(null);
+
+  const copyClientLink = (id) => {
+    const url = `${window.location.origin}/SupplementStrategy832?id=${id}&readonly=true`;
+    navigator.clipboard.writeText(url);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   const load = async () => {
     setLoading(true);
@@ -113,6 +122,11 @@ export default function SupplementAdmin832() {
                     className="flex items-center gap-1.5 px-4 py-2 bg-[#00416A] text-white rounded-lg text-sm font-medium hover:bg-[#003356] transition">
                     <Eye className="w-4 h-4" /> Öffnen
                   </a>
+                  <button onClick={() => copyClientLink(item.id)}
+                    className={`flex items-center gap-1.5 px-3 py-2 border rounded-lg text-sm font-medium transition ${copiedId === item.id ? "border-green-400 text-green-600 bg-green-50" : "border-black/10 text-black/50 hover:bg-black/5 hover:text-[#00416A]"}`}
+                    title="Kunden-Link kopieren (nur lesen)">
+                    <Link className="w-4 h-4" /> {copiedId === item.id ? "Kopiert!" : "Link"}
+                  </button>
                   <button onClick={() => handleDuplicate(item)}
                     className="flex items-center gap-1.5 px-3 py-2 border border-black/10 text-black/50 rounded-lg text-sm hover:bg-black/5 hover:text-[#00416A] transition"
                     title="Duplizieren">

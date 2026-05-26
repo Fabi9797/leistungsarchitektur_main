@@ -245,6 +245,7 @@ function ExplanationsPage({ supplements, explanations, edit, onUpdate }) {
 export default function SupplementStrategy832() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
+  const readonly = params.get("readonly") === "true";
 
   const [data, setData] = useState(null);
   const [draft, setDraft] = useState(null);
@@ -367,7 +368,7 @@ Supplemente: ${names}`,
           <ArrowLeft size={16} /> Zurück
         </a>
         <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-          {edit ? (
+          {!readonly && edit ? (
             <>
               <button onClick={generateExplanations} disabled={generating}
                 style={{ display: "flex", alignItems: "center", gap: "6px", padding: "8px 16px", background: "rgba(139,92,246,0.1)", color: "#7C3AED", border: "none", borderRadius: "10px", fontSize: "13px", fontWeight: 600, cursor: "pointer", opacity: generating ? 0.7 : 1 }}>
@@ -385,10 +386,12 @@ Supplemente: ${names}`,
             </>
           ) : (
             <>
-              <button onClick={() => setEdit(true)}
-                style={{ display: "flex", alignItems: "center", gap: "6px", padding: "8px 16px", background: "rgba(0,65,106,0.1)", color: C.indigo, border: "none", borderRadius: "10px", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>
-                <Edit2 size={15} /> Bearbeiten
-              </button>
+              {!readonly && (
+                <button onClick={() => setEdit(true)}
+                  style={{ display: "flex", alignItems: "center", gap: "6px", padding: "8px 16px", background: "rgba(0,65,106,0.1)", color: C.indigo, border: "none", borderRadius: "10px", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>
+                  <Edit2 size={15} /> Bearbeiten
+                </button>
+              )}
               <button onClick={() => window.print()}
                 style={{ display: "flex", alignItems: "center", gap: "6px", padding: "8px 16px", background: C.indigo, color: C.white, border: "none", borderRadius: "10px", fontSize: "13px", fontWeight: 700, cursor: "pointer" }}>
                 <Printer size={15} /> Drucken
