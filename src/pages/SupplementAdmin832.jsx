@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Plus, Eye, Trash2 } from "lucide-react";
+import { Plus, Eye, Trash2, Copy } from "lucide-react";
 import { createPageUrl } from "@/utils";
 
 const DEFAULT_SUPPLEMENTS = [
@@ -40,6 +40,17 @@ export default function SupplementAdmin832() {
   const handleDelete = async (id) => {
     if (!confirm("Löschen?")) return;
     await base44.entities.SupplementPlan.delete(id);
+    load();
+  };
+
+  const handleDuplicate = async (item) => {
+    await base44.entities.SupplementPlan.create({
+      client_name: item.client_name + " (Kopie)",
+      version: item.version,
+      intro_text: item.intro_text || "",
+      supplements_json: item.supplements_json || "",
+      explanations_json: item.explanations_json || "",
+    });
     load();
   };
 
@@ -102,6 +113,9 @@ export default function SupplementAdmin832() {
                     className="flex items-center gap-1.5 px-4 py-2 bg-[#00416A] text-white rounded-lg text-sm font-medium hover:bg-[#003356] transition">
                     <Eye className="w-4 h-4" /> Öffnen
                   </a>
+                  <button onClick={() => handleDuplicate(item)} className="p-2 text-black/30 hover:text-[#00416A] transition" title="Duplizieren">
+                    <Copy className="w-4 h-4" />
+                  </button>
                   <button onClick={() => handleDelete(item.id)} className="p-2 text-black/20 hover:text-red-500 transition">
                     <Trash2 className="w-4 h-4" />
                   </button>
