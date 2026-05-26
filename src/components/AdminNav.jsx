@@ -22,9 +22,10 @@ export default function AdminNav() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
-  // Hide on public pages
+  // Hide on public pages and readonly supplement view
   const isPublic = location.pathname === "/" || location.pathname.startsWith("/kunde/");
-  if (isPublic) return null;
+  const readonly = new URLSearchParams(window.location.search).get("readonly") === "true";
+  if (isPublic || readonly) return null;
 
   return (
     <>
