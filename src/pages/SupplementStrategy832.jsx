@@ -360,13 +360,16 @@ Supplemente: ${names}`,
           @page { margin: 0; size: A4; }
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        ${readonly ? `.no-print { display: none !important; }` : ""}
       `}</style>
 
       {/* Toolbar */}
       <div className="no-print" style={{ maxWidth: "210mm", margin: "0 auto 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
-        <a href={createPageUrl("SupplementAdmin832")} style={{ display: "flex", alignItems: "center", gap: "6px", color: C.indigo, opacity: 0.6, textDecoration: "none", fontSize: "13px", fontWeight: 600 }}>
-          <ArrowLeft size={16} /> Zurück
-        </a>
+        {!readonly && (
+          <a href={createPageUrl("SupplementAdmin832")} style={{ display: "flex", alignItems: "center", gap: "6px", color: C.indigo, opacity: 0.6, textDecoration: "none", fontSize: "13px", fontWeight: 600 }}>
+            <ArrowLeft size={16} /> Zurück
+          </a>
+        )}
         <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
           {!readonly && edit ? (
             <>
