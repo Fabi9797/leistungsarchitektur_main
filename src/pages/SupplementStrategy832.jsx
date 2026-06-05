@@ -25,8 +25,8 @@ function EditableCell({ value, onChange, placeholder = "" }) {
 // ───────── TAGESPLAN ─────────
 function DailySchedule({ supplements }) {
   const SLOTS = [
-    { key: "erste_mahlzeit", label: "🍽 Erste Mahlzeit", ...TIMING_COLORS.erste_mahlzeit },
     { key: "morgens", label: "☀️ Morgens", ...TIMING_COLORS.morgens },
+    { key: "erste_mahlzeit", label: "🍽 Erste Mahlzeit", ...TIMING_COLORS.erste_mahlzeit },
     { key: "mittags", label: "🌤 Mittags", ...TIMING_COLORS.mittags },
     { key: "abends", label: "🌆 Abends", ...TIMING_COLORS.abends },
     { key: "zur_nacht", label: "🌙 Zur Nacht", ...TIMING_COLORS.zur_nacht },
