@@ -579,7 +579,7 @@ export default function NutritionStrategy832() {
             setDraft(d => ({ ...d, [srcKey]: srcItems, [dstKey]: dstItems }));
           }
         }}>
-        {draft.sectionOrder.filter(key => !editMode || draft[key].length > 0).map((key, idx) => (
+        {draft.sectionOrder.filter(key => editMode || draft[key].length > 0).map((key, idx) => (
           <Page key={key} pageNum={idx + 3}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "4px" }}>
               <p style={s.label}>Mahlzeiten</p>
