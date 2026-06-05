@@ -185,8 +185,14 @@ function MealSection({ title, items, edit, onChange, onRename, onDelete, section
     <>
       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
         {edit ? (
-          <input value={title} onChange={e => onRename(e.target.value)}
-            style={{ ...s.h2, flex: 1, background: "rgba(0,65,106,0.04)", border: "1px dashed rgba(0,65,106,0.25)", borderRadius: "4px", outline: "none", fontFamily: "inherit", padding: "3px 8px" }} />
+          <div style={{ display: "flex", alignItems: "center", gap: "6px", flex: 1 }}>
+            <Pencil size={14} style={{ color: C.indigo, opacity: 0.5, flexShrink: 0 }} />
+            <input
+              value={title}
+              onChange={ev => onRename(ev.target.value)}
+              style={{ fontSize: "22px", fontWeight: 800, color: C.indigo, lineHeight: 1.1, flex: 1, background: "#f0f7ff", border: `2px solid ${C.indigo}`, borderRadius: "6px", outline: "none", fontFamily: "inherit", padding: "4px 10px" }}
+            />
+          </div>
         ) : (
           <h2 style={{ ...s.h2, margin: 0 }}>{title}</h2>
         )}
