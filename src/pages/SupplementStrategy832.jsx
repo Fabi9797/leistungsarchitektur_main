@@ -5,7 +5,7 @@ import { createPageUrl } from "@/utils";
 
 const C = { indigo: "#00416A", eggshell: "#F0EAD6", white: "#FFFFFF" };
 
-const TIMING_KEYS = ["erste_mahlzeit", "morgens", "mittags", "abends", "zur_nacht"];
+const TIMING_KEYS = ["morgens", "erste_mahlzeit", "mittags", "abends", "zur_nacht"];
 const TIMING_LABELS = { erste_mahlzeit: "Erste Mahlzeit", morgens: "Morgens", mittags: "Mittags", abends: "Abends", zur_nacht: "Zur Nacht" };
 const TIMING_COLORS = {
   erste_mahlzeit: { bg: "#FFF3E0", text: "#E65100" },
