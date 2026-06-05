@@ -1,0 +1,60 @@
+{
+  "name": "StorySlot",
+  "type": "object",
+  "properties": {
+    "week_key": {
+      "type": "string",
+      "title": "Woche (YYYY-WW)"
+    },
+    "day_index": {
+      "type": "number",
+      "title": "Wochentag (0=Mo, 6=So)"
+    },
+    "slot_index": {
+      "type": "number",
+      "title": "Slot-Nummer (0-basiert)"
+    },
+    "format": {
+      "type": "string",
+      "title": "Format",
+      "enum": [
+        "Talk to camera",
+        "Repost Feed",
+        "Athleten-Einblick",
+        "Athletenfeedback",
+        "Training",
+        "Essen/Nutrilize",
+        "Poll/Frage",
+        "Athletenerfolg",
+        "Mythos der Woche",
+        "Pers\u00f6nlich/Ausblick",
+        "Sonstiges"
+      ],
+      "default": "Talk to camera"
+    },
+    "content": {
+      "type": "string",
+      "title": "Inhalt"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Geplant",
+        "Fertig",
+        "\u00dcbersprungen"
+      ],
+      "default": "Geplant"
+    },
+    "is_template": {
+      "type": "boolean",
+      "title": "Ist Vorlage",
+      "default": false
+    }
+  },
+  "required": [
+    "week_key",
+    "day_index",
+    "slot_index"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "TestimonialAudio",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name (z.B. Frederick, Alex, Shayan)"
+    },
+    "audio_url": {
+      "type": "string",
+      "title": "Audio URL"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

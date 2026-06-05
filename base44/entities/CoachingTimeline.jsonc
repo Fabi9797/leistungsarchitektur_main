@@ -1,0 +1,32 @@
+{
+  "name": "CoachingTimeline",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "title": "Client ID"
+    },
+    "client_name": {
+      "type": "string",
+      "title": "Kundenname"
+    },
+    "coaching_start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Coachingstart"
+    },
+    "current_week": {
+      "type": "number",
+      "title": "Aktuelle Woche",
+      "default": 0
+    },
+    "weeks_json": {
+      "type": "string",
+      "title": "Wochen-Daten (JSON)"
+    }
+  },
+  "required": [
+    "client_id",
+    "client_name"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "name": "NutritionStrategy",
+  "type": "object",
+  "properties": {
+    "client_name": {
+      "type": "string",
+      "title": "Kundenname"
+    },
+    "version": {
+      "type": "string",
+      "title": "Version",
+      "default": "1"
+    },
+    "ist_summary": {
+      "type": "string",
+      "title": "IST-Zusammenfassung"
+    },
+    "soll_summary": {
+      "type": "string",
+      "title": "SOLL-Zusammenfassung"
+    },
+    "warum_json": {
+      "type": "string",
+      "title": "Warum? (JSON)"
+    },
+    "kalorien_ziel": {
+      "type": "number",
+      "title": "Kalorienziel"
+    },
+    "kalorien_defizit": {
+      "type": "string",
+      "title": "Kaloriendefizit"
+    },
+    "protein_ziel": {
+      "type": "number",
+      "title": "Proteinziel (g)"
+    },
+    "protein_info": {
+      "type": "string",
+      "title": "Protein-Info"
+    },
+    "mahlzeiten_json": {
+      "type": "string",
+      "title": "Mahlzeitenstruktur (JSON)"
+    },
+    "morgens_json": {
+      "type": "string",
+      "title": "Morgens Varianten (JSON)"
+    },
+    "mittags_json": {
+      "type": "string",
+      "title": "Mittags Varianten (JSON)"
+    },
+    "snack_json": {
+      "type": "string",
+      "title": "Snack Varianten (JSON)"
+    },
+    "abend_json": {
+      "type": "string",
+      "title": "Abendessen Varianten (JSON)"
+    },
+    "section_order_json": {
+      "type": "string",
+      "title": "Seitenreihenfolge (JSON)"
+    }
+  },
+  "required": [
+    "client_name"
+  ]
+}

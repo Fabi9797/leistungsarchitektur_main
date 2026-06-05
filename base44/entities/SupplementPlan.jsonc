@@ -1,0 +1,30 @@
+{
+  "name": "SupplementPlan",
+  "type": "object",
+  "properties": {
+    "client_name": {
+      "type": "string",
+      "title": "Kundenname"
+    },
+    "version": {
+      "type": "string",
+      "title": "Version",
+      "default": "1"
+    },
+    "intro_text": {
+      "type": "string",
+      "title": "Einleitung"
+    },
+    "supplements_json": {
+      "type": "string",
+      "title": "Supplemente (JSON)"
+    },
+    "explanations_json": {
+      "type": "string",
+      "title": "Erkl\u00e4rungen (JSON)"
+    }
+  },
+  "required": [
+    "client_name"
+  ]
+}

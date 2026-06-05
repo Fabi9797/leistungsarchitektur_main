@@ -1,0 +1,68 @@
+{
+  "name": "AdScript",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Titel der Ad"
+    },
+    "format": {
+      "type": "string",
+      "title": "Format",
+      "enum": [
+        "Long Form (45-90 Sek.)",
+        "Short Form (15-25 Sek.)",
+        "B-Roll (12 Sek.)",
+        "Instagram Caption"
+      ]
+    },
+    "zielgruppe_segment": {
+      "type": "string",
+      "title": "Zielgruppen-Segment"
+    },
+    "themen_pillar": {
+      "type": "string",
+      "title": "Themen-Pillar",
+      "enum": [
+        "Ern\u00e4hrung",
+        "Training",
+        "Nahrungserg\u00e4nzung",
+        "Umweltanpassung",
+        "Alltagsbewegung",
+        "Mindset"
+      ]
+    },
+    "hook": {
+      "type": "string",
+      "title": "Hook"
+    },
+    "body_text": {
+      "type": "string",
+      "title": "Vollst\u00e4ndiger Ad-Text"
+    },
+    "structured_json": {
+      "type": "string",
+      "title": "Strukturierte Sektionen (JSON)"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Entwurf",
+        "Freigegeben",
+        "Aktiv",
+        "Pausiert",
+        "Archiviert"
+      ],
+      "default": "Entwurf"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notizen"
+    }
+  },
+  "required": [
+    "title",
+    "format"
+  ]
+}

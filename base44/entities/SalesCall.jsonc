@@ -1,0 +1,103 @@
+{
+  "name": "SalesCall",
+  "type": "object",
+  "properties": {
+    "lead_id": {
+      "type": "string",
+      "title": "Lead ID"
+    },
+    "lead_name": {
+      "type": "string",
+      "title": "Lead Name"
+    },
+    "lead_email": {
+      "type": "string",
+      "title": "E-Mail"
+    },
+    "lead_phone": {
+      "type": "string",
+      "title": "Telefon"
+    },
+    "lead_analyse_json": {
+      "type": "string",
+      "title": "Analyse-Antworten JSON"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Vorbereitung",
+        "Aktiv",
+        "Abgeschlossen",
+        "Nicht konvertiert"
+      ],
+      "default": "Vorbereitung",
+      "title": "Status"
+    },
+    "current_step": {
+      "type": "number",
+      "default": 1,
+      "title": "Aktueller Schritt"
+    },
+    "call_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Gespr\u00e4chsdatum"
+    },
+    "gvz_gegenwart": {
+      "type": "string",
+      "title": "GVZ - Gegenwart"
+    },
+    "gvz_vergangenheit": {
+      "type": "string",
+      "title": "GVZ - Vergangenheit"
+    },
+    "gvz_zukunft": {
+      "type": "string",
+      "title": "GVZ - Zukunft"
+    },
+    "step_notes_json": {
+      "type": "string",
+      "title": "Schritt-Notizen JSON"
+    },
+    "kaufmotive_json": {
+      "type": "string",
+      "title": "Kaufmotive JSON"
+    },
+    "puek_json": {
+      "type": "string",
+      "title": "P\u00dcK-Ketten JSON"
+    },
+    "preis_reaktion": {
+      "type": "string",
+      "enum": [
+        "Sofort Ja",
+        "Nachdenken",
+        "Einwand",
+        "Absage"
+      ],
+      "title": "Preisreaktion"
+    },
+    "ergebnis": {
+      "type": "string",
+      "enum": [
+        "Abschluss",
+        "Bedenkzeit",
+        "Absage",
+        "Follow-up"
+      ],
+      "title": "Ergebnis"
+    },
+    "follow_up_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Follow-up Datum"
+    },
+    "zusammenfassung": {
+      "type": "string",
+      "title": "Zusammenfassung"
+    }
+  },
+  "required": [
+    "lead_name"
+  ]
+}

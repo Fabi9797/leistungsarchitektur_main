@@ -1,0 +1,114 @@
+{
+  "name": "ContentPiece",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Titel"
+    },
+    "type": {
+      "type": "string",
+      "title": "Content-Art",
+      "enum": [
+        "Reden",
+        "B-Roll",
+        "Slideshow",
+        "Reel",
+        "Story",
+        "Carousel"
+      ],
+      "default": "Reden"
+    },
+    "category": {
+      "type": "string",
+      "title": "Kategorie",
+      "enum": [
+        "Training",
+        "Ern\u00e4hrung",
+        "Supplements",
+        "Steuerung"
+      ],
+      "default": "Training"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Idee",
+        "In Planung",
+        "Gedreht",
+        "Geschnitten",
+        "Ver\u00f6ffentlicht"
+      ],
+      "default": "Idee"
+    },
+    "planned_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Geplantes Datum"
+    },
+    "hook": {
+      "type": "string",
+      "title": "Hook"
+    },
+    "topic_info": {
+      "type": "string",
+      "title": "Weitere Infos zum Thema"
+    },
+    "video_duration": {
+      "type": "string",
+      "title": "Videol\u00e4nge",
+      "enum": [
+        "15 Sek",
+        "30 Sek",
+        "45 Sek",
+        "60 Sek",
+        "90 Sek"
+      ],
+      "default": "60 Sek"
+    },
+    "script": {
+      "type": "string",
+      "title": "Skript"
+    },
+    "slideshow_slides": {
+      "type": "array",
+      "title": "Slideshow Slides",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notizen"
+    },
+    "images": {
+      "type": "array",
+      "title": "Bilder (Slideshow)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          }
+        }
+      },
+      "default": []
+    },
+    "hashtags": {
+      "type": "string",
+      "title": "Hashtags"
+    },
+    "cta": {
+      "type": "string",
+      "title": "Call-to-Action"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "name": "MonthlyReport",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "title": "Client ID"
+    },
+    "client_name": {
+      "type": "string",
+      "title": "Kundenname"
+    },
+    "report_month": {
+      "type": "string",
+      "title": "Monat (YYYY-MM)"
+    },
+    "report_label": {
+      "type": "string",
+      "title": "Monatsbezeichnung"
+    },
+    "gefuehl_vorher": {
+      "type": "string",
+      "title": "Gef\u00fchl vorher"
+    },
+    "gefuehl_nachher": {
+      "type": "string",
+      "title": "Gef\u00fchl nachher"
+    },
+    "energie_vorher": {
+      "type": "number",
+      "title": "Energie vorher (1-10)"
+    },
+    "energie_nachher": {
+      "type": "number",
+      "title": "Energie nachher (1-10)"
+    },
+    "stress_vorher": {
+      "type": "number",
+      "title": "Stress vorher (1-10)"
+    },
+    "stress_nachher": {
+      "type": "number",
+      "title": "Stress nachher (1-10)"
+    },
+    "schlaf_vorher": {
+      "type": "number",
+      "title": "Schlaf vorher (1-10)"
+    },
+    "schlaf_nachher": {
+      "type": "number",
+      "title": "Schlaf nachher (1-10)"
+    },
+    "highlight_des_monats": {
+      "type": "string",
+      "title": "Highlight des Monats"
+    },
+    "reflexion_kunde": {
+      "type": "string",
+      "title": "Reflexion Kunde"
+    },
+    "gewicht_start": {
+      "type": "number",
+      "title": "Gewicht Start (kg)"
+    },
+    "gewicht_end": {
+      "type": "number",
+      "title": "Gewicht Ende (kg)"
+    },
+    "gewicht_verlauf_json": {
+      "type": "string",
+      "title": "Gewichtsverlauf (JSON)"
+    },
+    "kfa_start": {
+      "type": "number",
+      "title": "KFA Start (%)"
+    },
+    "kfa_end": {
+      "type": "number",
+      "title": "KFA Ende (%)"
+    },
+    "umfaenge_json": {
+      "type": "string",
+      "title": "Umf\u00e4nge (JSON)"
+    },
+    "hrv_avg": {
+      "type": "number",
+      "title": "HRV \u00d8"
+    },
+    "hrv_trend": {
+      "type": "string",
+      "title": "HRV Trend",
+      "enum": [
+        "Steigend",
+        "Stabil",
+        "Fallend"
+      ]
+    },
+    "hrv_verlauf_json": {
+      "type": "string",
+      "title": "HRV Verlauf (JSON)"
+    },
+    "ruhepuls_avg": {
+      "type": "number",
+      "title": "Ruhepuls \u00d8"
+    },
+    "ruhepuls_trend": {
+      "type": "string",
+      "title": "Ruhepuls Trend",
+      "enum": [
+        "Steigend",
+        "Stabil",
+        "Fallend"
+      ]
+    },
+    "ruhepuls_verlauf_json": {
+      "type": "string",
+      "title": "Ruhepuls Verlauf (JSON)"
+    },
+    "schlafdauer_avg": {
+      "type": "number",
+      "title": "Schlafdauer \u00d8 (h)"
+    },
+    "uebungen_json": {
+      "type": "string",
+      "title": "Haupt\u00fcbungen (JSON)"
+    },
+    "training_compliance": {
+      "type": "number",
+      "title": "Training Compliance (%)"
+    },
+    "kalorien_avg": {
+      "type": "number",
+      "title": "Kalorien \u00d8 (kcal)"
+    },
+    "protein_avg": {
+      "type": "number",
+      "title": "Protein \u00d8 (g)"
+    },
+    "ernaehrung_compliance": {
+      "type": "number",
+      "title": "Ern\u00e4hrungs-Compliance (%)"
+    },
+    "supplement_compliance": {
+      "type": "number",
+      "title": "Supplement-Compliance (%)"
+    },
+    "coach_kommentar": {
+      "type": "string",
+      "title": "Coach Kommentar"
+    },
+    "fokus_naechster_monat": {
+      "type": "string",
+      "title": "Fokus n\u00e4chster Monat"
+    },
+    "gesamtbewertung": {
+      "type": "number",
+      "title": "Gesamtbewertung (1-10)"
+    }
+  },
+  "required": [
+    "client_id",
+    "report_month"
+  ]
+}

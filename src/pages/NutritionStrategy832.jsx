@@ -178,12 +178,25 @@ function MealCard({ variant, edit, onChange, onDelete, index, showIndex }) {
   );
 }
 
-function MealSection({ title, items, edit, onChange, sectionKey }) {
+function MealSection({ title, items, edit, onChange, onRename, onDelete, sectionKey }) {
   const newCard = { name: "Neue Option", basis: [], kcal: "000 kcal", protein: "00g P" };
 
   return (
     <>
-      <h2 style={{ ...s.h2, marginBottom: "20px" }}>{title}</h2>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+        {edit ? (
+          <input value={title} onChange={e => onRename(e.target.value)}
+            style={{ ...s.h2, flex: 1, background: "rgba(0,65,106,0.04)", border: "1px dashed rgba(0,65,106,0.25)", borderRadius: "4px", outline: "none", fontFamily: "inherit", padding: "3px 8px" }} />
+        ) : (
+          <h2 style={{ ...s.h2, margin: 0 }}>{title}</h2>
+        )}
+        {edit && (
+          <button onClick={onDelete}
+            style={{ background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "6px", cursor: "pointer", color: "#cc3333", padding: "4px 10px", fontSize: "10px", fontWeight: 600, display: "flex", alignItems: "center", gap: "4px", flexShrink: 0 }}>
+            <Trash2 size={11} /> Sektion löschen
+          </button>
+        )}
+      </div>
       {edit ? (
         <Droppable droppableId={sectionKey} direction="horizontal">
           {(provided) => (
@@ -277,6 +290,17 @@ export default function NutritionStrategy832() {
   }, []);
 
   function toDraft(d) {
+    let sectionOrder = DEFAULT_ORDER;
+    let sectionLabels = { ...SECTION_LABELS };
+    try {
+      const parsed = JSON.parse(d.section_order_json);
+      if (Array.isArray(parsed)) {
+        sectionOrder = parsed;
+      } else if (parsed?.order) {
+        sectionOrder = parsed.order;
+        sectionLabels = { ...SECTION_LABELS, ...(parsed.labels || {}) };
+      }
+    } catch {}
     return {
       client_name: d.client_name || "",
       version: d.version || "1",
@@ -292,7 +316,8 @@ export default function NutritionStrategy832() {
       mittags: parse(d.mittags_json, []) || [],
       snack: parse(d.snack_json, []) || [],
       abend: parse(d.abend_json, []) || [],
-      sectionOrder: parse(d.section_order_json, DEFAULT_ORDER) || DEFAULT_ORDER,
+      sectionOrder,
+      sectionLabels,
     };
   }
 
@@ -313,7 +338,7 @@ export default function NutritionStrategy832() {
       mittags_json: JSON.stringify(draft.mittags),
       snack_json: JSON.stringify(draft.snack),
       abend_json: JSON.stringify(draft.abend),
-      section_order_json: JSON.stringify(draft.sectionOrder),
+      section_order_json: JSON.stringify({ order: draft.sectionOrder, labels: draft.sectionLabels }),
     });
     setSaving(false);
     setEditMode(false);
@@ -583,11 +608,18 @@ export default function NutritionStrategy832() {
               )}
             </div>
             <MealSection
-              title={SECTION_LABELS[key]}
+              title={draft.sectionLabels?.[key] || SECTION_LABELS[key]}
               items={draft[key]}
               edit={e}
               onChange={v => upd(key, v)}
               sectionKey={key}
+              onRename={name => setDraft(d => ({ ...d, sectionLabels: { ...d.sectionLabels, [key]: name } }))}
+              onDelete={() => setDraft(d => ({
+                ...d,
+                sectionOrder: d.sectionOrder.filter(k => k !== key),
+                [key]: [],
+                sectionLabels: Object.fromEntries(Object.entries(d.sectionLabels || {}).filter(([k2]) => k2 !== key))
+              }))}
             />
           </Page>
         ))}

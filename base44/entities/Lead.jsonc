@@ -1,0 +1,57 @@
+{
+  "name": "Lead",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-Mail"
+    },
+    "phone": {
+      "type": "string",
+      "title": "Telefon"
+    },
+    "status": {
+      "type": "string",
+      "title": "Status",
+      "enum": [
+        "Neu",
+        "Kontaktiert",
+        "Qualifiziert",
+        "Angebot",
+        "Gewonnen",
+        "Verloren"
+      ],
+      "default": "Neu"
+    },
+    "source": {
+      "type": "string",
+      "title": "Quelle",
+      "enum": [
+        "Website",
+        "Empfehlung",
+        "Instagram",
+        "Sonstige"
+      ],
+      "default": "Website"
+    },
+    "ziel": {
+      "type": "string",
+      "title": "Ziel"
+    },
+    "notizen": {
+      "type": "string",
+      "title": "Notizen"
+    },
+    "analyse_answers": {
+      "type": "string",
+      "title": "Analyse-Antworten (JSON)"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
