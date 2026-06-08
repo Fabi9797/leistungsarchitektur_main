@@ -97,7 +97,7 @@ const AuthenticatedApp = () => {
       <Route path="/CoachingPlan832" element={<BackofficeGuard><CoachingPlan832 /></BackofficeGuard>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
-    <AdminNav />
+    {new URLSearchParams(window.location.search).get("readonly") !== "1" && <AdminNav />}
     </>
   );
 };
