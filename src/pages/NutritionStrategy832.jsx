@@ -274,6 +274,7 @@ export default function NutritionStrategy832() {
   const [saving, setSaving] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const entityId = useRef(null);
+  const isReadonly = new URLSearchParams(window.location.search).get("readonly") === "1";
 
   useEffect(() => {
     const id = new URLSearchParams(window.location.search).get("id");
@@ -396,7 +397,7 @@ export default function NutritionStrategy832() {
       `}</style>
 
       {/* Toolbar */}
-      <div className="no-print" style={{ background: C.indigo, color: "white", padding: "10px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: 0, zIndex: 50, gap: "12px" }}>
+      <div className="no-print" style={{ background: C.indigo, color: "white", padding: "10px 24px", display: isReadonly ? "none" : "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: 0, zIndex: 50, gap: "12px" }}>
         <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", opacity: 0.5, flexShrink: 0 }}>
           Ernährungsstrategie · {draft.client_name}
         </span>

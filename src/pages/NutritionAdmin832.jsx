@@ -51,7 +51,7 @@ export default function NutritionAdmin832() {
   const [copiedId, setCopiedId] = useState(null);
 
   const copyLink = (id) => {
-    const url = `${window.location.origin}/NutritionStrategy832?id=${id}`;
+    const url = `${window.location.origin}/NutritionStrategy832?id=${id}&readonly=1`;
     navigator.clipboard.writeText(url);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
