@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Plus, Eye, Trash2 } from "lucide-react";
+import { Plus, Eye, Trash2, Copy, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const DEFAULT = {
@@ -48,6 +48,14 @@ export default function NutritionAdmin832() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(DEFAULT);
+  const [copiedId, setCopiedId] = useState(null);
+
+  const copyLink = (id) => {
+    const url = `${window.location.origin}/NutritionStrategy832?id=${id}`;
+    navigator.clipboard.writeText(url);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   const load = async () => {
     setLoading(true);
@@ -157,6 +165,11 @@ export default function NutritionAdmin832() {
                     className="flex items-center gap-1.5 px-4 py-2 bg-[#00416A] text-white rounded-lg text-sm font-medium hover:bg-[#003356] transition">
                     <Eye className="w-4 h-4" /> Präsentation
                   </Link>
+                  <button onClick={() => copyLink(item.id)}
+                    className="flex items-center gap-1.5 px-3 py-2 border border-black/10 rounded-lg text-sm font-medium text-black/50 hover:bg-black/5 transition">
+                    {copiedId === item.id ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                    {copiedId === item.id ? "Kopiert!" : "Link"}
+                  </button>
                   <button onClick={() => handleDelete(item.id)} className="p-2 text-black/20 hover:text-red-500 transition">
                     <Trash2 className="w-4 h-4" />
                   </button>
